@@ -12,12 +12,13 @@ from django.template import RequestContext
 
 
 # Create your views here.
-@login_required
-def index(request):
-    return HttpResponse("Hola, mundo")
+# @login_required
+# def index(request):
+#     return HttpResponse("Hola, mundo")
 
-#1 Menu principal 
-def menu(request):
+#1 Menu principal
+@login_required 
+def index(request):
     return render(request, 'ventas/menu.html')
 #2 muestra boleta o factura
 @login_required
@@ -26,7 +27,16 @@ def nueva(request):
 
 @login_required
 def factura(request):
-    return render(request, 'ventas/factura.html')
+
+    if request.method == 'POST':
+        nueva_venta = Venta(usuario=request.user)
+        nueva_venta.save()
+        codigo_venta = Venta.objects.latest('id')
+        print(codigo_venta)
+    return render(request, 'ventas/venta.html')
+
+
+    #return render(request, 'ventas/factura.html')
 
 #3 eligió boleta 
 @login_required
@@ -37,7 +47,7 @@ def boleta(request):
         nueva_venta.save()
         codigo_venta = Venta.objects.latest('id')
         print(codigo_venta)
-    return render(request, 'ventas/boleta.html')
+    return render(request, 'ventas/venta.html')
     
 def detalleadd(request):
     if request.method == 'POST':        
@@ -81,24 +91,7 @@ def detalleadd(request):
         
 
         subtotal= Venta.objects.last()
-        return HttpResponseRedirect('/boletalista/')
-
-
-
-""" def finboleta(request):
-    if request.method =='POST':
-        total = request.POST['total']
-        forma = request.POST.get['gridRadios']
-        if forma =='option1': 
-
-        
-
-        #print(cambio)
-        print(forma.value)
-        return render( request, 'ventas/pagar.html')
-
-"""
-
+        return HttpResponseRedirect('boletalista/')
 
 def guardarboleta(request):
     if request.method == 'POST':
@@ -116,9 +109,6 @@ def guardarfactura(request):
         nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=(request.POST['textinput']) )
         nueva_factura.save()
 
-
-    
-
 class VentaList(ListView):
 
     model = DetalleVenta
@@ -133,7 +123,6 @@ class VentaList(ListView):
         context['suma'] = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta')*F('cantidad')))['total']
         print(context)
         return context
-
 
 @login_required    
 def pagar(request):
