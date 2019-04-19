@@ -7,12 +7,10 @@ class Proveedor(models.Model):
     direccion = models.CharField(max_length=100, blank=False, null=False)
     telefono = models.IntegerField()
     email = models.EmailField(max_length=254)
-
     class Meta:
-        ordering = ["rut"]
         verbose_name_plural = "Proveedores"
         def __str__(self):
-            return self.nombre
+            return str(self.rut)
 
 
 class Producto(models.Model):
@@ -32,7 +30,7 @@ class Compra(models.Model):
     producto = models.ManyToManyField('Producto', through='DetalleCompra')
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class DetalleCompra(models.Model):
