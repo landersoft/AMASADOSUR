@@ -1,0 +1,85 @@
+{% extends "base.html"%}
+
+{% block content %}
+
+<div class="row no-gutters">
+
+    <div class="col-6 col-md-6 center-block text-center" style="background-color: #eee;">Producto</div>
+    <div class="col-6 center-block text-center" style="background-color: #eee;">Lista</div>
+ 
+</div>
+
+
+<div class="row no-gutters">
+  <div class="col-6 center-block text-center align-self-center" style="background-color: #fff;"> 
+      <form class="form-row align-items-center" action="/add" method="POST">{% csrf_token %}
+
+        <div class="col-2 offset-md-4">
+          <label class="sr-only" for="textinput">Codigo</label>
+
+          <input id="textinput" name="textinput" type="text" placeholder="Ingrese Codigo" class="form-control input-lg" required=""> 
+        </div>
+
+        
+        <div class="col-auto align-self-end">
+          <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
+        </div>
+    </form> 
+  </div>
+
+
+
+
+
+
+  <div class="col-6" style="background-color: rgba(0,0,255,.1)">
+
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for VentaList in object_list %}
+        <tr>
+      
+          <th scope="row">{{VentaList.id_producto}}</th>
+          <td>{{VentaList.cantidad}}</td>
+          <td>{{VentaList.precio_venta}}</td>
+      
+        </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  <div class="col-md-5 offset-md-1" style="background-color: rgba(0,0,255,.1)">.col-md-4 .offset-md-4</div>
+  <div class="col-md-5 offset-md-0" style="background-color: #eee;">.col-md-4 .offset-md-4</div>
+</div>
+
+
+{% endblock %}
