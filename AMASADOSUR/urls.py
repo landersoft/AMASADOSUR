@@ -21,9 +21,10 @@ from ventas import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('ventas/', include('ventas.urls')),
+
     path(r'', views.index),
     path('login/', LoginView.as_view(template_name='login.html'), name="login"),
+    path(r'ventas/', include('ventas.urls')),
+    path('admin/', admin.site.urls),   
 
 ]
