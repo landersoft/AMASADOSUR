@@ -91,7 +91,7 @@ def detalleadd(request):
         
 
         subtotal= Venta.objects.last()
-        return HttpResponseRedirect('boletalista/')
+        return HttpResponseRedirect('lista/')
 
 def guardarboleta(request):
     if request.method == 'POST':
