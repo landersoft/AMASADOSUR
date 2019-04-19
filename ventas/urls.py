@@ -10,6 +10,6 @@ urlpatterns = [
     path(r'nueva/boleta/add', views.detalleadd, name='add'),
     path(r'nueva/factura/', views.factura, name='factura'),
     path(r'nueva/factura/add', views.detalleadd, name='add'),
-    path(r'nueva/boleta/boletalista/',views.VentaList.as_view()),
+    path(r'nueva/boleta/lista/',views.VentaList.as_view()),
 
 ]
