@@ -1,0 +1,28 @@
+
+{% extends "base.html"%}
+
+{% block content %}
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>RUT</td>
+            <th>Nombre</td>
+            <th>Direccion</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in cliente %}
+            <tr>
+                <td>{{ cliente.rut }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.direccion }}</td>
+            </tr>
+       {% endfor %}
+   </tbody>
+</table>
+
+{% endblock %}

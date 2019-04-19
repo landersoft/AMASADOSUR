@@ -1,0 +1,86 @@
+
+{% load staticfiles %}
+
+<!doctype html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css '%}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+   
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{%  block tittle %} Document {% endblock %}</title>
+</head>
+
+{% block menu %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/menu"><img src="{% static 'img/python.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">SabroSystem</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/"> Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ventas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="ventas/nueva">Nueva</a>
+          <a class="dropdown-item" href="#">Editar</a>
+          <a class="dropdown-item" href="#">Estadisticas</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://127.0.0.1:8000/admin/">Administración</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+
+{% endblock %}
+
+
+
+
+
+{% block content %}
+    <h5>Bloque de contenido</h5>
+{% endblock %}
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+{% block footer %}
+<nav class="navbar fixed-bottom navbar-light bg-light">
+<div class="container justify-content-center">
+{% load static %}
+<a class="navbar-brand" href="https://www.djangoproject.com/"><img src="{% static 'img/django.png' %}" width="50" height="60" alt=""></a>
+  <a class="navbar-brand " href="https://www.mysql.com/"><img src="{% static 'img/mysql.png' %}" width="60" height="70" alt=""></a>
+  <a class="navbar-brand " href="https://www.w3.org/html/"><img src="{% static 'img/html5.png' %}" width="60" height="60" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics"></a>
+  <a class="navbar-brand" href="https://www.debian.org/index.es.html"><img src="{% static 'img/debian2.png' %}" width="45" height="65" alt=""></a>
+  
+</div>
+
+
+
+</nav>
+{% endblock %}
+
+</html>

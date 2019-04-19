@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<script>
+  function sumar() {
+    var total = 0;
+    $(".monto").each(function() {
+  
+      if (isNaN(parseFloat($(this).val()))) {      
+        total += 0;
+      } else { 
+        total += parseFloat($(this).val());
+      }
+  
+    });
+  
+    //alert(total);
+    document.getElementById('spTotal').innerHTML = total;
+  
+  }
+</script>
+
+<script>
+  function restar(){
+    var total = 0;
+    var num1 = parseFloat($("#txt_campo_1").val());
+    var num2 = parseFloat($("#txt_campo_2").val());
+    total = num2-num1
+    document.getElementById('spTotal').innerHTML = total;
+
+    }
+
+</script>
+<div class="container">
+  <div class="col-5 offset-4">
+
+
+        
+    <form class="form-row align-items-center" action="/finboleta" method="POST">{% csrf_token %}
+      <span>Total</span>
+      <input type="text" id="txt_campo_1" readonly class="form-control-plaintext monto" value={{total}} onkeyup="restar();" />
+      <br/>
+      
+      <span>Importe</span>
+      <input type="text" id="txt_campo_2" class="form-control monto" onkeyup="restar();" />
+      <br/>      
+      <span>Vuelto: </span> <span id="spTotal"></span>
+      <br>
+    </div>
+
+    <div class="col-5 offset-4">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+          Efectivo
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <label class="form-check-label" for="exampleRadios2">
+          Tarjeta
+        </label>
+      </div>
+      
+  </div>
+  <div class="col-5 offset-8">
+    <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
+  </div>
+</div> 
+
+
+{% endblock %}

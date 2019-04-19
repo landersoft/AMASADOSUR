@@ -12,6 +12,7 @@ from django.template import RequestContext
 
 
 # Create your views here.
+@login_required
 def index(request):
     return HttpResponse("Hola, mundo")
 
