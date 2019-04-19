@@ -1,19 +1,19 @@
 from django.contrib import admin
-from modulos.abastecimiento.models import Producto, Proveedor, Compra, DetalleCompra
+from abastecimiento.models import Producto, Proveedor, Compra, DetalleCompra
 
 
 ###########################################################################
 class AdminProveedor(admin.ModelAdmin):
     list_display = ["rut", "nombre", "direccion", "telefono", "email"]
     list_filter = ["rut"]
-    search_fields = ["rut", "nombre"]
+    #search_fields = ["rut", "nombre"]
 
     class Meta:
         model = Proveedor
-
+        
 #############################################################################
 class AdminProducto(admin.ModelAdmin):
-    list_display = ["id", "nombre", "descripcion", "precio"]
+    list_display = ["id", "nombre", "descripcion", "precio_actual"]
     list_filter = ["id","nombre"]
     search_fields = ["id", "nombre"]
 
@@ -22,9 +22,16 @@ class AdminProducto(admin.ModelAdmin):
 
 ##############################################################################
 class AdminCompra(admin.ModelAdmin):
-    list_display = ["id", "fecha", "proveedor", "total"]
+    list_display = ["id", "fecha", "get_proveedor", "total"]
     list_filter = ["id","fecha"]
-    search_fields = ["id", "proveedor"]
+    search_fields = ["id"]
+#################MUY IMPORTANTE FOREIGN KEY###########################
+    def get_proveedor(self, obj):
+        return obj.proveedor.nombre
+    get_proveedor.short_description = 'Proveedor'
+    get_proveedor.admin_order_field = 'proveedor_nombre'
+
+
 
     class Meta:
         model = Compra
