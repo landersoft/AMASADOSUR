@@ -38,7 +38,7 @@
 
 
         
-    <form class="form-row align-items-center" action="/finboleta" method="POST">{% csrf_token %}
+    <form class="form-row align-items-center" action="finventa" method="POST">{% csrf_token %}
       <span>Total</span>
       <input type="text" id="txt_campo_1" readonly class="form-control-plaintext monto" value={{total}} onkeyup="restar();" />
       <br/>
@@ -65,6 +65,7 @@
       </div>
       
   </div>
+  
   <div class="col-5 offset-8">
     <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
   </div>

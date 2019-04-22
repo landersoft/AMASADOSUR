@@ -12,7 +12,7 @@
 
 <div class="row no-gutters">
   <div class="col-6 center-block text-center align-self-center" style="background-color: #fff;"> 
-      <form class="form-row align-items-center" action="/ventas/nueva/boleta/add" method="POST">{% csrf_token %}
+      <form class="form-row align-items-center" action="/ventas/nueva/add" method="POST">{% csrf_token %}
 
         <div class="col-2 offset-md-4">
           <label class="sr-only" for="textinput">Codigo</label>
@@ -92,6 +92,6 @@
   <form class="form-row align-items-center" action="pagar" method="POST">
     {% csrf_token %}
     <input type="hidden" value={{suma}} name="suma" />
-    <button type="submit" class="btn btn-primary mb-2">Pagar</button>  
+    <button type="submit" class="btn btn-primary mb-2">Siguiente</button>  
 </div>
 {% endblock %}
