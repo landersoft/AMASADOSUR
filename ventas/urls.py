@@ -7,9 +7,10 @@ urlpatterns = [
     path(r'', views.index, name='index'),
     path(r'nueva/', views.nueva, name='nueva'),
     path(r'nueva/boleta/', views.boleta, name='boleta'),
-    path(r'nueva/boleta/add', views.detalleadd, name='add'),
-    path(r'nueva/factura/', views.factura, name='factura'),
-    path(r'nueva/factura/add', views.detalleadd, name='add'),
-    path(r'nueva/boleta/lista/',views.VentaList.as_view()),
+    path(r'nueva/add', views.detalleadd, name='add'),
+    #path(r'nueva/factura/', views.factura, name='factura'),
+    #path(r'nueva/factura/add', views.detalleadd, name='add'),
+    path(r'nueva/lista/',views.VentaList.as_view()),
+    path(r'nueva/lista/pagar', views.pagar, name='pagar'),
 
 ]
