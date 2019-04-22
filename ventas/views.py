@@ -22,18 +22,17 @@ def index(request):
     return render(request, 'ventas/menu.html')
 #2 muestra boleta o factura
 @login_required
-def nueva(request):
+def nueva2(request):
     return render(request, 'ventas/nueva.html')
 
 @login_required
-def factura(request):
-
-    if request.method == 'POST':
+def nueva(request):
+    #if request.method == 'POST':
         nueva_venta = Venta(usuario=request.user)
         nueva_venta.save()
         codigo_venta = Venta.objects.latest('id')
         print(codigo_venta)
-    return render(request, 'ventas/venta.html')
+        return render(request, 'ventas/venta.html')
 
 
     #return render(request, 'ventas/factura.html')
