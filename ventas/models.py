@@ -17,6 +17,7 @@ class Venta(models.Model):
     total = models.IntegerField(blank=True, null=True)
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True, null=True)
     producto = models.ManyToManyField("abastecimiento.Producto", through='DetalleVenta')
+    forma_pago = models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return str(self.id)
    
@@ -39,13 +40,13 @@ class DetalleVenta(models.Model):
 class Factura(models.Model):
     id_venta = models.ForeignKey('Venta', on_delete=models.CASCADE)
     id_cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
-    forma_pago = models.CharField(max_length=100, null=True, blank=True)
+    
     def __str__(self):
         return str(self.id)
 
 
 class Boleta(models.Model):
     id_venta = models.ForeignKey('Venta', on_delete=models.CASCADE)
-    forma_pago = models.CharField(max_length=100, null=True, blank=True)
+    
     def __str__(self):
         return str(self.id)
