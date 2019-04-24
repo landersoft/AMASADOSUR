@@ -15,5 +15,6 @@ urlpatterns = [
     path(r'nueva/lista/formapago', views.formapago, name='formapago'),
     path(r'nueva/lista/documento', views.tipodocumento, name='tipodocumento'),
     path(r'nueva/lista/verifica', views.verifica, name='verifica'),
+    path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
 
 ]
