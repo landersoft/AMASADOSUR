@@ -38,7 +38,7 @@
 
 
         
-    <form class="form-row align-items-center" action="finventa" method="POST">{% csrf_token %}
+    <form class="form-row align-items-center" action="formapago" method="POST">{% csrf_token %}
       <span>Total</span>
       <input type="text" id="txt_campo_1" readonly class="form-control-plaintext monto" value={{total}} onkeyup="restar();" />
       <br/>
