@@ -92,16 +92,36 @@ def detalleadd(request):
         subtotal= Venta.objects.last()
         return HttpResponseRedirect('lista/')
 
-def guardarboleta(request):
+
+def boletaofactura(request):
+        if request.method == 'POST':
+                tipodocumento = request.POST['documento']
+                if tipodocumento == 'boleta':
+                        nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
+
+
+def formapago(request):
     if request.method == 'POST':
         forma = request.POST['exampleRadios']
-        if forma =='option1':
-                nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'),forma_pago='efectivo')
+        de_venta = Venta.objects.last()
+        if forma =='option1':               
+                de_venta.forma_pago='Efectivo'
+                #nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
         else:
-                nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'),forma_pago='tarjeta')
-        
-        nueva_boleta.save()
-        return render(request, 'ventas/menu.html')
+                de_venta.forma_pago='Tarjeta'
+
+        de_venta.save()
+        return render(request, 'ventas/boletaofactura.html')
+
+def tipodocumento(request):
+        if request.method == 'POST':
+                tipo = request.POST['documento']
+                if tipo == 'boleta':
+                        nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
+                        nueva_boleta.save()
+                        return render(request, 'ventas/menu.html')
+                else:
+                        return render(request, 'ventas/verifica.html')
 
 def guardarfactura(request):
     if request.method == 'POST':
