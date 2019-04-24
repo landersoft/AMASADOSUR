@@ -17,8 +17,11 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=10, blank=False, null=False)
     descripcion = models.CharField(max_length=30, blank=False, null=False)
     precio_actual = models.IntegerField()
+    stock = models.IntegerField(default=0)
     def __str__(self):
         return self.nombre
+
+
 
 
 class Compra(models.Model):
@@ -49,3 +52,4 @@ class DetalleCompra(models.Model):
         def __str__(self):
             return self.id
 
+#https://stackoverflow.com/questions/30252693/django-admin-call-function-on-save
