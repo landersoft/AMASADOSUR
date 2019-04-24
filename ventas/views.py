@@ -9,6 +9,7 @@ from django.db.models import Q,F
 from django.db.models import Sum, IntegerField
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from .forms import RegCliente
 
 
 # Create your views here.
@@ -155,9 +156,28 @@ def verifica(request):
         if request.method == 'POST':
                 rut = request.POST['rut']
                 cliente = Cliente.objects.filter(rut=rut)                
-                print (cliente.exists())
-                return render(request,'ventas/factura2.html',{ 'cliente':cliente })
+                if cliente.exists()== True:
+                        nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=cliente)
+                        return render(request, 'ventas/menu.html')
+                else:
+                        return HttpResponseRedirect('registrocliente')
                 
 #https://es.stackoverflow.com/questions/95569/recuperar-objectos-de-un-modelo-en-django
 
+def registracliente(request):
+        form = RegCliente(request.POST or None)
+        context = {
+                "form":form
+                
+        }
+        if form.is_valid():
+                form_data = form.cleaned_data
+                dni = form_data.get("rut")
+                name = form_data.get("nombre")
+                adress = form_data.get("direccion")
+                obj = Cliente.objects.create(rut=dni,nombre=name,direccion=adress)
+                nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=Cliente.objects.get(rut=dni))
+                nueva_factura.save()
+                return render(request, 'ventas/menu.html')
 
+        return render(request, "ventas/registrocliente.html", context)
