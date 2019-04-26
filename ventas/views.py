@@ -155,9 +155,39 @@ def pagar(request):
 def verifica(request):
         if request.method == 'POST':
                 rut = request.POST['rut']
-                cliente = Cliente.objects.filter(rut=rut)                
-                if cliente.exists()== True:
-                        nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=cliente)
+                try:
+                        cliente = Cliente.objects.get(rut=request.POST['rut'])
+                except Cliente.DoesNotExist:
+                        cliente = None
+                        return HttpResponseRedirect('registrocliente')
+
+
+                print("este es el id del cliente " +str(cliente))
+                                
+                if cliente!=(Null or None):
+                        nueva_factura2 = Factura(id_venta=Venta.objects.latest('id'), id_cliente=cliente)
+                        nueva_factura2.save()
+
+                        venta = Factura.objects.latest('id').id_venta
+                        print ("id de venta es " + str(venta))
+                        #este te entrega el id producto y la cantidad a restar. 
+                        detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad').count()
+                        print("esto es el contador de elementos del queryset " + str(detalles))
+                        
+                        #este es para cargar todos los objetos de tipo detalleventa
+                        
+                        detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
+                        print(detalles)
+                        for detalle in detalles:
+                        #instance.id_producto.stock += instance.cantidad
+                                stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
+                                print(stock_actual)
+                                #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
+                                producto = Producto.objects.get(id=detalle['id_producto'])
+                                producto.stock-=detalle['cantidad']
+                                producto.save()
+
+
                         return render(request, 'ventas/menu.html')
                 else:
                         return HttpResponseRedirect('registrocliente')
@@ -178,6 +208,31 @@ def registracliente(request):
                 obj = Cliente.objects.create(rut=dni,nombre=name,direccion=adress)
                 nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=Cliente.objects.get(rut=dni))
                 nueva_factura.save()
+
+
+
+                venta = Factura.objects.latest('id').id_venta
+                print ("id de venta es " + str(venta))
+                        #este te entrega el id producto y la cantidad a restar. 
+                detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad').count()
+                print("esto es el contador de elementos del queryset " + str(detalles))
+                        
+                        #este es para cargar todos los objetos de tipo detalleventa
+                        
+                detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
+                print(detalles)
+                for detalle in detalles:
+                        #instance.id_producto.stock += instance.cantidad
+                        stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
+                        print(stock_actual)
+                                #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
+                        producto = Producto.objects.get(id=detalle['id_producto'])
+                        producto.stock-=detalle['cantidad']
+                        producto.save()
+
                 return render(request, 'ventas/menu.html')
+                #este te entrega el id de venta
+                
+                
 
         return render(request, "ventas/registrocliente.html", context)
