@@ -12,11 +12,6 @@ from django.template import RequestContext
 from .forms import RegCliente
 
 
-# Create your views here.
-# @login_required
-# def index(request):
-#     return HttpResponse("Hola, mundo")
-
 #1 Menu principal
 @login_required 
 def index(request):
@@ -119,7 +114,25 @@ def tipodocumento(request):
                 tipo = request.POST['documento']
                 if tipo == 'boleta':
                         nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
-                        nueva_boleta.save()
+                        nueva_boleta.save()                       
+                        venta = Boleta.objects.latest('id').id_venta
+                        print ("id de venta es " + str(venta))
+                        #este te entrega el id producto y la cantidad a restar. 
+                        detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad').count()
+                        print("esto es el contador de objetos del queryset " + str(detalles))
+                        
+                        #este es para cargar todos los objetos de tipo detalleventa
+                        
+                        detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
+                        print(detalles)
+                        for detalle in detalles:
+                        #instance.id_producto.stock += instance.cantidad
+                                stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
+                                print(stock_actual)
+                                #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
+                                producto = Producto.objects.get(id=detalle['id_producto'])
+                                producto.stock-=detalle['cantidad']
+                                producto.save()
                         return render(request, 'ventas/menu.html')
                 else:
                         return render(request, 'ventas/verifica.html')
