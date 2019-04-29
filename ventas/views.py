@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from .models import Venta, Producto, DetalleVenta, Boleta, Factura, Cliente
 from django.views.generic import ListView
-from django.db.models import Q,F
+from django.db.models import Q,F, range
 from django.db.models import Sum, IntegerField
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -133,6 +133,18 @@ def tipodocumento(request):
                                 producto = Producto.objects.get(id=detalle['id_producto'])
                                 producto.stock-=detalle['cantidad']
                                 producto.save()
+                        
+
+###################################Como obtener el total de ventas################################################################                        
+
+                        ventas=Boleta.objects.all().values('id_venta')
+                        total=0
+                        for venta in ventas:
+                                sumando=Venta.objects.get(id=venta['id_venta']).total      
+                                total = total + sumando
+                        
+                        print ('este es el total de venta: '+str(total))
+
                         return render(request, 'ventas/menu.html')
                 else:
                         return render(request, 'ventas/verifica.html')
@@ -249,3 +261,10 @@ def registracliente(request):
                 
 
         return render(request, "ventas/registrocliente.html", context)
+
+
+#Entrega las ID de las ventas en boleta
+
+
+
+
