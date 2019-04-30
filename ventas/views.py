@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from .models import Venta, Producto, DetalleVenta, Boleta, Factura, Cliente
 from django.views.generic import ListView
-from django.db.models import Q,F, range
+from django.db.models import Q,F
 from django.db.models import Sum, IntegerField
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -149,6 +149,8 @@ def tipodocumento(request):
                 else:
                         return render(request, 'ventas/verifica.html')
 
+###################################################################################################################################
+
 def guardarfactura(request):
     if request.method == 'POST':
         nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=(request.POST['textinput']) )
@@ -265,6 +267,12 @@ def registracliente(request):
 
 #Entrega las ID de las ventas en boleta
 
+#Total de todas las ventas
+#Venta.objects.values('boleta__id','total').aggregate(suma=Sum('total'))
+#Total de costo de las ventas
+#DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
 
+#Entrega la cantidad de productos vendidos
+#DetalleVenta.objects.values('id_producto').order_by('id_producto').annotate(total=Sum('cantidad'))
 
 
