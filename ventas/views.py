@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from abastecimiento.models import DetalleCompra
 from .models import Venta, Producto, DetalleVenta, Boleta, Factura, Cliente
 from django.views.generic import ListView
 from django.db.models import Q,F
@@ -265,6 +266,15 @@ def registracliente(request):
         return render(request, "ventas/registrocliente.html", context)
 
 
+def margen(request):
+    if request.method=='POST':
+        ventas = Venta.objects.values('boleta__id','total').aggregate(suma=Sum('total'))
+        costo = DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
+
+
+
+
+
 #Entrega las ID de las ventas en boleta
 
 #Total de todas las ventas
@@ -276,3 +286,21 @@ def registracliente(request):
 #DetalleVenta.objects.values('id_producto').order_by('id_producto').annotate(total=Sum('cantidad'))
 
 
+#id_cantidad=DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
+#suma=DetalleCompra.objects.filter(id_producto=id_cantidad.values('id_producto').values('precio_unitario'))
+
+
+#suma=DetalleCompra.objects.filter(id_producto=id_cantidad.values('id_producto')).values('precio_unitario')
+
+###################################################################
+#1)Total boletas
+#ventas = Boleta.objects.all()
+#ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+#total = ven.annotate(Sum(F('precio_venta')*F('cantidad')))
+
+#2)Cantidad de productos vendidos.
+#ventas = Boleta.objects.all()
+#ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+#cantidad=ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
+
+#3)
