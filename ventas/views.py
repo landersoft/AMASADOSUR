@@ -302,12 +302,19 @@ def margen(request):
 #ventas = Boleta.objects.all()
 #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
 #cantidad=ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
-
+#
 
 #3)Total Costo
+#ventas = Boleta.objects.all()
 #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
 #cantidad_id=ven.values('id_producto_id').order_by('id_producto_id').annotate(total_venta=Sum('cantidad'))
-#precio=Producto.objects.filter(id__in=cantidad_id.values('id_producto_id'))
+#precio=DetalleCompra.objects.filter(id_producto_id__in=cantidad_id.values('id_producto_id')).values('id_producto_id','precio_unitario')
 #from itertools import chain
 #result_list = list(chain(cantidad_id, precio))
+
+#from django.db.models import F,Q,Count,Sum,Aggregate
+#from ventas.models import Producto,DetalleVenta,Cliente,Boleta,Venta,Factura
+
+#can=list(cantidad_id)
+#pre=list(precio)
 
