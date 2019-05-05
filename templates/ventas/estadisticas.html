@@ -1,14 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-El total de ventas es : {{ total_venta }}
+{% block tittle %} Nueva venta {% endblock %}
 
-El utilidad neta es: {{ utilidad_neta }}
+{% block content %}
 
-</body>
-</html>
+El total de ventas es : {{ totalventas }}
+<p>
+La utilidad neta es: {{ utilidad }}
+<p>
+    <H4>Productos mas vendidos</H4>
+<div class="col-6" offset ="col-2" style="background-color: rgba(0,0,255,.1)">
+
+    <table class="table table-striped">
+<thead>
+  <tr>
+    <th scope="col">id producto</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Cantidad</th>
+  </tr>
+</thead>
+<tbody>
+    {% for cant in cantidad_id %}
+      <tr>
+    
+        <th scope="row">{{cant.id_producto_id}}</th>
+        <td>djangobug</td>
+        <td>{{cant.total}}</td>
+        <td></td>
+        
+    
+      </tr>
+      
+      
+    {% endfor %}
+      
+</tbody>
+
+</table>
+
+{% endblock %} 
