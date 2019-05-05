@@ -16,5 +16,6 @@ urlpatterns = [
     path(r'nueva/lista/documento', views.tipodocumento, name='tipodocumento'),
     path(r'nueva/lista/verifica', views.verifica, name='verifica'),
     path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
+    path(r'estadisticas/', views.estadisticas, name='estadisticas'),
 
 ]
