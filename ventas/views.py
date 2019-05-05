@@ -192,7 +192,7 @@ def verifica(request):
 
                 print("este es el id del cliente " +str(cliente))
                                 
-                if cliente!=(Null or None):
+                if cliente!=(None):
                         nueva_factura2 = Factura(id_venta=Venta.objects.latest('id'), id_cliente=cliente)
                         nueva_factura2.save()
 
@@ -266,11 +266,63 @@ def registracliente(request):
         return render(request, "ventas/registrocliente.html", context)
 
 
-def margen(request):
-    if request.method=='POST':
-        ventas = Venta.objects.values('boleta__id','total').aggregate(suma=Sum('total'))
-        costo = DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
+def estadisticas(request):
+            ############################TOTAL VENTAS#########################################
+        ventas = Boleta.objects.all()
+        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        totalventas = ven.aggregate(totalventas=Sum(F('precio_venta')*F('cantidad')))['totalventas']
+        print(totalventas)
 
+            ############################Cantidad de productos vendidos x id############################
+        ventas = Boleta.objects.all()
+        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        cantidad_id = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
+        print('esta es la cantidad_id')
+        print(cantidad_id)
+            ###########################Utilidad Neta###############################################
+
+        ventas = Boleta.objects.all()
+        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        cantidades=ven.values('id_producto_id').order_by('id_producto_id').annotate(total_venta=Sum('cantidad'))
+        precio=DetalleCompra.objects.filter(id_producto_id__in=cantidad_id.values('id_producto_id')).values('id_producto_id','precio_unitario')
+
+        pre=list(precio)
+        can=list(cantidades)
+        costo=0
+
+        print('este es el pre')
+        print(pre)
+
+        indice=0
+        suma=0
+        print (str(len(cantidades)))
+
+        for i in range(len(can)):
+            if can[i]['id_producto_id']==pre[i]['id_producto_id']:
+                suma=suma+(can[i]['total_venta']*pre[i]['precio_unitario'])
+
+        print(suma)
+        print('este es el costo')
+
+
+        utilidad=totalventas-suma
+
+
+        #utilidad=tv[indice]['totalventas']-suma
+        print(utilidad)
+        #for indice in cantidades.__len__():
+        #    indice+=indice
+        #    if cantidades.values('id_producto_id')[indice]==pre[indice]['id_producto_id']:
+        #            costo=costo+(cantidades.values('cantidad'))* pre[indice]['precio_unitario']
+        #print(costo)
+            #utilidad_neta=totalventas-costo
+            #,{'cantidad_id': cantidad_id}
+
+
+
+
+            
+        return render(request,'ventas/estadisticas.html',{'totalventas': totalventas ,'cantidad_id': cantidad_id,'utilidad': utilidad})
 
 
 
