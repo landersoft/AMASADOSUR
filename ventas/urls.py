@@ -17,5 +17,7 @@ urlpatterns = [
     path(r'nueva/lista/verifica', views.verifica, name='verifica'),
     path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
     path(r'estadisticas/', views.estadisticas, name='estadisticas'),
+    path(r'reporte/boletas', views.vista_boleta, name='vista_boleta'),
+
 
 ]

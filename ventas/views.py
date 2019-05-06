@@ -325,7 +325,8 @@ def estadisticas(request):
         return render(request,'ventas/estadisticas.html',{'totalventas': totalventas ,'cantidad_id': cantidad_id,'utilidad': utilidad})
 
 
-
+def vista_boleta(request):
+        return render(request,'ventas/vista_boleta.html')
 
 #Entrega las ID de las ventas en boleta
 
