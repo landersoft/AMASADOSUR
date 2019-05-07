@@ -1,36 +1,60 @@
 {% extends "base.html" %}
 
-{% block tittle %} Detalle Boleta {{boleta.boleta_id}}{% endblock %}
+{% block tittle %} Detalle Boleta {{boleta.id}}{% endblock %}
 
 {% block content %}
 
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Boleta</th>
+        {% for bol in boleta %}
+        <th "col">{{bol.id}}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for vent in venta2 %}
+        <th scope="col">Fecha</th>
+        <th "col">{{vent.fecha|date:'d-M-Y'}}</th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for vent in venta2 %}
+        <th scope="col">Hora</th>
+        <th "col">{{vent.fecha|date:'H:m'}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+      
+  
+
   <tbody>
+    
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      
+      <th scope="row">Cantidad</th>
+      <th scope="row">Codigo</th>
+      <th scope="row">Descripcion</th>
+      <th scope="row">Sub Total</th>
+      
     </tr>
+    
+    {% for det in detalle %}
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <th>{{det.cantidad}}</th>
+      <td>{{det.id_producto_id}}</td>
+      <td>"Nombre producto"</td>
+      <td>{{det.precio_venta}}</td>
+      
     </tr>
+    {% endfor %}
     <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      
+      <th scope="row">Forma de Pago</th>
+      {% for vent in venta2 %}
+      <td>{{vent.forma_pago}}</td>
+      {% endfor %}
+
     </tr>
   </tbody>
 </table>

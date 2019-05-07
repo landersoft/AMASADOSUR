@@ -334,7 +334,9 @@ def detalle_boleta(request,id):
     boleta= Boleta.objects.filter(id=id)
     print(boleta)
     venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
+    print(venta2)
     detalle = DetalleVenta.objects.filter(id_venta__in=venta2.values('id'))
+    print(detalle)
     return render(request,'ventas/detalle_boleta.html', {'venta2':venta2 ,'detalle':detalle, 'boleta':boleta })
 
 
@@ -381,3 +383,4 @@ def detalle_boleta(request,id):
 #can=list(cantidad_id)
 #pre=list(precio)
 
+#a=Venta.objects.filter(id__in=DetalleVenta.objects.values('id_venta')).values('detalleventa__precio_venta')
