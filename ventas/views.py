@@ -326,7 +326,17 @@ def estadisticas(request):
 
 
 def vista_boleta(request):
-        return render(request,'ventas/vista_boleta.html')
+    boletas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','boleta__id_venta','forma_pago','total')
+    boletas=boletas.order_by('boleta')
+    return render(request,'ventas/vista_boleta.html',{'boletas': boletas})
+
+def detalle_boleta(request,id):
+    boleta= Boleta.objects.filter(id=id)
+    print(boleta)
+    venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
+    detalle = DetalleVenta.objects.filter(id_venta__in=venta2.values('id'))
+    return render(request,'ventas/detalle_boleta.html', {'venta2':venta2 ,'detalle':detalle, 'boleta':boleta })
+
 
 #Entrega las ID de las ventas en boleta
 

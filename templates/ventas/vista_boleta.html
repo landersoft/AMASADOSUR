@@ -1,42 +1,31 @@
-{% load staticfiles %}
+{% extends "base.html" %}
 
-<!doctype html>
-<html lang="es">
-<head>
-    <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css '%}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-   
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{%  block tittle %} Boleta {% endblock %}</title>
-</head>
+{% block tittle %}Boletas{% endblock %}
 
-<body>
+{% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col bg-secondary">
-            <center>primera</center>
-        </div>    
-        <div class="col-8">
-            <div class="col-12 bg-danger">
-                <div class="col-6 bg-dark text-white">
-                    <center><h5>Almacen "Hay pan"</h5><p>RUT:79000001<p>Giro:Almacen<p>Direccion: Avda. Sin nombre S/n</center>
-                </div>
-                <div class="col-6 bg-info offset-6">
-                    <center>mitad</center>
-                </div>
-
-            </div>
-        </div>            
-        <div class="col bg-secondary">
-            <center>tercera</center> 
-        </div>  
-    </div>
-</div>
-    
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">venta</th>
+      <th scope="col">forma de pago</th>
+      <th scope="col">total</th>        
+    </tr>
+  </thead>
+    <tbody>
+      {% for boleta in boletas %}
+    <tr>
+      <th scope="row"><a href="{% url 'ventas:detalle_boleta' boleta.boleta__id %}">{{boleta.boleta__id}}</a></th>
+      <td>{{boleta.boleta__id_venta}}</td>
+      <td>{{boleta.forma_pago}}</td>
+      <td>{{boleta.total}}</td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
 
 
-</body>
+
+
+{% endblock %}

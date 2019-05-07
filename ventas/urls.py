@@ -1,7 +1,8 @@
 from . import views
-#from ventas.views import nueva,index
+from ventas import views
 from django.urls import path, include
 
+app_name='ventas'
 
 urlpatterns = [
     path(r'', views.index, name='index'),
@@ -17,7 +18,9 @@ urlpatterns = [
     path(r'nueva/lista/verifica', views.verifica, name='verifica'),
     path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
     path(r'estadisticas/', views.estadisticas, name='estadisticas'),
-    path(r'reporte/boletas', views.vista_boleta, name='vista_boleta'),
+    path(r'reporte/boletas/', views.vista_boleta, name='vista_boleta'),
+    path(r'reporte/boletas/detalle/<int:id>', views.detalle_boleta, name='detalle_boleta'),
+    path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
 
 
 ]
