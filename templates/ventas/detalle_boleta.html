@@ -35,27 +35,35 @@
       <th scope="row">Cantidad</th>
       <th scope="row">Codigo</th>
       <th scope="row">Descripcion</th>
-      <th scope="row">Sub Total</th>
+      <th scope="row">Precio</th>
+      <th scope='row'>Subtotal</tn>
       
     </tr>
     
     {% for det in detalle %}
     <tr>
-      <th>{{det.cantidad}}</th>
-      <td>{{det.id_producto_id}}</td>
-      <td>"Nombre producto"</td>
-      <td>{{det.precio_venta}}</td>
+      <th>{{det.detalleventa__cantidad}}</th>
+      <td>{{det.producto__id}}</td>
+      <td>{{det.producto__nombre}}</td>
+      <td>{{det.detalleventa__precio_venta}}</td>
+      <td>{{det.suto}} </td>
+
       
     </tr>
     {% endfor %}
-    <tr>
-      
+
+    <tr>      
       <th scope="row">Forma de Pago</th>
       {% for vent in venta2 %}
       <td>{{vent.forma_pago}}</td>
+      
+      <td>Total: {{vent.total}}</td>
       {% endfor %}
-
     </tr>
+
+
+
+
   </tbody>
 </table>
 
