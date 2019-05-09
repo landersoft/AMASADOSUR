@@ -9,7 +9,7 @@
  
 </div>
 
-
+<div id="espacio">&nbsp</div>
 <div class="row no-gutters">
   <div class="col-6 center-block text-center align-self-center" style="background-color: #fff;"> 
       <form class="form-row align-items-center" action="/ventas/nueva/add" method="POST">{% csrf_token %}
@@ -36,9 +36,9 @@
 
 
 
-  <div class="col-6" style="background-color: rgba(0,0,255,.1)">
+  <div class="col-6" style="background-color: rgba(236,246,250,.1)">
 
-      <table class="table table-sm">
+      <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col"><center>Nombre</center></th>
@@ -68,6 +68,7 @@
   </div>
   <br>
   
+  <div id="espacio">&nbsp</div>
   <div class="col-md-6 offset-md-6" style="text-align: right; background-color: #eee">
     Total = <tr>{{suma}}</tr>
   </div>
@@ -75,7 +76,7 @@
 
 
 <!- estos es un comentarios ->
-<div class="col-md-12 offset-11">
+<div class="col-md-6 offset-5">
   <form class="form-row align-items-center" action="pagar" method="POST">
     {% csrf_token %}
     <input type="hidden" value={{suma}} name="suma" />

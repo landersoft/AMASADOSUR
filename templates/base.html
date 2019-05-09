@@ -4,6 +4,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+    <link rel="stylesheet" href="{%  static 'css/estilo.css '%}">
     <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css '%}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
    
@@ -31,11 +32,12 @@
           Ventas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="http://127.0.0.1:8000/ventas/nueva">Nueva</a>
+          <a class="dropdown-item" href="http://127.0.0.1:8000/ventas/nueva">Nueva Venta</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Lista</a>
+          <a class="dropdown-item">Lista</a>
           <a class="dropdown-item" href="#">--Boetas</a>
           <a class="dropdown-item" href="#">--Facturas</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/ventas/estadisticas">Estadisticas</a>
         </div>
       </li>
@@ -58,6 +60,8 @@
 
 {% block content %}
     <h5>Bloque de contenido</h5>
+    <img/html5.png>
+    
 {% endblock %}
 
 
