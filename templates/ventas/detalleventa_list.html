@@ -38,21 +38,21 @@
 
   <div class="col-6" style="background-color: rgba(0,0,255,.1)">
 
-      <table class="table table-striped">
+      <table class="table table-sm">
   <thead>
     <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Cantidad</th>
-      <th scope="col">Precio</th>
+      <th scope="col"><center>Nombre</center></th>
+      <th scope="col"><center>Cantidad</center></th>
+      <th scope="col"><center>Precio</center></th>
     </tr>
   </thead>
   <tbody>
       {% for VentaList in object_list %}
         <tr>
       
-          <th scope="row">{{VentaList.id_producto}}</th>
-          <td>{{VentaList.cantidad}}</td>
-          <td>{{VentaList.precio_venta}}</td>
+          <td><center>{{VentaList.id_producto}}</center></td>
+          <td><center>{{VentaList.cantidad}}</center></td>
+          <td><center>{{VentaList.precio_venta}}</center></td>
           <td></td>
           
       
@@ -65,25 +65,12 @@
   
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
-  <div class="col-md-5 offset-md-1" style="background-color: rgba(0,0,255,.1)">.col-md-4 .offset-md-4</div>
-  <div class="col-md-5 offset-md-0" style="text-align: right; background-color: #eee">Total = <tr>{{suma}}</tr></div>
+  <br>
+  
+  <div class="col-md-6 offset-md-6" style="text-align: right; background-color: #eee">
+    Total = <tr>{{suma}}</tr>
+  </div>
 </div>
 
 
