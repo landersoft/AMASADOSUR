@@ -338,19 +338,23 @@ def vista_factura(request):
 
 def detalle_factura(resquest,id):
     factura=Factura.objects.filter(id=id)
+    cliente=Factura.objects.filter(id=id).values('cliente__id','cliente__rut','cliente__direccion','cliente__nombre')
     venta3 = Venta.objects.filter(id__in=factura.values('id_venta_id'))
-    detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa',)
+    detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa','detalleventa__cantidad', 'producto__nombre', 'producto__id','total','detalleventa__precio_venta').annotate(subto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(factura__id=id)
+    return render(request, 'ventas/detalle_factura.html'),{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle }
+
 
 def detalle_boleta(request,id):
     boleta= Boleta.objects.filter(id=id)
     #print(boleta)
+    cliente=Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','direccion').filter(factura__id=id)
     venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
     #print(venta2)
     detalle=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total','detalleventa__precio_venta').annotate(suto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(boleta__id=id)
     #detalle=(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta__in=venta2.values('id'))
     #detalle = DetalleVenta.objects.filter(id_venta__in=venta2.values('id'))
     #a=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total').filter(boleta__id=1)
-
+    
     print(detalle)
     #(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta=1)
     return render(request,'ventas/detalle_boleta.html', {'venta2':venta2 ,'detalle':detalle, 'boleta':boleta })
