@@ -330,6 +330,17 @@ def vista_boleta(request):
     boletas=boletas.order_by('boleta')
     return render(request,'ventas/vista_boleta.html',{'boletas': boletas})
 
+
+def vista_factura(request):
+    facturas=Venta.objects.filter(id__in=Factura.objects.values('id_venta')).values('factura__id','factura__id_venta','forma_pago','total')
+    facturas=facturas.order_by('factura')
+    return render(request, 'ventas/vista_factura.html', {'facturas': facturas})
+
+def detalle_factura(resquest,id):
+    factura=Factura.objects.filter(id=id)
+    venta3 = Venta.objects.filter(id__in=factura.values('id_venta_id'))
+    detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa',)
+
 def detalle_boleta(request,id):
     boleta= Boleta.objects.filter(id=id)
     #print(boleta)
