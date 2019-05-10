@@ -336,12 +336,12 @@ def vista_factura(request):
     facturas=facturas.order_by('factura')
     return render(request, 'ventas/vista_factura.html', {'facturas': facturas})
 
-def detalle_factura(resquest,id):
+def detalle_factura(request,id):
     factura=Factura.objects.filter(id=id)
     cliente=Factura.objects.filter(id=id).values('cliente__id','cliente__rut','cliente__direccion','cliente__nombre')
     venta3 = Venta.objects.filter(id__in=factura.values('id_venta_id'))
     detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa','detalleventa__cantidad', 'producto__nombre', 'producto__id','total','detalleventa__precio_venta').annotate(subto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(factura__id=id)
-    return render(request, 'ventas/detalle_factura.html'),{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle }
+    return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle})
 
 
 def detalle_boleta(request,id):
