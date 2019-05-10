@@ -337,8 +337,8 @@ def vista_factura(request):
     return render(request, 'ventas/vista_factura.html', {'facturas': facturas})
 
 def detalle_factura(request,id):
-    factura=Factura.objects.filter(id=id)
-    cliente=Factura.objects.filter(id=id).values('cliente__id','cliente__rut','cliente__direccion','cliente__nombre')
+    factura= Factura.objects.filter(id=id)
+    cliente= cliente= Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','rut','direccion')
     venta3 = Venta.objects.filter(id__in=factura.values('id_venta_id'))
     detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa','detalleventa__cantidad', 'producto__nombre', 'producto__id','total','detalleventa__precio_venta').annotate(subto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(factura__id=id)
     return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle})
@@ -347,7 +347,6 @@ def detalle_factura(request,id):
 def detalle_boleta(request,id):
     boleta= Boleta.objects.filter(id=id)
     #print(boleta)
-    cliente=Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','direccion').filter(factura__id=id)
     venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
     #print(venta2)
     detalle=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total','detalleventa__precio_venta').annotate(suto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(boleta__id=id)
