@@ -76,10 +76,12 @@
 
 
 <!- estos es un comentarios ->
-<div class="col-md-6 offset-5">
+<div class="col-6 offset-5">
   <form class="form-row align-items-center" action="pagar" method="POST">
     {% csrf_token %}
     <input type="hidden" value={{suma}} name="suma" />
-    <button type="submit" class="btn btn-primary mb-2">Siguiente</button>  
+    <div style="height:10px; width:100%"></div>
+    <button type="submit" class="btn btn-primary mb-2">Siguiente</button> 
+  </form>
 </div>
 {% endblock %}

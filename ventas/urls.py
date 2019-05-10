@@ -19,8 +19,10 @@ urlpatterns = [
     path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
     path(r'estadisticas/', views.estadisticas, name='estadisticas'),
     path(r'reporte/boletas/', views.vista_boleta, name='vista_boleta'),
+    path(r'reporte/facturas/', views.vista_factura, name='vista_factura'),
     path(r'reporte/boletas/detalle/<int:id>', views.detalle_boleta, name='detalle_boleta'),
-    path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
+    path(r'reporte/facturas/detalle/<int:id>', views.detalle_factura, name='detalle_factura'),
+    #path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
 
 
 ]

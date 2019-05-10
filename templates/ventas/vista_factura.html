@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block tittle %}Facturas{% endblock %}
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">venta</th>
+      <th scope="col">forma de pago</th>
+      <th scope="col">total</th>        
+    </tr>
+  </thead>
+    <tbody>
+      {% for fac in facturas %}
+    <tr>
+      <th scope="row"><a href="{% url 'ventas:detalle_factura' fac.factura__id %}">{{fac.factura__id}}</a></th>
+      <td>{{fac.factura__id_venta}}</td>
+      <td>{{fac.forma_pago}}</td>
+      <td>{{fac.total}}</td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
