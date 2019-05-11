@@ -268,7 +268,7 @@ def registracliente(request):
 
 def estadisticas(request):
             ############################TOTAL VENTAS#########################################
-        ventas = Boleta.objects.all()
+        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
         totalventas = ven.aggregate(totalventas=Sum(F('precio_venta')*F('cantidad')))['totalventas']
         print(totalventas)
@@ -359,7 +359,8 @@ def detalle_boleta(request,id):
     return render(request,'ventas/detalle_boleta.html', {'venta2':venta2 ,'detalle':detalle, 'boleta':boleta })
     
 
-
+def exito(request):
+    return render(request, 'ventas/exito.html')
 #Entrega las ID de las ventas en boleta
 
 #Total de todas las ventas
