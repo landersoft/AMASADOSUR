@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+{% block content %}
+<div class="swal2-icon swal2-success swal2-animate-success-icon" style="display: flex;">
+ <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
+   <span class="swal2-success-line-tip"></span>
+   <span class="swal2-success-line-long"></span>
+   <div class="swal2-success-ring"></div> 
+   <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
+   <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
+</div>
+
+<div class="col-sm text-center">
+    <div class="alert alert-success" role="alert">
+        ¡Transacción realizada con exito! 
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">   
+    function Redirect() 
+    {  
+        window.location="/"; 
+    } 
+    
+    setTimeout('Redirect()', 3000);   
+</script>
+
+{% endblock %}
+
+
+
+
+

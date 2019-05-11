@@ -22,6 +22,8 @@ urlpatterns = [
     path(r'reporte/facturas/', views.vista_factura, name='vista_factura'),
     path(r'reporte/boletas/detalle/<int:id>', views.detalle_boleta, name='detalle_boleta'),
     path(r'reporte/facturas/detalle/<int:id>', views.detalle_factura, name='detalle_factura'),
+    path(r'exito/', views.exito, name='exito'),
+
     #path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
 
 
