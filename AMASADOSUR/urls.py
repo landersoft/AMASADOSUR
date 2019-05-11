@@ -23,7 +23,7 @@ from django import forms
 
 urlpatterns = [
 
-    path(r'', views.index),
+    path(r'', views.index, name="index"),
     path('login/', LoginView.as_view(template_name='login.html'), name="login"),
     path(r'ventas/', include(('ventas.urls','ventas' ), namespace='ventas')),
     path('admin/', admin.site.urls),   

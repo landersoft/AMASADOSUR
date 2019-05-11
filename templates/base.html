@@ -18,7 +18,7 @@
 {% block menu %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="http://127.0.0.1:8000"><img src="{% static 'img/python.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">OpenVendor</a>
+  <a class="navbar-brand" href="/"><img src="{% static 'img/python.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">OpenVendor</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -32,17 +32,17 @@
           Ventas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="http://127.0.0.1:8000/ventas/nueva">Nueva Venta</a>
+          <a class="dropdown-item" href="{% url 'ventas:nueva' %}">Nueva Venta</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item">Lista</a>
-          <a class="dropdown-item" href="#">--Boetas</a>
-          <a class="dropdown-item" href="#">--Facturas</a>
+          <a class="dropdown-item" href="{% url 'ventas:vista_boleta' %}">--Boletas</a>
+          <a class="dropdown-item" href="{% url 'ventas:vista_factura' %}">--Facturas</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/ventas/estadisticas">Estadisticas</a>
+          <a class="dropdown-item" href="{% url 'ventas:estadisticas' %}">Estadisticas</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="http://127.0.0.1:8000/admin/">Administración</a>
+        <a class="nav-link" href="{% url 'admin:index' %}">Administración</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>
