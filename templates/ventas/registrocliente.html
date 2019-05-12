@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block content %}
+<div class="col-md-4 col-md-offset-4">
 <form method='POST' action='' >{% csrf_token %}
 {{ form.as_p}}
 <input type='submit' value='Registrar'>
 
 </form>
-
+</div>
 
 {% endblock %}

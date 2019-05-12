@@ -16,7 +16,7 @@
         transform:scale(1)
     }
 }
-"{% url 'ventas:index' %}"
+
 @keyframes swal2-show{
     0%{
         -webkit-transform:scale(.7);
@@ -1342,5 +1342,9 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end,body.swal2-no-backdrop .swa
         -webkit-transform:rotate(360deg);
         transform:rotate(360deg)
     }
+}
+
+.pan{
+    background-image: url("..img/pan.png");
 }
 

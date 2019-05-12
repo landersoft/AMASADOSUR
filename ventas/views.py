@@ -274,8 +274,9 @@ def estadisticas(request):
         print(totalventas)
 
             ############################Cantidad de productos vendidos x id############################
-        ventas = Boleta.objects.all()
-        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
+        #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        ven = Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto')).values('nombre','detalleventa__id_producto','detalleventa__cantidad').order_by('detalleventa__id_producto')
         cantidad_id = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
         print('esta es la cantidad_id')
         print(cantidad_id)
@@ -338,10 +339,13 @@ def vista_factura(request):
 
 def detalle_factura(request,id):
     factura= Factura.objects.filter(id=id)
-    cliente= cliente= Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','rut','direccion')
+    cliente= Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','rut','direccion').filter(factura__id=id)
     venta3 = Venta.objects.filter(id__in=factura.values('id_venta_id'))
     detalle = Venta.objects.filter(id__in=Factura.objects.values('id_venta_id')).values('factura__id','id','detalleventa__id_detalleventa','detalleventa__cantidad', 'producto__nombre', 'producto__id','total','detalleventa__precio_venta').annotate(subto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(factura__id=id)
-    return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle})
+    iva = venta3.values('total').annotate(iva=F('total')*0.19)
+    supertotal=venta3.values('total').annotate(iva=F('total')*0.19).annotate(supertotal=Sum(F('total')+F('iva')))
+
+    return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle, 'iva':iva, 'supertotal':supertotal})
 
 
 def detalle_boleta(request,id):
@@ -360,7 +364,7 @@ def detalle_boleta(request,id):
     
 
 def exito(request):
-    return render(request, 'ventas/exito.html')
+        return(request, 'ventas/exito.html')
 #Entrega las ID de las ventas en boleta
 
 #Total de todas las ventas

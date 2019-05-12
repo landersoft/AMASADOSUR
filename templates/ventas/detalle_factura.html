@@ -1,72 +1,108 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% block tittle %} Detalle Factura{% endblock %}
-
 {% block content %}
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Factura n°:</th>
-        {% for fac in factura %}
-        <th "col">{{fac.id}}</th>
-        {% endfor %}
-      </tr>
-      <tr>
-        {% for vent in venta3 %}
-        <th scope="col">Fecha</th>
-        <th "col">{{vent.fecha|date:'d-M-Y'}}</th>
-        {% endfor %}
-      </tr>
-      <tr>
-        {% for vent in venta3 %}
-        <th scope="col">Hora</th>
-        <th "col">{{vent.fecha|date:'H:m'}}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-      
-  
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-3">
+                    <img src="{% static 'img/pan.png' %}" width='75' height='75' alt ='solomasas'>
+                    <img src="{% static 'img/amasado.PNG' %}" width='120' height='100' alt ='amasado'>
+				</div>
+				<div class="col-md-6">
+				</div>
+				<div class="col-md-3 text-center">
+                    <big><b>RUT: 76231432-8</b></big>
+                <P>
+                    <thead>
+                        <tr>
+                            <th scope="col text-center">
+                                {% for fac in factura %}
+                                    <strong> Factura N°:</strong>{{fac.id}}</p>
 
-  <tbody>
-    
-    <tr>
-      <th scope="row">Codigo</th>    
-      <th scope="row">Descripcion</th>      
-      <th scope="row">Cantidad</th>
-      <th scope="row">Precio</th>
-      <th scope='row'>Subtotal</tn>
-      
-    </tr>
-    
-    {% for det in detalle %}
-    <tr>
-      <th>{{det.detalleventa__cantidad}}</th>
-      <td>{{det.producto__id}}</td>
-      <td>{{det.producto__nombre}}</td>
-      <td>{{det.detalleventa__precio_venta}}</td>
-      <td>{{det.suto}} </td>
+                                {% endfor %}
+                            </th>
+                        </tr>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col-md-3">
+                    {% for cli in cliente %}
+                        <strong>Señor(es)</strong>: {{ cli.nombre }}</p>
+                        <strong>Rut</strong>:{{ cli.rut }}</p>
+                        <strong>Dirección</strong>:{{ cli.direccion }}</p>
+                        <strong>Giro</strong>: Amasanderia </p>
+                    {% endfor %}
+				</div>
+				<div class="col-md-3">
 
-      
-    </tr>
-    {% endfor %}
+				</div>
+				<div class="col-md-3">
 
-    <tr>      
-      <th scope="row">Forma de Pago</th>
-      {% for vent in venta2 %}
-      <td>{{vent.forma_pago}}</td>
-      
-      <td>Total: {{vent.total}}</td>
-      {% endfor %}
-    </tr>
+				</div>
+				<div class="col-md-3 text-center">
+                {% for vent in venta3 %}
+                <strong>Fecha</strong>: {{vent.fecha|date:'d-M-Y'}}</p>
+                {% endfor %}
+				</div>
+			</div>
+
+            <div class="row">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col-md-2 text-center">Cod</th>
+                        <th scope="col-md-2 text-center">Cantidad</th>
+                        <th scope="col-md-4 text-center">Detalle</th>
+                        <th scope="col-md-2 text-center">P.Unitario</th>
+                        <th scope="col-md-2 text-center">P.Total</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                            {% for det in detalle %}
+                            <tr>
+                                    <th scope="row">{{ det.producto__id }}</th>
+                                    <td>{{ det.detalleventa__cantidad }}</td>
+                                    <td>{{ det.producto__nombre }}</td>
+                                    <td>{{ det.detalleventa__precio_venta }}</td>
+                                    <td>{{ det.subto }}</td>
+                            </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
 
 
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-3">
+                        {% for sup in supertotal %}
+                        <strong>Subtotal:</strong>{{ sup.total }}</p>
+                        <strong>IVA:</strong>{{sup.iva}}</p>
+                        <strong>Total:</strong>{{sup.supertotal}}</p>
+                        {% endfor %}
+                    </p>
+                  
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+</div>
+{% endblock %}
 
-
-  </tbody>
-</table>
-
-
-
+{% block footer %}
 
 {% endblock %}
