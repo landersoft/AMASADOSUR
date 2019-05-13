@@ -267,9 +267,10 @@ def registracliente(request):
 
 
 def estadisticas(request):
-            ############################TOTAL VENTAS#########################################
+            ############################TOTAL VENTAS OK#########################################
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
-        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         totalventas = ven.aggregate(totalventas=Sum(F('precio_venta')*F('cantidad')))['totalventas']
         print(totalventas)
 
@@ -277,13 +278,14 @@ def estadisticas(request):
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
         #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
         ven = Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto')).values('nombre','detalleventa__id_producto','detalleventa__cantidad').order_by('detalleventa__id_producto')
-        cantidad_id = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
+        cantidad_id = ven.values().order_by('detalleventa__id_producto').annotate(total=Sum('detalleventa__cantidad'))
         print('esta es la cantidad_id')
         print(cantidad_id)
             ###########################Utilidad Neta###############################################
-
-        ventas = Boleta.objects.all()
-        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
+        
+        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
+        #ventas = Boleta.objects.all()
+        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         cantidades=ven.values('id_producto_id').order_by('id_producto_id').annotate(total_venta=Sum('cantidad'))
         precio=DetalleCompra.objects.filter(id_producto_id__in=cantidad_id.values('id_producto_id')).values('id_producto_id','precio_unitario')
 
