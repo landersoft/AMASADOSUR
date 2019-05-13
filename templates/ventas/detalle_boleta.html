@@ -1,73 +1,110 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block tittle %} Detalle Boleta {{boleta.id}}{% endblock %}
 
 {% block content %}
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Boleta</th>
-        {% for bol in boleta %}
-        <th "col">{{bol.id}}</th>
-        {% endfor %}
-      </tr>
-      <tr>
-        {% for vent in venta2 %}
-        <th scope="col">Fecha</th>
-        <th "col">{{vent.fecha|date:'d-M-Y'}}</th>
-        {% endfor %}
-      </tr>
-      <tr>
-        {% for vent in venta2 %}
-        <th scope="col">Hora</th>
-        <th "col">{{vent.fecha|date:'H:m'}}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-      
-  
+  <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-3">
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-3">
+						</div>
+						<div class="col-md-6 text-center">
+              <img src="{% static 'img/pan.png' %}" width='75' height='75' alt ='solomasas'>
+              <img src="{% static 'img/amasado.PNG' %}" width='120' height='100' alt ='amasado'>
+              <div class="card text-center">
+                <div class="card-body">
+                  {% for bol in boleta %}
+                    <strong>Boleta N°: {{bol.id}}</strong>
+                  {% endfor %}
+                  {% for vent in venta2 %}
+                    </p>
+                    <th scope="col">Fecha:</th>
+                    <th "col">{{vent.fecha|date:'d-m-Y'}}</th>
+                    </p>
+                    <small>{{vent.fecha|date:'H:m'}}</small>
+                  {% endfor %}
+                </div>
 
-  <tbody>
-    
-    <tr>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">P.Unit</th>
+                        <th scope="col">Valor</th>
+                      </tr>
+                    </thead>
+                  <tbody>
+                    {% for det in detalle %}
+                      <tr>
+                        <th>{{det.detalleventa__cantidad}}</th>
+                        <td>{{det.producto__nombre}}</td>
+                        <td>{{det.detalleventa__precio_venta}}</td>
+                        <td>{{det.suto}}</td>  
+                      </tr>
+                    {% endfor %}
+
+                  </tbody>
+                  </table>
+                    </div>
+                  </div>
+                  <div class="card text-right">
+                    <div class="card-body">
+                      <div class="row">
+								          <div class="col-md-6">
+								      </div>
+								          <div class="col-md-6">
+                            {% for vent in venta2 %}
+                            <strong>Total:</strong> {{vent.total}}</p>
+                            <tr><strong>F. de Pago:</strong>{{vent.forma_pago}}</tr>
+                            {% endfor %}
+								          </div>
+							        </div>        
       
-      <th scope="row">Cantidad</th>
-      <th scope="row">Codigo</th>
-      <th scope="row">Descripcion</th>
-      <th scope="row">Precio</th>
-      <th scope='row'>Subtotal</tn>
       
     </tr>
-    
-    {% for det in detalle %}
-    <tr>
-      <th>{{det.detalleventa__cantidad}}</th>
-      <td>{{det.producto__id}}</td>
-      <td>{{det.producto__nombre}}</td>
-      <td>{{det.detalleventa__precio_venta}}</td>
-      <td>{{det.suto}} </td>
+                    </div>
+                  
+                  </div>
 
-      
-    </tr>
-    {% endfor %}
+                  
 
-    <tr>      
-      <th scope="row">Forma de Pago</th>
-      {% for vent in venta2 %}
-      <td>{{vent.forma_pago}}</td>
-      
-      <td>Total: {{vent.total}}</td>
-      {% endfor %}
-    </tr>
-
-
-
-
-  </tbody>
-</table>
-
+                </div>
+              </div>
+              
+                      
+                      
+                
+              
+							</div> 
+              
+						</div>
+						<div class="col-md-3">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
 
 
 
+
+{% endblock %}
+
+{% block footer %}
 {% endblock %}
