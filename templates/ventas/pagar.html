@@ -15,10 +15,8 @@
       }
   
     });
-  
     //alert(total);
     document.getElementById('spTotal').innerHTML = total;
-  
   }
 </script>
 
@@ -29,47 +27,99 @@
     var num2 = parseFloat($("#txt_campo_2").val());
     total = num2-num1
     document.getElementById('spTotal').innerHTML = total;
-
     }
-
 </script>
-<div class="container">
-  <div class="col-5 offset-4">
-
-
-        
-    <form class="form-row align-items-center" action="formapago" method="POST">{% csrf_token %}
-      <span>Total</span>
-      <input type="text" id="txt_campo_1" readonly class="form-control-plaintext monto" value={{total}} onkeyup="restar();" />
-      <br/>
-      
-      <span>Importe</span>
-      <input type="text" id="txt_campo_2" class="form-control monto" onkeyup="restar();" />
-      <br/>      
-      <span>Vuelto: </span> <span id="spTotal"></span>
-      <br>
-    </div>
-
-    <div class="col-5 offset-4">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-        <label class="form-check-label" for="exampleRadios1">
-          Efectivo
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-        <label class="form-check-label" for="exampleRadios2">
-          Tarjeta
-        </label>
-      </div>
-      
-  </div>
+<form class="form-row" action="formapago" method="POST">{% csrf_token %}	
+<div class="container-fluid">
   
-  <div class="col-5 offset-8">
-    <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
-  </div>
-</div> 
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-4">
+        
+					<div class="card bg-default">
+						<h5 class="card-header text-center">
+							Forma de Pago
+						</h5>
+						<div class="card-body">
+						
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">Efectivo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" disabled="disabled">
+                    <label class="form-check-label" for="exampleRadios2">Tarjeta</label>
+                </div>	
+						</div>
+						<div class="card-footer">
+							<div class="espacio">&nbsp</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card bg-default">
+						<h5 class="card-header text-center">
+							Ingreso Pago
+						</h5>
+						<div class="card-body">
+              						
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            </strong><input type="text" id="total" readonly class="form-control-plaintext monto" value="Total:" onkeyup="restar();" /></strong>
+                            </strong><input type="text" id="total" readonly class="form-control-plaintext monto" value="Importe:" onkeyup="restar();" /></strong>
+                            
 
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="txt_campo_1" readonly class="form-control-plaintext monto" value={{total}} onkeyup="restar();" />
+                            <input type="text" id="txt_campo_2" class="form-control monto" onkeyup="restar();" />
+                            
+                        </div>
+                    </div>
+                </div>
+              </form>
+						</div>
+						<div class="card-footer">
+							<span>Cambio: </span><strong> <span id="spTotal"></span></strong>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card">
+						<h5 class="card-header text-center">
+						Tipo de Documento	
+						</h5>
+						<div class="card-body">
+							<div class="form-check">
+                    <input class="form-check-input" type="radio" name="fp" id="exampleRadios1" value="boleta" checked>
+                    <label class="form-check-label" for="exampleRadios3">Boleta</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="fp" id="exampleRadios2" value="factura">
+                    <label class="form-check-label" for="exampleRadios4">Factura</label>
+                </div>
+						</div>
+						<div class="card-footer">
+							Card footer
+						</div>
+					</div>
+				</div>
+			</div>
+      <div class="row">
+      <div class="col-md-11"></div>
+      <button type="submit" class="btn btn-primary mb-2">Siguiente</button>
+      </div>
+		</div>
+		</div>
+    
+		<div class="col-md-1">
+		</div>
+	</div>
+</div>
+</form>
 
 {% endblock %}

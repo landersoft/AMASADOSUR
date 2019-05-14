@@ -1,24 +1,49 @@
 {% extends "base.html"%}
-
+{% load staticfiles %}
 {% block content %}
 
-<h1>Aqui verificamos</h1>
 
-<div class="row no-gutters">
-    <div class="col-6 center-block text-center align-self-center" style="background-color: #fff;"> 
-        <form class="form-row align-items-center" action="verifica" method="POST">{% csrf_token %}
-  
-          <div class="col-2 offset-md-4">
-            <label class="sr-only" for="textinput">Codigo</label>
-  
-            <input id="rut" name="rut" type="text" placeholder="Ingrese RUT" class="form-control input-lg" required=""> 
-          </div>
-  
+
+
+
+
+
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-5">
+					<div class="row">
+						<div class="col-md-6">
+						</div>
+						<div class="col-md-6">
+                <div class="form-group">
+                      <div class="form-group">
+                      <label class="col control-label" for="textinput">RUT</label>
+                      <input id="textinput" name="rut" type="text" placeholder="rut" class="form-control input-md">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+						</div>
+            <input id="textinput" name="rut" type="text" placeholder="rut" class="form-control input-md">
+					</div>
           
-          <div class="col-auto align-self-end">
-            <button type="submit" class="btn btn-primary mb-2">Aceptar</button>
-          </div>
-      </form> 
-    </div>
+				</div>
+        
+				<div class="col-md-5">
+        
+				</div>
+				<div class="col-md-1">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+</div>
 
 {% endblock %}

@@ -1,36 +1,38 @@
-
-
 {% extends "base.html"%}
 {% load staticfiles %}
 
 {% block content %}
 
-<h3>Acá el fomulario para la factura</h3>
-
-<div class="container">
-  <div class="row">
-    <div class="col-2" >
-      
-    </div>
-      <form class="form-row align-items-center" action="/verifica" method="POST">{% csrf_token %}
-       <div class="col-16" style="background-color: #eee;">
-        <div class="form-group row">
-            <label for="RUT" class="col-sm-2 col-form-label">RUT</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" name="rut" id="rut" placeholder="rut">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary mb-2 offset-8">Verificar</button>
-        <div class="col-2">
-      
-        </div>
 
 
-      </div>
-  </div>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-5">
+					<div class="row">
+						<div class="col-md-6">
+						</div>
+						<div class="col-md-6">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+				</div>
+				<div class="col-md-1">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
 </div>
-
-
-
 
 {% endblock %}

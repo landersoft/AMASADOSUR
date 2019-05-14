@@ -90,16 +90,16 @@ def detalleadd(request):
         return HttpResponseRedirect('lista/')
 
 
-def boletaofactura(request):
+""" def boletaofactura(request):
         if request.method == 'POST':
                 tipodocumento = request.POST['documento']
                 if tipodocumento == 'boleta':
-                        nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
+                        nueva_boleta = Boleta(id_venta=Venta.objects.latest('id')) """
 
 
 def formapago(request):
     if request.method == 'POST':
-        forma = request.POST['exampleRadios']
+        forma = request.POST.get('exampleRadios')
         de_venta = Venta.objects.last()
         if forma =='option1':               
                 de_venta.forma_pago='Efectivo'
@@ -108,7 +108,33 @@ def formapago(request):
                 de_venta.forma_pago='Tarjeta'
 
         de_venta.save()
-        return render(request, 'ventas/boletaofactura.html')
+        
+        tipo = request.POST.get('fp')
+        if tipo =='boleta':
+                nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
+                nueva_boleta.save()
+                venta = Boleta.objects.latest('id').id_venta
+                detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
+                print(detalles)
+                for detalle in detalles:
+                        #instance.id_producto.stock += instance.cantidad
+                        stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
+                        print(stock_actual)
+                        #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
+                        producto = Producto.objects.get(id=detalle['id_producto'])
+                        producto.stock-=detalle['cantidad']
+                        producto.save()
+
+                return render(request,'ventas/exito.html')
+        else:
+                return render(request, 'ventas/verifica.html')
+        
+
+
+
+
+
+        
 
 def tipodocumento(request):
         if request.method == 'POST':
@@ -276,8 +302,8 @@ def estadisticas(request):
 
             ############################Cantidad de productos vendidos x id############################
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
-        #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
-        ven = Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto')).values('nombre','detalleventa__id_producto','detalleventa__cantidad').order_by('detalleventa__id_producto')
+        #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
+        ven = Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto')).values('nombre','detalleventa__id_producto','detalleventa__cantidad').order_by('detalleventa__id_producto').filter(detalleventa__id_venta__in=ventas.values('id'))
         cantidad_id = ven.values().order_by('detalleventa__id_producto').annotate(total=Sum('detalleventa__cantidad'))
         print('esta es la cantidad_id')
         print(cantidad_id)
@@ -285,7 +311,7 @@ def estadisticas(request):
         
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
         #ventas = Boleta.objects.all()
-        ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
+        #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         cantidades=ven.values('id_producto_id').order_by('id_producto_id').annotate(total_venta=Sum('cantidad'))
         precio=DetalleCompra.objects.filter(id_producto_id__in=cantidad_id.values('id_producto_id')).values('id_producto_id','precio_unitario')
 
