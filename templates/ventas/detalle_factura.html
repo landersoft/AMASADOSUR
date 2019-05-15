@@ -52,15 +52,14 @@
 			</div>
 
             <div class="row">
-                <table class="table">
+                <table class="table text-center">
                     <thead>
                       <tr>
                         <th scope="col-md-2 text-center">Cod</th>
                         <th scope="col-md-2 text-center">Cantidad</th>
                         <th scope="col-md-4 text-center">Detalle</th>
                         <th scope="col-md-2 text-center">P.Unitario</th>
-                        <th scope="col-md-2 text-center">P.Total</th>
-                        
+                        <th scope="col-md-2 text-center">P.Total</th>                        
                       </tr>
                     </thead>
                     <tbody>
@@ -86,11 +85,11 @@
 				</div>
 				<div class="col-md-3">
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 text-right">
                         {% for sup in supertotal %}
-                        <strong>Subtotal:</strong>{{ sup.total }}</p>
-                        <strong>IVA:</strong>{{sup.iva}}</p>
-                        <strong>Total:</strong>{{sup.supertotal}}</p>
+                        <strong>Subtotal:  </strong>{{ sup.total }}</p>
+                        <strong>IVA: </strong>{{sup.iva}}</p>
+                        <strong>Total: </strong>{{sup.supertotal}}</p>
                         {% endfor %}
                     </p>
                   

@@ -2,12 +2,46 @@
 {% load static %}
 
 {% block content %}
-<div class="col-md-4 col-md-offset-4">
-<form method='POST' action='' >{% csrf_token %}
-{{ form.as_p}}
-<input type='submit' value='Registrar'>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
 
-</form>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header text-center">
+                    Nuevo Cliente
+                </div>
+                <div class="card-body">
+                    <form class="form-row" method='POST' action='' >{% csrf_token %}
+                        {% for field in form %}
+                        <div class="control-group">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-4">
+                                    <label class="control-label">{{ field.label }}</label> 
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="controls">{{ field }}
+                                </div>
+                                <div class="col-md-2"></div>
+                        </div>    
+                        {% endfor %}
+                            <div class="espacio">&nbsp;</div>
+                            <button type="submit" class="btn btn-primary mb-2">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+
+
+</div>
+<div class="col-md-4 col-md-offset-4">
+
 </div>
 
 {% endblock %}

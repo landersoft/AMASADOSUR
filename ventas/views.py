@@ -220,7 +220,7 @@ def verifica(request):
                                 
                 if cliente!=(None):
                         nueva_factura2 = Factura(id_venta=Venta.objects.latest('id'), id_cliente=cliente)
-                        nueva_factura2.save()
+                        nueva_factura2.save() 
 
                         venta = Factura.objects.latest('id').id_venta
                         print ("id de venta es " + str(venta))
@@ -242,7 +242,7 @@ def verifica(request):
                                 producto.save()
 
 
-                        return render(request, 'ventas/menu.html')
+                        return render(request, 'ventas/exito.html')
                 else:
                         return HttpResponseRedirect('registrocliente')
                 
@@ -284,7 +284,7 @@ def registracliente(request):
                         producto.stock-=detalle['cantidad']
                         producto.save()
 
-                return render(request, 'ventas/menu.html')
+                return render(request, 'ventas/exito.html')
                 #este te entrega el id de venta
                 
                 
