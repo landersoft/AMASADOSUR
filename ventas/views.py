@@ -46,13 +46,17 @@ def boleta(request):
     return render(request, 'ventas/venta.html')
     
 def detalleadd(request):
-    if request.method == 'POST':        
+    if request.method == 'POST':  
         
-        #de_venta = Venta.objects.latest('id')
-        de_venta = Venta.objects.last()
-        flotante = (request.POST['textinput'])
-        de_producto = Producto.objects.get(pk = request.POST['textinput'])
+        try:
+                de_producto = Producto.objects.get(pk = request.POST['textinput'])
+        except Producto.DoesNotExist:
+                de_producto = None
+                msj="Producto No existe"
+                return render(request,'ventas/venta.error.html',{'msj':msj})
 
+        flotante = (request.POST['textinput'])
+        de_venta = Venta.objects.last()
         print(de_venta.id)
         print(de_producto.id)      
         #consulta para saber si hay mas de este mismo producto
