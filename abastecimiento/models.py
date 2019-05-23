@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Proveedor(models.Model):
@@ -31,14 +32,14 @@ class Compra(models.Model):
         'Proveedor', related_name='proveedores', on_delete=models.PROTECT)
     total = models.IntegerField()
     producto = models.ManyToManyField('Producto', through='DetalleCompra')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
 
 
 class DetalleCompra(models.Model):
-    id_compra = models.ForeignKey(
-        'Compra', related_name='compra', on_delete=models.CASCADE)
+    id_compra = models.ForeignKey('Compra', related_name='compra', on_delete=models.CASCADE)
     id_producto = models.ForeignKey(
         "Producto", related_name='producto', on_delete=models.CASCADE)
     cantidad = models.IntegerField()
