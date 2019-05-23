@@ -2,3 +2,7 @@
     <div class="espacio">&nbsp</div>
     <img src="{% static 'img/huslero.jpg' %}" alt="panaderia" style="width:100%;height:70%;">
 </div>
+
+ocultar field en django admin
+
+https://stackoverflow.com/questions/10330916/how-to-hide-some-fields-in-django-admin
