@@ -19,7 +19,8 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=10, blank=False, null=False)
     descripcion = models.CharField(max_length=30, blank=False, null=False)
     precio_actual = models.IntegerField()
-    stock = models.IntegerField(default=0)
+    pmp = models.IntegerField()
+    stock = models.IntegerField(default=0, editable=False)
 
     def __str__(self):
         return self.nombre
