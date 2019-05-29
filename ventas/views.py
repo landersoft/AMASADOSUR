@@ -447,3 +447,6 @@ def exito(request):
 #Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('nombre','detalleventa__id_producto','detalleventa__precio_venta')
 
 #(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta=1)
+
+def menu2(request):
+        return render(request,'ventas/menu2.html')
