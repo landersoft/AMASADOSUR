@@ -28,6 +28,9 @@ def nueva2(request):
 def nueva(request):
         try:
                 caja = Caja.objects.latest("id")
+                if (caja.estado=="cerrada" and caja.hora_c.date()<date.today()):
+                        mesj = "¡Por favor abrir caja!"
+                return render(request,'ventas/nocaja.html',{'mesj':mesj})
         except Caja.DoesNotExist:
                 caja = None
                 mesj = "¡Por favor abrir caja!"
