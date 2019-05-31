@@ -7,10 +7,11 @@ app_name='ventas'
 urlpatterns = [
     path(r'', views.index, name='index'),
     path(r'nueva/', views.nueva, name='nueva'),
-    path(r'nueva/boleta/', views.boleta, name='boleta'),
+    #path(r'nueva/boleta/', views.boleta, name='boleta'),
     path(r'nueva/add', views.detalleadd, name='add'),
     path(r'nueva/menu2/', views.menu2, name='menu2'),
-    #path(r'nueva/factura/add', views.detalleadd, name='add'),
+    
+    path(r'abrircaja/', views.abrircaja, name='abrircaja'),
     path(r'nueva/lista/',views.VentaList.as_view()),
     path(r'nueva/lista/pagar', views.pagar, name='pagar'),
     path(r'nueva/lista/formapago', views.formapago, name='formapago'),

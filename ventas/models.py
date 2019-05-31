@@ -12,6 +12,16 @@ class Cliente(models.Model):
     def __str__(self):
         return str(self.nombre)
 
+class Caja(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True, null=True)
+    hora_a = models.DateTimeField(blank=True)
+    hora_c = models.DateTimeField(blank=True)
+    estado = models.CharField(max_length=10)
+    monto_inicial = models.IntegerField()
+    monto_final = models.IntegerField()
+    def __str__(self):
+        return str(self.estado)
+
 class Venta(models.Model):
     fecha = models.DateTimeField(auto_now=False, auto_now_add=True)
     total = models.IntegerField(blank=True, null=True)

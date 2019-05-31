@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from abastecimiento.models import DetalleCompra
-from .models import Venta, Producto, DetalleVenta, Boleta, Factura, Cliente
+from .models import Venta, Producto, DetalleVenta, Boleta, Factura, Cliente, Caja
 from django.views.generic import ListView
 from django.db.models import Q,F
 from django.db.models import Sum, IntegerField
@@ -20,11 +20,18 @@ def index(request):
 #2 muestra boleta o factura
 @login_required
 def nueva2(request):
-    return render(request, 'ventas/nueva.html')
+        
+
+        return render(request, 'ventas/nueva.html')
 
 @login_required
 def nueva(request):
-    #if request.method == 'POST':
+        try:
+                caja = Caja.objects.latest("id")
+        except Caja.DoesNotExist:
+                caja = None
+                mesj = "¡Por favor abrir caja!"
+                return render(request,'ventas/nocaja.html',{'mesj':mesj})
         nueva_venta = Venta(usuario=request.user)
         nueva_venta.save()
         codigo_venta = Venta.objects.latest('id')
@@ -450,3 +457,7 @@ def exito(request):
 
 def menu2(request):
         return render(request,'ventas/menu2.html')
+
+
+def abrircaja(request):
+        return render(request,'ventas/abrircaja.html')
