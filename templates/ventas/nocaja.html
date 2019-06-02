@@ -3,30 +3,43 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-4">
-		</div>
-		<div class="col-md-4">
-            <h1>&nbsp</h1>
-            <div class="alert alert-warning" role="alert">
-                {{mesj}}
-            </div>
-		</div>
-		<div class="col-md-4">
-		</div>
-	</div>
-</div>
 
 
 
-<script type="text/javascript">   
+
+<!-- <script type="text/javascript">   
     function Redirect() 
     {  
         window.location="/ventas/abrircaja"; 
     } 
     
     setTimeout('Redirect()', 2000);   
-</script>
+</script> -->
+
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                    <div class="alert alert-warning text-center" role="alert">
+                            {{mesj}}
+                    </div>
+                <div class="row">    
+                        <div class="col-md-8 offset-1">
+                                <form class="form-row align-items-center" action="abrircaja" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" class="form-control" id="monto" name="monto" placeholder="Monto inicial">
+                    </div>
+                        <div class="col-md-2">       
+                            <button type="submit" class="btn btn-primary align-self-end">Enviar</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

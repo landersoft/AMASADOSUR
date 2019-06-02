@@ -11,6 +11,8 @@ from django.db.models import Sum, IntegerField
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from .forms import RegCliente
+from django.contrib.auth import get_user
+from datetime import date, datetime
 
 
 #1 Menu principal
@@ -30,7 +32,7 @@ def nueva(request):
                 caja = Caja.objects.latest("id")
                 if (caja.estado=="cerrada" and caja.hora_c.date()<date.today()):
                         mesj = "¡Por favor abrir caja!"
-                return render(request,'ventas/nocaja.html',{'mesj':mesj})
+                        return render(request,'ventas/nocaja.html',{'mesj':mesj})
         except Caja.DoesNotExist:
                 caja = None
                 mesj = "¡Por favor abrir caja!"
@@ -461,6 +463,17 @@ def exito(request):
 def menu2(request):
         return render(request,'ventas/menu2.html')
 
-
+@login_required
 def abrircaja(request):
-        return render(request,'ventas/abrircaja.html')
+        if request.method == 'POST':
+                newcaja = Caja()
+                #usuario = auth.get_user(request)
+                usuario = get_user(request)
+                newcaja.usuario=usuario
+                newcaja.hora_a=datetime.now()
+                newcaja.estado="abierta"
+                newcaja.monto_inicial=request.POST.get('monto')
+                newcaja.save()
+                
+        #return render(request,'ventas/abrircaja.html')
+        return HttpResponseRedirect('nueva')

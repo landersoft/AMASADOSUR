@@ -11,7 +11,7 @@ urlpatterns = [
     path(r'nueva/add', views.detalleadd, name='add'),
     path(r'nueva/menu2/', views.menu2, name='menu2'),
     
-    path(r'abrircaja/', views.abrircaja, name='abrircaja'),
+    path(r'nueva/abrircaja', views.abrircaja, name='abrircaja'),
     path(r'nueva/lista/',views.VentaList.as_view()),
     path(r'nueva/lista/pagar', views.pagar, name='pagar'),
     path(r'nueva/lista/formapago', views.formapago, name='formapago'),

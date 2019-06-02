@@ -15,10 +15,10 @@ class Cliente(models.Model):
 class Caja(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True, null=True)
     hora_a = models.DateTimeField(blank=True)
-    hora_c = models.DateTimeField(blank=True)
+    hora_c = models.DateTimeField(blank=True, null=True)
     estado = models.CharField(max_length=10)
     monto_inicial = models.IntegerField()
-    monto_final = models.IntegerField()
+    monto_final = models.IntegerField(blank=True, null=True)
     def __str__(self):
         return str(self.estado)
 
