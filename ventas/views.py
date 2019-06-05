@@ -499,5 +499,5 @@ def cerrarcaja(request):
                 caja = Caja.objects.filter(usuario=get_user(request)).filter(estado="abierto")
                 caja.hora_c = datetime.now()
                 caja.estado = "cerrado"
-                caja.monto_final = Venta.objects.values('total').annotate(total_venta=Sum('total')
+                caja.monto_final = Venta.objects.values('total').annotate(total_venta=Sum('total'))
         return render(request, 'ventas/cierre.html')
