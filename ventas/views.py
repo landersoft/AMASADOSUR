@@ -30,18 +30,29 @@ def nueva2(request):
 def nueva(request):
         try:
                 caja = Caja.objects.latest("id")
-                if (caja.estado=="cerrada" and caja.hora_c.date()<date.today()):
+                if (caja.estado=="cerrada" and caja.hora_c.date()<datetime.date.today()):
                         mesj = "¡Por favor abrir caja!"
-                        return render(request,'ventas/nocaja.html',{'mesj':mesj})
+                        
+                elif (caja.estado=="cerrado" and caja.hora_c.date()==datetime.date.today()):
+                        mesj = "Caja ya fue cerrada hoy"
+                        
+                elif caja.estado =="abierto" and caja.hora_c.date()==None and caja.hora_a.date()<datetime.date.today():
+                        mesj="Caja no fue cerrada en la ultima jornada, favor realizar cierre y vuelva a abrir"
+                elif caja.estado=="abierto" and caja.hora_a.date()==date.today():
+                        nueva_venta = Venta(usuario=request.user)
+                        nueva_venta.save()
+                        codigo_venta = Venta.objects.latest('id')
+                        print(codigo_venta)
+                        return render(request, 'ventas/venta.html')
+                return render(request,'ventas/nocaja.html',{'mesj':mesj})
+                        
+                
         except Caja.DoesNotExist:
                 caja = None
                 mesj = "¡Por favor abrir caja!"
                 return render(request,'ventas/nocaja.html',{'mesj':mesj})
-        nueva_venta = Venta(usuario=request.user)
-        nueva_venta.save()
-        codigo_venta = Venta.objects.latest('id')
-        print(codigo_venta)
-        return render(request, 'ventas/venta.html')
+        
+        
 
 
     #return render(request, 'ventas/factura.html')
@@ -466,6 +477,8 @@ def menu2(request):
 @login_required
 def abrircaja(request):
         if request.method == 'POST':
+                
+
                 newcaja = Caja()
                 #usuario = auth.get_user(request)
                 usuario = get_user(request)
@@ -477,3 +490,14 @@ def abrircaja(request):
                 
         #return render(request,'ventas/abrircaja.html')
         return HttpResponseRedirect('nueva')
+
+
+
+@login_required
+def cerrarcaja(request):
+        if request.method =='POST':
+                caja = Caja.objects.filter(usuario=get_user(request)).filter(estado="abierto")
+                caja.hora_c = datetime.now()
+                caja.estado = "cerrado"
+                caja.monto_final = Venta.objects.values('total').annotate(total_venta=Sum('total')
+        return render(request, 'ventas/cierre.html')
