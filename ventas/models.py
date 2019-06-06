@@ -20,7 +20,7 @@ class Caja(models.Model):
     monto_inicial = models.IntegerField()
     monto_final = models.IntegerField(blank=True, null=True)
     def __str__(self):
-        return str(self.estado)
+        return (self.estado)
 
 class Venta(models.Model):
     fecha = models.DateTimeField(auto_now=False, auto_now_add=True)

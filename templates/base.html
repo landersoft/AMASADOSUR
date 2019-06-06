@@ -44,8 +44,14 @@
           <a class="dropdown-item" href="{% url 'ventas:estadisticas' %}">Estadisticas</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'admin:index' %}">Administración</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administración
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url 'ventas:abrircaja' %}">Abrir caja</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'admin:index' %}">Administración</a>
       </li>
 
       
@@ -74,7 +80,7 @@
 {% load static %}
 <a class="navbar-brand" href="https://www.djangoproject.com/"><img src="{% static 'img/django.png' %}" width="50" height="60" alt=""></a>
   <a class="navbar-brand " href="https://www.mysql.com/"><img src="{% static 'img/mysql.png' %}" width="60" height="70" alt=""></a>
-  <a class="navbar-brand " href="https://www.w3.org/html/"><img src="{% static 'img/html5.png' %}" width="60" height="60" alt="HTML5 Powered with CSS3 / Styling, and Semantics" title="HTML5 Powered with CSS3 / Styling, and Semantics"></a>
+  <a class="navbar-brand " href="https://www.w3.org/html/"><img src="{% static 'img/html5.png' %}" width="60" height="60" alt=""></a>
   <a class="navbar-brand" href="https://www.debian.org/index.es.html"><img src="{% static 'img/debian2.png' %}" width="45" height="65" alt=""></a>
   
 </div>
