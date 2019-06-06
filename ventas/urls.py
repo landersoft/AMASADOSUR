@@ -27,5 +27,5 @@ urlpatterns = [
 
     #path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
 
-
+#https://stackoverflow.com/questions/7217811/query-datetime-by-todays-date-in-django
 ]
