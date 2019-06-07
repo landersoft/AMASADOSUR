@@ -29,28 +29,39 @@ def nueva2(request):
 @login_required
 def nueva(request):
         try:
-                caja = Caja.objects.latest("id")
-                if (caja.estado=="cerrada" and caja.hora_c.date()<datetime.date.today()):
-                        mesj = "¡Por favor abrir caja!"
+                usuario=get_user(request)
+                caja = Caja.objects.filter(usuario=usuario).values('id','hora_a','hora_c','estado','monto_inicial')
+                print(caja)
+                print(caja.values('hora_c'))
+                if (caja.values('estado')=="cerrada" and (caja.values('hora_c')<datetime.date.today() or caja.values('hora_c')==None)):
+                        mesj = "¡Por favor abrir caja!111"
+                        return render(request,'ventas/nocaja.html',{'mesj':mesj})
                         
-                elif (caja.estado=="cerrado" and caja.hora_c.date()==datetime.date.today()):
-                        mesj = "Caja ya fue cerrada hoy"
+                # elif (caja.estado=="cerrado" and caja.hora_c==datetime.today()):
+                #         mesj = "Caja ya fue cerrada hoy"
                         
-                elif caja.estado =="abierto" and caja.hora_c.date()==None and caja.hora_a.date()<datetime.date.today():
-                        mesj="Caja no fue cerrada en la ultima jornada, favor realizar cierre y vuelva a abrir"
-                elif caja.estado=="abierto" and caja.hora_a.date()==date.today():
-                        nueva_venta = Venta(usuario=request.user)
-                        nueva_venta.save()
-                        codigo_venta = Venta.objects.latest('id')
-                        print(codigo_venta)
-                        return render(request, 'ventas/venta.html')
+                # elif caja.estado =="abierto" and caja.hora_c.date()==None and caja.hora_a<datetime.datetime.today():
+                #         mesj="Caja no fue cerrada en la ultima jornada, favor realizar cierre y vuelva a abrir"
+                # elif caja.estado=="abierto" and caja.hora_a.date()==date.today():
+                #         nueva_venta = Venta(usuario=request.user)
+                #         nueva_venta.save()
+                #         codigo_venta = Venta.objects.latest('id')
+                #         print(codigo_venta)
+                #         return render(request, 'ventas/venta.html')
+                mesj='No validó'
                 return render(request,'ventas/nocaja.html',{'mesj':mesj})
                         
                 
         except Caja.DoesNotExist:
                 caja = None
-                mesj = "¡Por favor abrir caja!"
+                mesj = "¡Por favor abrir caja!222"
                 return render(request,'ventas/nocaja.html',{'mesj':mesj})
+        
+        nueva_venta = Venta(usuario=request.user)
+        nueva_venta.save()
+        codigo_venta = Venta.objects.latest('id')
+        print(codigo_venta)
+        return render(request, 'ventas/venta.html')
         
         
 
@@ -488,7 +499,7 @@ def abrircaja(request):
                 newcaja.monto_inicial=request.POST.get('monto')
                 newcaja.save()
                 
-        #return render(request,'ventas/abrircaja.html')
+        return render(request,'ventas/venta.html')
         return HttpResponseRedirect('nueva')
 
 
