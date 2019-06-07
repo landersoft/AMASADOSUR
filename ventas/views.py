@@ -469,21 +469,16 @@ def menu2(request):
 def abrircaja(request):
         if request.method == 'POST':
 
-               ecaja=Caja.objects.filter(usuario=get_user(request),estado="abierta")
 
-
-                newcaja = Caja()
-                #usuario = auth.get_user(request)
-                usuario = get_user(request)
-                newcaja.usuario=usuario
-                newcaja.hora_a=datetime.now()
-                newcaja.estado="abierta"
-                newcaja.monto_inicial=request.POST.get('monto')
-                newcaja.save()
-                
-        return render(request,'ventas/venta.html')
-        return HttpResponseRedirect('nueva')
-
+            newcaja = Caja()
+            #usuario = auth.get_user(request)
+            usuario = get_user(request)
+            newcaja.usuario=usuario
+            newcaja.hora_a=datetime.now()
+            newcaja.estado="abierta"
+            newcaja.monto_inicial=request.POST.get('monto')
+            newcaja.save()
+            return render(request, 'ventas/venta.html')
 
 
 @login_required
