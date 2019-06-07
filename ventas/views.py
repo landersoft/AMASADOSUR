@@ -30,43 +30,23 @@ def nueva2(request):
 def nueva(request):
         try:
                 usuario=get_user(request)
-                caja = Caja.objects.filter(usuario=usuario).values('id','hora_a','hora_c','estado','monto_inicial')
+                caja = Caja.objects.get(usuario=usuario,estado="abierta")
                 print(caja)
-                print(caja.values('hora_c'))
-                if (caja.values('estado')=="cerrada" and (caja.values('hora_c')<datetime.date.today() or caja.values('hora_c')==None)):
-                        mesj = "¡Por favor abrir caja!111"
-                        return render(request,'ventas/nocaja.html',{'mesj':mesj})
-                        
-                # elif (caja.estado=="cerrado" and caja.hora_c==datetime.today()):
-                #         mesj = "Caja ya fue cerrada hoy"
-                        
-                # elif caja.estado =="abierto" and caja.hora_c.date()==None and caja.hora_a<datetime.datetime.today():
-                #         mesj="Caja no fue cerrada en la ultima jornada, favor realizar cierre y vuelva a abrir"
-                # elif caja.estado=="abierto" and caja.hora_a.date()==date.today():
-                #         nueva_venta = Venta(usuario=request.user)
-                #         nueva_venta.save()
-                #         codigo_venta = Venta.objects.latest('id')
-                #         print(codigo_venta)
-                #         return render(request, 'ventas/venta.html')
-                mesj='No validó'
-                return render(request,'ventas/nocaja.html',{'mesj':mesj})
-                        
-                
+                if caja.hora_a.date()<datetime.date().today():
+                    mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
+                    return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
+
+                nueva_venta = Venta(usuario=request.user)
+                nueva_venta.save()
+                codigo_venta = Venta.objects.latest('id')
+                print(codigo_venta)
+                return render(request, 'ventas/venta.html')
+
         except Caja.DoesNotExist:
                 caja = None
                 mesj = "¡Por favor abrir caja!222"
                 return render(request,'ventas/nocaja.html',{'mesj':mesj})
-        
-        nueva_venta = Venta(usuario=request.user)
-        nueva_venta.save()
-        codigo_venta = Venta.objects.latest('id')
-        print(codigo_venta)
-        return render(request, 'ventas/venta.html')
-        
-        
 
-
-    #return render(request, 'ventas/factura.html')
 
 #3 eligió boleta 
 @login_required
@@ -488,7 +468,9 @@ def menu2(request):
 @login_required
 def abrircaja(request):
         if request.method == 'POST':
-                
+
+               ecaja=Caja.objects.filter(usuario=get_user(request),estado="abierta")
+
 
                 newcaja = Caja()
                 #usuario = auth.get_user(request)
