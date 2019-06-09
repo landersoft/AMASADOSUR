@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect,HttpRequest
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -13,6 +13,8 @@ from django.template import RequestContext
 from .forms import RegCliente
 from django.contrib.auth import get_user
 from datetime import date, datetime
+
+
 
 
 #1 Menu principal
@@ -32,7 +34,8 @@ def nueva(request):
                 usuario=get_user(request)
                 caja = Caja.objects.get(usuario=usuario,estado="abierta")
                 print(caja)
-                if caja.hora_a.date()<datetime.date().today():
+                hoy=datetime
+                if caja.hora_a.date()<datetime.now().date():
                     mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
                     return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
 
@@ -468,10 +471,11 @@ def menu2(request):
 @login_required
 def abrircaja(request):
         if request.method == 'POST':
-
-
             newcaja = Caja()
-            #usuario = auth.get_user(request)
+            #newcaja.caja_modulo = request.META['HTTP_X_FORWARDED_FOR']
+            newcaja.caja_modulo = request.META.get('REMOTE_ADDR')
+            #request.META.get(‘REMOTE_ADDR’)
+            #newcaja.caja_modulo = request.get_host()
             usuario = get_user(request)
             newcaja.usuario=usuario
             newcaja.hora_a=datetime.now()
@@ -483,9 +487,29 @@ def abrircaja(request):
 
 @login_required
 def cerrarcaja(request):
-        if request.method =='POST':
-                caja = Caja.objects.filter(usuario=get_user(request)).filter(estado="abierto")
+        if request.method == 'POST':
+            usuario = get_user(request)
+            print(usuario)
+            try:
+                caja = Caja.objects.get(usuario=usuario, estado="abierta")
                 caja.hora_c = datetime.now()
                 caja.estado = "cerrado"
-                caja.monto_final = Venta.objects.values('total').annotate(total_venta=Sum('total'))
-        return render(request, 'ventas/cierre.html')
+                caja.save()
+                apertura = Caja.objects.filter(id=caja.id)[0].hora_a
+                cierre = Caja.objects.filter(id=caja.id)[0].hora_c
+                #caja.monto_final = Venta.objects.values('total').annotate(total_venta=Sum('total'))
+                total = Venta.objects.filter(fecha__range=(apertura, cierre)).exclude(total__isnull=True).aggregate(totality=Sum('total'))
+                print("te extraño caja1")
+                print(total)
+                #print("este es el totality: " + caja2['totality'])
+                caja.monto_final = total['totality']
+                caja.save()
+                return render(request, 'ventas/cierre.html')
+            except Caja.DoesNotExist:
+                    caja = None
+                    mesj = "Usuario no presenta cajas abiertas"
+                    return render(request, 'ventas/nocaja.html', {mesj: 'mesj'})
+
+@login_required()
+def cierracaja(request):
+    return render(request, 'ventas/cerrarcaja.html')

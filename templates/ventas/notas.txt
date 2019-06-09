@@ -16,3 +16,10 @@ from ventas.models import Producto,DetalleVenta,Cliente,Boleta,Venta,Factura,Caj
 from datetime import date, datetime
 
 Caja.objects.filter(usuario=1)[0].hora_a.date()
+
+
+despues = Caja.objects.filter(id=6)[0].hora_c
+antes = Caja.objects.filter(id=6)[0].hora_a
+caja2=Venta.objects.filter(fecha__range=(antes,despues)) // falta el usuario
+caja2=caja2.exclude(total__isnull=True)
+caja=Venta.objects.values('total').exclude(total__isnull=True)

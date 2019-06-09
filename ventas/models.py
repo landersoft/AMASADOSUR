@@ -19,6 +19,7 @@ class Caja(models.Model):
     estado = models.CharField(max_length=10)
     monto_inicial = models.IntegerField()
     monto_final = models.IntegerField(blank=True, null=True)
+    caja_modulo = models.CharField(max_length=20, null=False, blank=False)
     def __str__(self):
         return (self.estado)
 
