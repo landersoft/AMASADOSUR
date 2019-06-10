@@ -471,18 +471,31 @@ def menu2(request):
 @login_required
 def abrircaja(request):
         if request.method == 'POST':
-            newcaja = Caja()
-            #newcaja.caja_modulo = request.META['HTTP_X_FORWARDED_FOR']
-            newcaja.caja_modulo = request.META.get('REMOTE_ADDR')
-            #request.META.get(‘REMOTE_ADDR’)
-            #newcaja.caja_modulo = request.get_host()
-            usuario = get_user(request)
-            newcaja.usuario=usuario
-            newcaja.hora_a=datetime.now()
-            newcaja.estado="abierta"
-            newcaja.monto_inicial=request.POST.get('monto')
-            newcaja.save()
-            return render(request, 'ventas/venta.html')
+                try:
+                        usuario=get_user(request)
+                        caja = Caja.objects.get(usuario=usuario,estado="abierta")
+                        print(caja)
+                        hoy=datetime
+                        if caja.hora_a.date()<datetime.now().date():
+                                mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
+                                return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
+                except Caja.DoesNotExist:        
+                        newcaja = Caja()
+                        #newcaja.caja_modulo = request.META['HTTP_X_FORWARDED_FOR']
+                        newcaja.caja_modulo = request.META.get('REMOTE_ADDR')
+                        #request.META.get(‘REMOTE_ADDR’)
+                        #newcaja.caja_modulo = request.get_host()
+                        usuario = get_user(request)
+                        newcaja.usuario=usuario
+                        newcaja.hora_a=datetime.now()
+                        newcaja.estado="abierta"
+                        newcaja.monto_inicial=request.POST.get('monto')
+                        newcaja.save()
+                        nueva_venta = Venta(usuario=request.user)
+                        nueva_venta.save()
+                        codigo_venta = Venta.objects.latest('id')
+                        return render(request, 'ventas/venta.html')
+        return render(request, 'ventas/nocaja.html')
 
 
 @login_required
