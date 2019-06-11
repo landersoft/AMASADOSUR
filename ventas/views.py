@@ -479,6 +479,10 @@ def abrircaja(request):
                         if caja.hora_a.date()<datetime.now().date():
                                 mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
                                 return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
+                        elif caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
+                                mesj="Caja cerrada por hoy"
+                                return render(request,'ventas/info.html',{'mesj': mesj})
+
                 except Caja.DoesNotExist:        
                         newcaja = Caja()
                         #newcaja.caja_modulo = request.META['HTTP_X_FORWARDED_FOR']
@@ -495,7 +499,23 @@ def abrircaja(request):
                         nueva_venta.save()
                         codigo_venta = Venta.objects.latest('id')
                         return render(request, 'ventas/venta.html')
-        return render(request, 'ventas/nocaja.html')
+        else:   
+                try:
+                        usuario=get_user(request)
+                        caja = Caja.objects.get(usuario=usuario,estado="abierta")
+                        print(caja)
+                        hoy=datetime
+                        if caja.hora_a.date()<datetime.now().date():
+                                mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
+                                return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
+                        elif caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
+                                mesj="Caja cerrada por hoy"
+                                return render(request,'ventas/info.html',{'mesj': mesj})
+                except:
+                        return render(request, 'ventas/nocaja.html')
+
+
+        
 
 
 @login_required
@@ -517,12 +537,35 @@ def cerrarcaja(request):
                 #print("este es el totality: " + caja2['totality'])
                 caja.monto_final = total['totality']
                 caja.save()
-                return render(request, 'ventas/cierre.html')
+                return render(request, 'ventas/arqueo.html')
             except Caja.DoesNotExist:
                     caja = None
                     mesj = "Usuario no presenta cajas abiertas"
                     return render(request, 'ventas/nocaja.html', {mesj: 'mesj'})
 
-@login_required()
+@login_required
 def cierracaja(request):
     return render(request, 'ventas/cerrarcaja.html')
+
+
+@login_required
+def arqueo(request):
+        usuario = get_user(request)
+        try:
+              caja=Caja.objects.latest(usuario=usuario, estado="cerrada")
+              if caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
+                      fecha = caja.hora_a.date()
+                      usuario = caja.usuario
+                      hora = datetime.now().strptime('%H:%M:%S')
+                      hora_apertura = caja.hora_a.strptime('%H:%M:%S')
+                      hora_cierre = caja.hora_c.strptime('%H:%M:%S')
+                      total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
+                      total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
+                      monto_inicial = caja.monto_inicial
+                      monto_final = caja.monto_final
+                      caja_modulo = caja.caja_modulo
+                      return(request,'ventas/arqueo.html')
+        except:
+                mesj = "Caja no cerrada el dia de hoy"
+                return(request, 'ventas/cerrarcaja.html', {mesj:'mesj'})
+                
