@@ -3,7 +3,13 @@
 
 {% block content %}
 
-
+ {% for ProductoList in object_list %}
+                    <tr>
+                        <td>{{VentaList.id}}</td>
+                        <td><center>{{VentaList.nombre}}</center></td>
+                        <td><center>{{VentaList.pre_actual}}</center></td>
+                    </tr>
+                {% endfor %}
 
 
 {% endblock %}
