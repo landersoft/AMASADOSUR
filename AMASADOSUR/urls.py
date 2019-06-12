@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 from ventas import views
+from abastecimiento import views
 from django import forms
 #from  import views
 
@@ -25,7 +26,9 @@ urlpatterns = [
 
     path(r'', views.index, name="index"),
     path('login/', LoginView.as_view(template_name='login.html'), name="login"),
-    path(r'ventas/', include(('ventas.urls','ventas' ), namespace='ventas')),
-    path('admin/', admin.site.urls),   
+    path(r'ventas/', include(('ventas.urls', 'ventas'), namespace='ventas')),
+    path('admin/', admin.site.urls),
+    path(r'abastecimiento/', include(('abastecimiento.urls', 'abastecimiento'), namespace='abastecimiento')),
+
 
 ]

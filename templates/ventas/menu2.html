@@ -1,4 +1,6 @@
+
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block content %}
 
@@ -7,45 +9,52 @@
 
 <body>
   <div class="container">
-    <h1>Same height columns in Bootstrap</h1>
+    <h1></h1>
     <div class="row row-flex">
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="content colour-1">
-          <h3>First column</h3>
-          <p>This one has a bit longer content</p>
+        <div class="content" style="background-color: #00CEC0">
+
+            <img src="{% static 'img/venta.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Ventas</h3>
           <p>This one has a bit longer content</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="content colour-2">
-          <h3>Second column</h3>
+        <div class="content" style="background-color:#F77D51">
+          <img src="{% static 'img/producto.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Productos</h3>
           <p>Normal content.</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="content colour-3">
-          <h3>Third column</h3>
+            <img src="{% static 'img/reporte.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Reportes</h3>
           <p>Normal content.</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="content colour-4">
-          <h3>Fourth column</h3>
+          <img src="{% static 'img/deal.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Compras</h3>
           <p>Normal content.</p>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="content colour-5">
-          <h3>Fifth column</h3>
-          <p>Normal content.</p>
+        <div onclick="javascript:window.location.href='{% url 'admin:index' %}' ">
+
+            <div class="content colour-5">
+                <img src="{% static 'img/existencias.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Existencias</h3>
+                <p>Normal content.</p>
+            </div>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="content colour-6">
-          <h3>Sixth column</h3>
-          <p>Normal content.</p>
-        </div>
-      </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <a href="{% url 'admin:index' %}">
+                <div class="content colour-6">
+                    <img src="{% static 'img/administracion.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Administración</h3>
+                    <p>Normal content.</p>
+                </div>
+                </a>
+            </div>
+
     </div>
     
   
@@ -54,6 +63,8 @@
 </body>
 
 
+{% endblock %}
+{% block footer %}
 {% endblock %}
 
 
