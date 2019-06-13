@@ -27,8 +27,9 @@ urlpatterns = [
     path(r'reporte/facturas/detalle/<int:id>', views.detalle_factura, name='detalle_factura'),
     path(r'exito/', views.exito, name='exito'),
     
-
-    #path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
-
-#https://stackoverflow.com/questions/7217811/query-datetime-by-todays-date-in-django
 ]
+
+    # path(r'reporte/boletas/lista', views.detalle_boleta, name='detalle_boleta'),
+
+    # https://stackoverflow.com/questions/7217811/query-datetime-by-todays-date-in-django
+

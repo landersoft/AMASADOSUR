@@ -1,15 +1,47 @@
 {% extends "base.html"%}
 {% load staticfiles %}
 
+{% block tittle %}Productos{% endblock %}
 {% block content %}
 
- {% for ProductoList in object_list %}
-                    <tr>
-                        <td>{{VentaList.id}}</td>
-                        <td><center>{{VentaList.nombre}}</center></td>
-                        <td><center>{{VentaList.pre_actual}}</center></td>
-                    </tr>
-                {% endfor %}
+
+
+
+    <div class="col-1">
+
+    </div>
+    <div class="col-10 offset-1">
+<table class="table text-center">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">nombre</th>
+      <th scope="col">descripción</th>
+      <th scope="col">precio venta</th>
+      <th scope="col">stock</th>
+      <th scope="col">margen</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for producto in object_list %}
+    <tr>
+        <th scope="row">{{producto.id}}</th>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.descripcion}}</td>
+        <td>{{producto.precio_actual}}</td>
+        <td>{{producto.stock}}</td>
+        <td>{{producto.margen}} %</td>
+
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+    </div>
+
+    <div class="col-1">
+
+    </div>
+
 
 
 {% endblock %}

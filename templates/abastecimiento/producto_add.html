@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+
+            <label for="address" class="col-sm-3 control-label">Nombre:</label>{{ form.nombre }}
+            {{ form.as_p }}
+
+    <button type="submit" class="btn btn-danger">Guardar</button>
+        </div>
+    </form>
+
+
+{% endblock %}
