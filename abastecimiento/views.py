@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 from abastecimiento.forms import ProductoForm
-from .models import Producto,Proveedor
+from .models import Producto,Proveedor,Compra
+from django.forms import formsets, formset_factory
 
 
 def index(request):
@@ -19,6 +20,7 @@ class ProductoCreate(CreateView):
     form_class = ProductoForm
     template_name = 'abastecimiento/producto_add.html'
     success_url = reverse_lazy('abastecimiento:productos')
+
 
 
 

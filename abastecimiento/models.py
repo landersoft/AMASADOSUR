@@ -44,6 +44,8 @@ class DetalleCompra(models.Model):
     id_compra = models.ForeignKey('Compra', related_name='compra', on_delete=models.CASCADE)
     id_producto = models.ForeignKey(
         "Producto", related_name='producto', on_delete=models.CASCADE)
+    lote = models.CharField(max_length=30, blank=True, null=True)
+    fecha_vencimiento = models.DateField()
     cantidad = models.IntegerField()
     precio_unitario = models.IntegerField()
 
