@@ -63,38 +63,38 @@ def boleta(request):
     return render(request, 'ventas/venta.html')
     
 def detalleadd(request):
+
     if request.method == 'POST':  
         
         try:
-                de_producto = Producto.objects.get(pk = request.POST['textinput'])
+                de_producto = Producto.objects.get(pk=request.POST.get('textinput'))
         except Producto.DoesNotExist:
                 de_producto = None
                 msj="Producto No existe"
-                return render(request,'ventas/venta.error.html',{'msj':msj})
+                return render(request,'ventas/venta.error.html', {'msj': msj})
 
         flotante = (request.POST['textinput'])
         de_venta = Venta.objects.last()
         print(de_venta.id)
         print(de_producto.id)      
-        #consulta para saber si hay mas de este mismo producto
-        obj = DetalleVenta.objects.filter(id_producto = de_producto.id, id_venta=de_venta.id).first()
+        # consulta para saber si hay mas de este mismo producto
+        obj = DetalleVenta.objects.filter(id_producto=de_producto.id, id_venta=de_venta.id).first()
         
-        #query = DetalleVenta.objects.filter(id_producto = flotante, id_venta = de_venta).count()
+        # query = DetalleVenta.objects.filter(id_producto = flotante, id_venta = de_venta).count()
         precio = Producto.objects.get(id=flotante).precio_actual
         
         if obj is None:
             det_venta = DetalleVenta()
             det_venta.id_producto=de_producto
             det_venta.id_venta=de_venta
-            det_venta.cantidad = 1 
+            det_venta.cantidad = int(request.POST.get('cantidad'))
             det_venta.precio_venta = precio
             det_venta.save()
         else:
             det_venta = DetalleVenta.objects.get(id_producto=de_producto, id_venta=de_venta)
-            det_venta.cantidad += 1
+            det_venta.cantidad += int(request.POST.get('cantidad'))
             det_venta.save()
 
-        
         print(de_producto.nombre)
         print(precio)
         print(det_venta.cantidad)
@@ -102,10 +102,9 @@ def detalleadd(request):
         total2 = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(suma=Sum(F('precio_venta')*F('cantidad')))
         print("total consulta")
         de_venta.total = total2["suma"]
-        print (total2["suma"])
+        print(total2["suma"])
         contador = len(total2)
         de_venta.save()
-        
 
         subtotal= Venta.objects.last()
         return HttpResponseRedirect('lista/')
@@ -569,3 +568,7 @@ def arqueo(request):
                 mesj = "Caja no cerrada el dia de hoy"
                 return(request, 'ventas/cerrarcaja.html', {mesj:'mesj'})
                 
+
+
+def test(request):
+    return render(request, "ventas/detalleventa_list.html")
