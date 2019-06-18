@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -18,37 +18,60 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>OpenVendor POS</title>
 </head>
 <body>
+
 <div class="container-fluid">
 	<div class="row">
+        		<div class="col-md-1">
+		</div>
+		<div class="col-md-2 align-content-center">
+            <div onclick="javascript:window.location.href='{% url 'abastecimiento:index'%}' ">
+                <div class="navbar-brand align-content-center" href="/"><img src="{% static 'img/python.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">OpenVendor</div>
+            </div>
+
+		</div>
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-1">
+		</div>
 		<div class="col-md-1">
 
 		</div>
-		<div class="col-md-2 align-content-center">
-            <a class="navbar-brand align-content-center" href="/"><img src="{% static 'img/python.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">OpenVendor</a>
-
+		<div class="col-md-2 ">
 		</div>
-		<div class="col-md-3 border colour-1">
+		<div class="col-md-3 border border-0">
 
-            <form class="form-row align-items-center" action="/ventas/nueva/add" method="POST">{% csrf_token %}
+            <form class="form-row align-items-center text text-center text-black-50" action="/ventas/nueva/add" method="POST">
+                {% csrf_token %}
+                Codigo
+
                 <input id="textinput" name="textinput" type="number" placeholder="Ingrese Codigo" class="form-control input-lg"
                        required="" autofocus >
 		</div>
 
-        <div class="col-md-1 border colour-3">
-                <input id="cantidad" name="cantidad" type="number" placeholder="cantidad" class="form-control input-lg" required="" autofocus >
+        <div class="col-md-1 text-black-50">
+                Cantidad
+                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
 		</div>
 
-		<div class="col-md-1 border colour-3">
-                <button type="submit" class="btn btn-primary"><span class="fa fa-barcode"></span> Aceptar</button>
+		<div class="col-md-1 text-light ">
+            aceptar
+                <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
 
 		</div>
             </form>
-		<div class="col-md-3 border colour-6 text-center h-auto">
-            <strong>Total:</strong> {{suma}}
-			<div id="espacio">&nbsp</div>
+		<div class="col-md-3 text text-center text-black-50 h-auto">
+            <div class="text text-light">Total</div>
+            <h2><strong>Total:</strong> {{suma}}</h2>
+
 
 		</div>
 		<div class="col-md-1">
@@ -59,16 +82,16 @@
 		</div>
 		<div class="col-md-2">
              <div class="list-group">
-            <button type="button" class="list-group-item list-group-item-action active">
-             Cras justo odio
-            </button>
-              <button type="button" class="list-group-item list-group-item-action">Dapibus ac facilisis in</button>
-              <button type="button" class="list-group-item list-group-item-action">Morbi leo risus</button>
-              <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button>
-              <button type="button" class="list-group-item list-group-item-action" disabled>Vestibulum at eros</button>
+            <a><button type="button" onclick="window.location.href='{% url 'ventas:nueva' %}'" class="list-group-item list-group-item-action active">
+             Nueva Venta
+            </button></a>
+              <button type="button" onclick="window.location.href='{% url 'ventas:nueva' %}'" class="list-group-item list-group-item-action">Nueva Venta</button>
+              <button type="button" class="list-group-item list-group-item-action">Tesoreria</button>
+              <button type="button" class="list-group-item list-group-item-action">Lista</button>
+              <button type="button" class="list-group-item list-group-item-action" disabled>Cerrar Caja</button>
         </div>
 		</div>
-		<div class="col-md-5 border border-primary">
+		<div class="col-md-5 border border-primary rounded">
             <table class="table text-center">
 				<thead>
 					<tr>
@@ -93,22 +116,52 @@
                 {% endfor %}
                 </tbody>
             </table>
-		</div>
-		<div class="col-md-3 colour-3">
+        </div>
 
+		<div class="col-md-3 rounded">
+            <div class="card">
+                <div class="card-header text-center">
+                    <strong>Forma de Pago</strong>
+                </div>
+                <form class="form-row align-items-center" action="formapago" method="POST">{% csrf_token %}
+                <div class="card-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                        <label class="form-check-label" for="exampleRadios1">Efectivo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" disabled="disabled">
+                        <label class="form-check-label" for="exampleRadios2">Tarjeta</label>
+                    </div>
+                </div>
+            </div>
 
-		</div>
+            <div class="card">
+                <div class="card-header text-center">
+                    Documento
+                </div>
+                <div class="card-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="fp" id="exampleRadios3" value="boleta" checked>
+                        <label class="form-check-label" for="exampleRadios3">Boleta</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="fp" id="exampleRadios4" value="factura" disabled>
+                        <label class="form-check-label" for="exampleRadios4">Factura</label>
+                    </div>
+                </div>             
+            </div>
+            <div class="estilo">&nbsp</div>
+            <input type="hidden" value={{suma}} name="suma" />
+    			<button type="submit" class="btn btn-primary btn-lg btn-block">Siguiente</button>
+        
+        </form>
+    </div>
+
 		<div class="col-md-1">
 		</div>
 	</div>
 </div>
-
-<form class="form-row align-items-center" action="pagar" method="POST">
-    			{% csrf_token %}
-    			<input type="hidden" value={{suma}} name="suma" />
-    			<button type="submit" class="btn btn-primary mb-2">Siguiente</button>
-  			</form>
-
 
 </body>
 </html>

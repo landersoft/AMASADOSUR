@@ -14,11 +14,13 @@
     <h1></h1>
     <div class="row row-flex">
       <div class="col-md-4 col-sm-6 col-xs-12">
+          <div onclick="javascript:window.location.href='{% url 'ventas:nueva' %}' ">
         <div class="content" style="background-color: #00CEC0">
 
             <img src="{% static 'img/venta.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Ventas</h3>
           <p>This one has a bit longer content</p>
         </div>
+          </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
           <div onclick="javascript:window.location.href='{% url 'admin:abastecimiento_producto_changelist' %}' ">
@@ -41,7 +43,7 @@
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div onclick="javascript:window.location.href='{% url 'admin:index' %}' ">
+        <div onclick="javascript:window.location.href='{% url 'abastecimiento:productos' %}' ">
 
             <div class="content colour-5">
                 <img src="{% static 'img/existencias.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Existencias</h3>

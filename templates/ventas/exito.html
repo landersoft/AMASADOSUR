@@ -29,10 +29,10 @@
 <script type="text/javascript">   
     function Redirect() 
     {  
-        window.location="/"; 
+        window.location.href='{% url 'ventas:detalle_boleta' id=boleta.value %}';
     } 
     
-    setTimeout('Redirect()', 3000);   
+    setTimeout('Redirect()', 2000);   
 </script>
 
 {% endblock %}

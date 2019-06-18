@@ -23,6 +23,7 @@ class Producto(models.Model):
     stock = models.IntegerField(default=0, editable=False)
     margen = models.IntegerField(default=20)
 
+
     def __str__(self):
         return self.nombre
 

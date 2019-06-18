@@ -24,7 +24,6 @@ def index(request):
 #2 muestra boleta o factura
 @login_required
 def nueva2(request):
-        
 
         return render(request, 'ventas/nueva.html')
 
@@ -43,7 +42,7 @@ def nueva(request):
                 nueva_venta.save()
                 codigo_venta = Venta.objects.latest('id')
                 print(codigo_venta)
-                return render(request, 'ventas/venta.html')
+                return render(request, 'ventas/detalleventa_list.html')
 
         except Caja.DoesNotExist:
                 caja = None
@@ -87,18 +86,26 @@ def detalleadd(request):
             det_venta = DetalleVenta()
             det_venta.id_producto=de_producto
             det_venta.id_venta=de_venta
-            det_venta.cantidad = int(request.POST.get('cantidad'))
-            det_venta.precio_venta = precio
-            det_venta.save()
+            cero = request.POST.get('cantidad')
+            if cero=='':
+                det_venta.cantidad = 1
+            else:
+                det_venta.cantidad = request.POST.get('cantidad')
+                det_venta.precio_venta = precio
+                det_venta.save()
         else:
             det_venta = DetalleVenta.objects.get(id_producto=de_producto, id_venta=de_venta)
-            det_venta.cantidad += int(request.POST.get('cantidad'))
+            cero = request.POST.get('cantidad')
+            if cero=='':
+                det_venta.cantidad += 1
+            else:
+                det_venta.cantidad += int(request.POST.get('cantidad'))
             det_venta.save()
 
         print(de_producto.nombre)
         print(precio)
         print(det_venta.cantidad)
-        print((det_venta.cantidad * det_venta.precio_venta))        
+        # print((det_venta.cantidad * det_venta.precio_venta))
         total2 = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(suma=Sum(F('precio_venta')*F('cantidad')))
         print("total consulta")
         de_venta.total = total2["suma"]
@@ -120,6 +127,8 @@ def detalleadd(request):
 def formapago(request):
     if request.method == 'POST':
         forma = request.POST.get('exampleRadios')
+        print("esta el la forma")
+        print(forma)
         de_venta = Venta.objects.last()
         if forma =='option1':               
                 de_venta.forma_pago='Efectivo'
@@ -130,22 +139,25 @@ def formapago(request):
         de_venta.save()
         
         tipo = request.POST.get('fp')
-        if tipo =='boleta':
-                nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
-                nueva_boleta.save()
-                venta = Boleta.objects.latest('id').id_venta
-                detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
-                print(detalles)
-                for detalle in detalles:
-                        #instance.id_producto.stock += instance.cantidad
-                        stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
-                        print(stock_actual)
-                        #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
-                        producto = Producto.objects.get(id=detalle['id_producto'])
-                        producto.stock-=detalle['cantidad']
-                        producto.save()
+        print("esta es el tipo")
+        print(tipo)
+        if tipo == "boleta":
+            nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
+            nueva_boleta.save()
+            boleta = Boleta.objects.all()
+            venta = Boleta.objects.latest('id').id_venta
+            detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
+            print(detalles)
+            for detalle in detalles:
+                #instance.id_producto.stock += instance.cantidad
+                stock_actual=Producto.objects.get(id=detalle['id_producto']).stock
+                print(stock_actual)
+                #producto = Producto.objects.get(id=detalle['id_producto']).stock-=detalle['cantidad']
+                producto = Producto.objects.get(id=detalle['id_producto'])
+                producto.stock -= detalle['cantidad']
+                producto.save()
 
-                return render(request,'ventas/exito.html')
+                return render(request, 'ventas/exito.html',{ boleta :'boleta'})
         else:
                 return render(request, 'ventas/verifica.html')
         
@@ -551,22 +563,23 @@ def cierracaja(request):
 def arqueo(request):
         usuario = get_user(request)
         try:
-              caja=Caja.objects.latest(usuario=usuario, estado="cerrada")
-              if caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
-                      fecha = caja.hora_a.date()
-                      usuario = caja.usuario
-                      hora = datetime.now().strptime('%H:%M:%S')
-                      hora_apertura = caja.hora_a.strptime('%H:%M:%S')
-                      hora_cierre = caja.hora_c.strptime('%H:%M:%S')
-                      total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
-                      total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
-                      monto_inicial = caja.monto_inicial
-                      monto_final = caja.monto_final
-                      caja_modulo = caja.caja_modulo
-                      return(request,'ventas/arqueo.html')
+            caja=Caja.objects.latest(usuario=usuario, estado="cerrada")
+            if caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
+                caja_id = caja.id
+                fecha = caja.hora_a.date()
+                usuario = caja.usuario
+                hora = datetime.now().strptime('%H:%M:%S')
+                hora_apertura = caja.hora_a.strptime('%H:%M:%S')
+                hora_cierre = caja.hora_c.strptime('%H:%M:%S')
+                total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
+                total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
+                monto_inicial = caja.monto_inicial
+                monto_final = caja.monto_final
+                caja_modulo = caja.caja_modulo
+                return render(request, 'ventas/arqueo.html', {fecha: 'fecha', usuario: 'usuario', hora: 'hora', hora_apertura: 'hora_apertura', hora_cierre: 'hora_cierre', total_efectivo: 'total_efectivo', total_tarjeta: 'total_tarjeta', monto_inicial: 'monto_inicial', monto_final: 'monto_final', caja_modulo: 'caja_modulo', caja_id: 'caja_id'})
         except:
                 mesj = "Caja no cerrada el dia de hoy"
-                return(request, 'ventas/cerrarcaja.html', {mesj:'mesj'})
+                return render(request, 'ventas/cerrarcaja.html', {mesj: 'mesj'})
                 
 
 
