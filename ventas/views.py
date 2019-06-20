@@ -17,6 +17,7 @@ from datetime import date, datetime
 
 
 
+
 #1 Menu principal
 @login_required 
 def index(request):
@@ -144,8 +145,12 @@ def formapago(request):
         if tipo == "boleta":
             nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
             nueva_boleta.save()
-            boleta = Boleta.objects.all()
+            boleta2 = Boleta.objects.all().last()
+            print("esta es la boleta")
+            print(boleta2.id)
             venta = Boleta.objects.latest('id').id_venta
+            print("esta es la venta")
+            print(venta)
             detalles = DetalleVenta.objects.filter(id_venta=venta).values('id_producto','cantidad')
             print(detalles)
             for detalle in detalles:
@@ -157,7 +162,12 @@ def formapago(request):
                 producto.stock -= detalle['cantidad']
                 producto.save()
 
-                return render(request, 'ventas/exito.html',{ boleta :'boleta'})
+            # return render(request, 'ventas/exito.html', {'boleta2': boleta2})
+            url = reverse('ventas:exito')
+            return HttpResponseRedirect(url)
+
+            #url = reverse('ventas:detalle_boleta', kwargs={'id': boleta2.id})
+            #return HttpResponseRedirect(url)
         else:
                 return render(request, 'ventas/verifica.html')
         
@@ -411,7 +421,7 @@ def detalle_factura(request,id):
     return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle, 'iva':iva, 'supertotal':supertotal})
 
 
-def detalle_boleta(request,id):
+def detalle_boleta(request, id):
     boleta= Boleta.objects.filter(id=id)
     #print(boleta)
     venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
@@ -427,54 +437,14 @@ def detalle_boleta(request,id):
     
 
 def exito(request):
-        return(request, 'ventas/exito.html')
-#Entrega las ID de las ventas en boleta
+    boleta2 = Boleta.objects.all().last()
+    # url = reverse('ventas:detalle_boleta', kwargs={'id': boleta2.id})
+    # return HttpResponseRedirect(url)
+    boleta_dict = {
+        'boleta2': boleta2
+    }
+    return render(request, 'ventas/exito.html',boleta_dict)
 
-#Total de todas las ventas
-#Venta.objects.values('boleta__id','total').aggregate(suma=Sum('total'))
-#Total de costo de las ventas
-#DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
-
-#Entrega la cantidad de productos vendidos
-#DetalleVenta.objects.values('id_producto').order_by('id_producto').annotate(total=Sum('cantidad'))
-
-
-#id_cantidad=DetalleVenta.objects.values('id_venta_id','id_producto','cantidad')
-#suma=DetalleCompra.objects.filter(id_producto=id_cantidad.values('id_producto').values('precio_unitario'))
-
-
-#suma=DetalleCompra.objects.filter(id_producto=id_cantidad.values('id_producto')).values('precio_unitario')
-
-###################################################################
-#1)Total venta
-#ventas = Boleta.objects.all()
-#ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
-#total = ven.aggregate(Sum(F('precio_venta')*F('cantidad')))
-
-#2)Cantidad de productos vendidos.
-#ventas = Boleta.objects.all()
-#ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
-#cantidad=ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
-#
-
-#3)Total Costo
-#ventas = Boleta.objects.all()
-#ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
-#cantidad_id=ven.values('id_producto_id').order_by('id_producto_id').annotate(total_venta=Sum('cantidad'))
-#precio=DetalleCompra.objects.filter(id_producto_id__in=cantidad_id.values('id_producto_id')).values('id_producto_id','precio_unitario')
-#from itertools import chain
-#result_list = list(chain(cantidad_id, precio))
-
-#from django.db.models import F,Q,Count,Sum,Aggregate
-#from ventas.models import Producto,DetalleVenta,Cliente,Boleta,Venta,Factura
-
-#can=list(cantidad_id)
-#pre=list(precio)
-
-#a=Venta.objects.filter(id__in=DetalleVenta.objects.values('id_venta')).values('detalleventa__precio_venta')
-#Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('nombre','detalleventa__id_producto','detalleventa__precio_venta')
-
-#(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta=1)
 
 def menu2(request):
         return render(request,'ventas/menu2.html')
@@ -509,7 +479,7 @@ def abrircaja(request):
                         nueva_venta = Venta(usuario=request.user)
                         nueva_venta.save()
                         codigo_venta = Venta.objects.latest('id')
-                        return render(request, 'ventas/venta.html')
+                        return render(request, 'ventas/detalleventa_list.html')
         else:   
                 try:
                         usuario=get_user(request)

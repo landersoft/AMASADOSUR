@@ -19,21 +19,32 @@
 
 <div class="col-sm text-center">
     <div class="alert alert-success" role="alert">
-        ¡Transacción realizada con exito! 
+        ¡Transacción realizada con exito!
+        {{  boleta2 }}
+
+
+<input type="hidden" id="Url" data-url="{% url 'ventas:detalle_boleta' id=boleta2.id %}" />
+
     </div>
+<script type="text/javascript">
+    function Redirect()
+    {
+        var url = $("#Url").attr("data-url");
+
+
+        window.location.href = url;
+
+    }
+    setTimeout('Redirect()', 2000);
+</script>
+
+
 </div>
 
 
 
 
-<script type="text/javascript">   
-    function Redirect() 
-    {  
-        window.location.href='{% url 'ventas:detalle_boleta' id=boleta.value %}';
-    } 
-    
-    setTimeout('Redirect()', 2000);   
-</script>
+
 
 {% endblock %}
 
