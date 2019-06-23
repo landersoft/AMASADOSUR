@@ -13,7 +13,7 @@ class AdminProveedor(admin.ModelAdmin):
         
 #############################################################################
 class AdminProducto(admin.ModelAdmin):
-    list_display = ["id", "nombre", "descripcion", "precio_actual"]
+    list_display = ["id", "nombre", "descripcion", "precio_venta_unitario"]
     list_filter = ["id","nombre"]
     search_fields = ["id", "nombre"]
 
@@ -28,8 +28,8 @@ class AdminCompra(admin.ModelAdmin):
 #################MUY IMPORTANTE FOREIGN KEY###########################
     def get_proveedor(self, obj):
         return obj.proveedor.nombre
-    get_proveedor.short_description = 'Proveedor'
-    get_proveedor.admin_order_field = 'proveedor_nombre'
+        get_proveedor.short_description = 'Proveedor'
+        get_proveedor.admin_order_field = 'proveedor_nombre'
 
 
 
@@ -37,7 +37,7 @@ class AdminCompra(admin.ModelAdmin):
         model = Compra
 ###############################################################################
 class AdminDetalleCompra(admin.ModelAdmin):
-    list_display = ["id_compra", "id_producto", "cantidad", "precio_unitario"]
+    list_display = ["id_compra", "id_producto", "cantidad", "precio_compra_unitario"]
     list_filter = ["id_compra","id_producto"]
     search_fields = ["id_compra"]
 

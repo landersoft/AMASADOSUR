@@ -82,7 +82,7 @@ def detalleadd(request):
         obj = DetalleVenta.objects.filter(id_producto=de_producto.id, id_venta=de_venta.id).first()
         
         # query = DetalleVenta.objects.filter(id_producto = flotante, id_venta = de_venta).count()
-        precio = Producto.objects.get(id=flotante).precio_actual
+        precio = Producto.objects.get(id=flotante).precio_venta_unitario
         
         if obj is None:
             det_venta = DetalleVenta()
@@ -360,7 +360,7 @@ def estadisticas(request):
         #ventas = Boleta.objects.all()
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         cantidades = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
-        precio=DetalleCompra.objects.filter(id_producto_id__in=ven2.values('id_producto_id')).values('id_producto_id','precio_unitario')
+        precio=DetalleCompra.objects.filter(id_producto_id__in=ven2.values('id_producto_id')).values('id_producto_id','precio_unitario_compra')
 
         pre=list(precio)
         can=list(cantidades)
@@ -375,7 +375,7 @@ def estadisticas(request):
 
         for i in range(len(can)):
             if can[i]['id_producto_id']==pre[i]['id_producto_id']:
-                suma=suma+(can[i]['total']*pre[i]['precio_unitario'])
+                suma=suma+(can[i]['total']*pre[i]['precio_unitario_compra'])
 
         print(suma)
         print('este es el costo')
@@ -389,7 +389,7 @@ def estadisticas(request):
         #for indice in cantidades.__len__():
         #    indice+=indice
         #    if cantidades.values('id_producto_id')[indice]==pre[indice]['id_producto_id']:
-        #            costo=costo+(cantidades.values('cantidad'))* pre[indice]['precio_unitario']
+        #            costo=costo+(cantidades.values('cantidad'))* pre[indice]['precio_unitario_compra']
         #print(costo)
             #utilidad_neta=totalventas-costo
             #,{'cantidad_id': cantidad_id}
@@ -594,4 +594,4 @@ def arqueo(request):
 
 @login_required
 def test(request):
-    return render(request, "ventas/detalleventa_list.html")
+    return render(request, "abastecimiento/compras.html")

@@ -37,7 +37,7 @@ class DetalleVenta(models.Model):
     id_venta = models.ForeignKey('Venta', on_delete=models.CASCADE)
     id_producto = models.ForeignKey('abastecimiento.Producto', on_delete=models.CASCADE)
     cantidad = models.IntegerField()
-    precio_venta = models.IntegerField()
+    precio_venta_unitario = models.IntegerField()
 
     class Meta:
         ordering = ["id_venta"]

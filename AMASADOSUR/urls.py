@@ -30,6 +30,6 @@ urlpatterns = [
     path(r'ventas/', include(('ventas.urls', 'ventas'), namespace='ventas')),
     path('admin/', admin.site.urls),
     path(r'abastecimiento/', include(('abastecimiento.urls', 'abastecimiento'), namespace='abastecimiento')),
-    path(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+    path(r'logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 
 ]

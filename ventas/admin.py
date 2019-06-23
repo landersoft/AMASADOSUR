@@ -32,7 +32,7 @@ class AdminBoleta(admin.ModelAdmin):
 
 
 class AdminDetalleVenta(admin.ModelAdmin):
-    list_display = ["id_detalleventa", "id_venta", "id_producto", "cantidad", "precio_venta"]
+    list_display = ["id_detalleventa", "id_venta", "id_producto", "cantidad", "precio_venta_unitario"]
     list_filter = ["id_venta", "id_producto"]
     search_fields = ["id_venta"]
 
