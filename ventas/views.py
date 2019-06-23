@@ -61,7 +61,8 @@ def boleta(request):
         codigo_venta = Venta.objects.latest('id')
         print(codigo_venta)
     return render(request, 'ventas/venta.html')
-    
+
+@login_required
 def detalleadd(request):
 
     if request.method == 'POST':  
@@ -124,7 +125,7 @@ def detalleadd(request):
                 if tipodocumento == 'boleta':
                         nueva_boleta = Boleta(id_venta=Venta.objects.latest('id')) """
 
-
+@login_required
 def formapago(request):
     if request.method == 'POST':
         forma = request.POST.get('exampleRadios')
@@ -177,7 +178,7 @@ def formapago(request):
 
 
         
-
+@login_required
 def tipodocumento(request):
         if request.method == 'POST':
                 tipo = request.POST['documento']
@@ -219,11 +220,12 @@ def tipodocumento(request):
                         return render(request, 'ventas/verifica.html')
 
 ###################################################################################################################################
-
+@login_required
 def guardarfactura(request):
     if request.method == 'POST':
         nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=(request.POST['textinput']) )
         nueva_factura.save()
+
 
 class VentaList(ListView):
 
@@ -247,7 +249,7 @@ def pagar(request):
         print (costo)
         return render( request, 'ventas/pagar.html', {'total': costo} )
 
-
+@login_required
 def verifica(request):
         if request.method == 'POST':
                 rut = request.POST['rut']
@@ -290,6 +292,7 @@ def verifica(request):
                 
 #https://es.stackoverflow.com/questions/95569/recuperar-objectos-de-un-modelo-en-django
 
+@login_required
 def registracliente(request):
         form = RegCliente(request.POST or None)
         context = {
@@ -333,7 +336,7 @@ def registracliente(request):
 
         return render(request, "ventas/registrocliente.html", context)
 
-
+@login_required
 def estadisticas(request):
             ############################TOTAL VENTAS OK#########################################
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
@@ -398,18 +401,19 @@ def estadisticas(request):
         return render(request,'ventas/estadisticas.html',{'totalventas': totalventas ,'ven2': ven2,'utilidad': utilidad , nombre:'nombre'})
 
 
-
+@login_required
 def vista_boleta(request):
     boletas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','boleta__id_venta','forma_pago','total')
     boletas=boletas.order_by('boleta')
     return render(request,'ventas/vista_boleta.html',{'boletas': boletas})
 
-
+@login_required
 def vista_factura(request):
     facturas=Venta.objects.filter(id__in=Factura.objects.values('id_venta')).values('factura__id','factura__id_venta','forma_pago','total')
     facturas=facturas.order_by('factura')
     return render(request, 'ventas/vista_factura.html', {'facturas': facturas})
 
+@login_required
 def detalle_factura(request,id):
     factura= Factura.objects.filter(id=id)
     cliente= Cliente.objects.filter(id__in=Factura.objects.values('id_cliente')).values('id','nombre','rut','direccion').filter(factura__id=id)
@@ -420,7 +424,7 @@ def detalle_factura(request,id):
 
     return render(request, 'ventas/detalle_factura.html',{'factura':factura, 'cliente': cliente, 'venta3': venta3, 'detalle': detalle, 'iva':iva, 'supertotal':supertotal})
 
-
+@login_required
 def detalle_boleta(request, id):
     boleta= Boleta.objects.filter(id=id)
     #print(boleta)
@@ -435,7 +439,7 @@ def detalle_boleta(request, id):
     #(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta=1)
     return render(request,'ventas/detalle_boleta.html', {'venta2':venta2 ,'detalle':detalle, 'boleta':boleta })
     
-
+@login_required
 def exito(request):
     boleta2 = Boleta.objects.all().last()
     # url = reverse('ventas:detalle_boleta', kwargs={'id': boleta2.id})
@@ -445,7 +449,7 @@ def exito(request):
     }
     return render(request, 'ventas/exito.html', boleta_dict)
 
-
+@login_required
 def menu2(request):
         return render(request,'ventas/menu2.html')
 
@@ -588,6 +592,6 @@ def arqueo(request):
             return render(request, 'ventas/cerrarcaja.html', {'mesj': mesj})
                 
 
-
+@login_required
 def test(request):
     return render(request, "ventas/detalleventa_list.html")

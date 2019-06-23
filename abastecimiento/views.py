@@ -4,8 +4,10 @@ from django.urls import reverse_lazy
 from abastecimiento.forms import ProductoForm
 from .models import Producto,Proveedor,Compra
 from django.forms import formsets, formset_factory
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index(request):
     return render(request, 'ventas/menu2.html')
 
