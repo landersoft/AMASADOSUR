@@ -18,6 +18,7 @@ urlpatterns = [
     path(r'nueva/lista/verifica', views.verifica, name='verifica'),
     path(r'nueva/lista/registrocliente', views.registracliente, name='registracliente'),
     path(r'cerrarcaja/', views.cerrarcaja, name='cerrarcaja'),
+    path(r'cerrarcaja/arqueo', views.arqueo, name='arqueo'),
     path(r'cierracaja/', views.cierracaja, name='cierracaja'),
 
     path(r'estadisticas/', views.estadisticas, name='estadisticas'),

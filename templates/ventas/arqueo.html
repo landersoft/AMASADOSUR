@@ -1,59 +1,115 @@
 {% extends "base.html" %}
 
-{% block tittle %} Indicadores {% endblock %}
+{% load static %}
+
+{% block tittle %} Cierre Caja {% endblock %}
 
 {% block content %}
 
-
-<div class="container-fluid">
+  <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-3">
-		</div>
-		<div class="col-md-6">
-			<h3 class="text-info text-center">
-				Arqueo de Caja
-			</h3>
-			<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-2">
-		</div>
-		<div class="col-md-8">
+		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-3">
 				</div>
-				<div class="col-md-3">
-				</div>
-				<div class="col-md-3">
-				</div>
-				<div class="col-md-3">
-                    Fecha: {{ fecha }}
-                    <div class="estilo">
-                        &nbsp
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-10">
+              <div class="card">
+                <div class="card-body text text-center">
+                    <strong>Cierre N°: {{caja_id}}</strong></p>
+                    <th scope="col"><strong>Fecha: </strong>{{ fecha }}</th> {{hora}}
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Usuario</strong>: {{ usuario }}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Hora Apertura:</strong>{{ hora_apertura }}
+                            <strong>Hora Cierre:</strong>{{ hora_cierre }}
+                        </div>
                     </div>
-                    Cierre N°: {{ caja_id }}
+                </div>
+              </div>
+                            <div class="card">
+                            <div class="card-header text text-center">
+                                <strong>Cuadre de Caja</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>Saldo  Inicial: </strong><p></p>
+                                        <strong>Venta Efectivo: </strong><p></p>
+                                        <strong>Venta Tarjeta: </strong><p></p>
+                                        <strong>Total:</strong>
+                                    </div>
+
+                                    <div class="col-md-6 text-center">
+                                        {{ monto_inicial }}<p></p>
+                                        {{ total_efectivo.totality }}<p></p>
+                                        {{ total_tarjeta.totality }}<p></p>
+                                        {{ total }}
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-header text text-center">
+                                <strong>Ventas</strong>
+                            </div>
+                                    <div class="card card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 text-left">
+                                                <strong>Efectivo:</strong><p></p>
+                                                <strong>Tarjeta:</strong>
+
+                                            </div>
+                                            <div class="col-md-6 text-left">
+                                                {{ cantidad_efectivo }}
+                                                {{ cantidad_tarjeta }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                  </div>
+
+                  
+
+                </div>
+              </div>
+              
+                      
+                      
+                
+              
+							</div>
+              
+						</div>
+						<div class="col-md-1">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-3">
-                    Caja: {{ caja_modulo }}
-                    <div class="estilo">
-                        &nbsp
-                    </div>
-                    Cajero: {{ usuario }}
-
-
-				</div>
-				<div class="col-md-3">
-				</div>
-				<div class="col-md-3">
-				</div>
-				<div class="col-md-3">
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2">
 		</div>
 	</div>
-</div>
+  </div>
 
+
+
+
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

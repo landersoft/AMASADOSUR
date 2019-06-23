@@ -114,7 +114,7 @@ def detalleadd(request):
         contador = len(total2)
         de_venta.save()
 
-        subtotal= Venta.objects.last()
+        subtotal = Venta.objects.last()
         return HttpResponseRedirect('lista/')
 
 
@@ -132,10 +132,10 @@ def formapago(request):
         print(forma)
         de_venta = Venta.objects.last()
         if forma =='option1':               
-                de_venta.forma_pago='Efectivo'
+                de_venta.forma_pago = 'Efectivo'
                 #nueva_boleta = Boleta(id_venta=Venta.objects.latest('id'))
         else:
-                de_venta.forma_pago='Tarjeta'
+                de_venta.forma_pago = 'Tarjeta'
 
         de_venta.save()
         
@@ -443,7 +443,7 @@ def exito(request):
     boleta_dict = {
         'boleta2': boleta2
     }
-    return render(request, 'ventas/exito.html',boleta_dict)
+    return render(request, 'ventas/exito.html', boleta_dict)
 
 
 def menu2(request):
@@ -506,6 +506,7 @@ def cerrarcaja(request):
             print(usuario)
             try:
                 caja = Caja.objects.get(usuario=usuario, estado="abierta")
+                print(caja.id)
                 caja.hora_c = datetime.now()
                 caja.estado = "cerrado"
                 caja.save()
@@ -518,11 +519,19 @@ def cerrarcaja(request):
                 #print("este es el totality: " + caja2['totality'])
                 caja.monto_final = total['totality']
                 caja.save()
-                return render(request, 'ventas/arqueo.html')
+                # return render(request, 'ventas/arqueo.html')
+                url = reverse('ventas:arqueo')
+                print(url)
+                return HttpResponseRedirect(url)
             except Caja.DoesNotExist:
                     caja = None
                     mesj = "Usuario no presenta cajas abiertas"
-                    return render(request, 'ventas/nocaja.html', {mesj: 'mesj'})
+                    context = {
+                        'mesj': mesj
+                    }
+
+
+                    return render(request, 'ventas/nocaja.html', context)
 
 @login_required
 def cierracaja(request):
@@ -532,24 +541,51 @@ def cierracaja(request):
 @login_required
 def arqueo(request):
         usuario = get_user(request)
-        try:
-            caja=Caja.objects.latest(usuario=usuario, estado="cerrada")
-            if caja.hora_a.date()==datetime.now().date() and caja.hora_c.date()==datetime.now().date():
-                caja_id = caja.id
-                fecha = caja.hora_a.date()
-                usuario = caja.usuario
-                hora = datetime.now().strptime('%H:%M:%S')
-                hora_apertura = caja.hora_a.strptime('%H:%M:%S')
-                hora_cierre = caja.hora_c.strptime('%H:%M:%S')
-                total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
-                total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
-                monto_inicial = caja.monto_inicial
-                monto_final = caja.monto_final
-                caja_modulo = caja.caja_modulo
-                return render(request, 'ventas/arqueo.html', {fecha: 'fecha', usuario: 'usuario', hora: 'hora', hora_apertura: 'hora_apertura', hora_cierre: 'hora_cierre', total_efectivo: 'total_efectivo', total_tarjeta: 'total_tarjeta', monto_inicial: 'monto_inicial', monto_final: 'monto_final', caja_modulo: 'caja_modulo', caja_id: 'caja_id'})
-        except:
-                mesj = "Caja no cerrada el dia de hoy"
-                return render(request, 'ventas/cerrarcaja.html', {mesj: 'mesj'})
+        print(usuario)
+
+        #caja = Caja.objects.latest(usuario=usuario, estado="cerrada")
+        caja = Caja.objects.filter(usuario=usuario, estado="cerrado").latest('id')
+        caja = Caja.objects.get(id=caja.id)
+        print(caja.id)
+        print(caja.usuario)
+        if caja.hora_a.date() == datetime.now().date() and caja.hora_c.date() == datetime.now().date():
+
+            caja_id = caja.id
+            fecha = caja.hora_a.date()
+            usuario = caja.usuario
+            print(usuario)
+            hora = datetime.now()
+            hora = hora.time()
+            print(hora)
+            hora_apertura = caja.hora_a.time()
+            hora_cierre = caja.hora_c.time()
+            total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
+            total_efectivo = total_efectivo
+            total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
+            monto_inicial = caja.monto_inicial
+            monto_final = caja.monto_final
+            caja_modulo = caja.caja_modulo
+            print(caja_modulo)
+
+            caja_dict = {
+                'caja_id': caja_id ,
+                'fecha': fecha,
+                'usuario': usuario,
+                'hora': hora,
+                'hora_apertura': hora_apertura,
+                'hora_cierre': hora_cierre,
+                'total_efectivo': total_efectivo,
+                'total_tarjeta': total_tarjeta,
+                #totality=Sum('total'))
+                'monto_inicial': monto_inicial,
+                'monto_final': monto_final,
+                'caja_modulo': caja_modulo,
+            }
+
+            return render(request, 'ventas/arqueo.html', caja_dict)
+        else:
+            mesj = "Caja no cerrada el dia de hoy"
+            return render(request, 'ventas/cerrarcaja.html', {'mesj': mesj})
                 
 
 
