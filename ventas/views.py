@@ -18,15 +18,15 @@ from datetime import date, datetime
 
 
 
-#1 Menu principal
+
 @login_required 
 def index(request):
-    return render(request, 'ventas/menu.html')
-#2 muestra boleta o factura
-@login_required
-def nueva2(request):
+        return render(request, 'ventas/menu.html')
 
-        return render(request, 'ventas/nueva.html')
+# @login_required
+# def nueva2(request):
+
+#         return render(request, 'ventas/nueva.html')
 
 @login_required
 def nueva(request):
@@ -47,11 +47,21 @@ def nueva(request):
 
         except Caja.DoesNotExist:
                 caja = None
-                mesj = "¡Por favor abrir caja!222"
-                return render(request,'ventas/nocaja.html',{'mesj':mesj})
+                
+                mesj = "¡Por favor abrir caja!"
+                usuario=get_user(request)
+                fecha = datetime.now()
+                caja = request.META.get('REMOTE_ADDR')
 
-
-#3 eligió boleta 
+                context = {
+                        'msj': mesj,
+                        'usuario': usuario,
+                        'fecha': fecha,
+                        'caja': caja
+                }
+                
+                return render(request,'ventas/nocaja.html', context)
+ 
 @login_required
 def boleta(request):
 
@@ -93,7 +103,7 @@ def detalleadd(request):
                 det_venta.cantidad = 1
             else:
                 det_venta.cantidad = request.POST.get('cantidad')
-                det_venta.precio_venta = precio
+                det_venta.precio_venta_unitario = precio
                 det_venta.save()
         else:
             det_venta = DetalleVenta.objects.get(id_producto=de_producto, id_venta=de_venta)
@@ -108,7 +118,7 @@ def detalleadd(request):
         print(precio)
         print(det_venta.cantidad)
         # print((det_venta.cantidad * det_venta.precio_venta))
-        total2 = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(suma=Sum(F('precio_venta')*F('cantidad')))
+        total2 = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(suma=Sum(F('precio_venta_unitario')*F('cantidad')))
         print("total consulta")
         de_venta.total = total2["suma"]
         print(total2["suma"])
@@ -117,13 +127,6 @@ def detalleadd(request):
 
         subtotal = Venta.objects.last()
         return HttpResponseRedirect('lista/')
-
-
-""" def boletaofactura(request):
-        if request.method == 'POST':
-                tipodocumento = request.POST['documento']
-                if tipodocumento == 'boleta':
-                        nueva_boleta = Boleta(id_venta=Venta.objects.latest('id')) """
 
 @login_required
 def formapago(request):
@@ -171,13 +174,7 @@ def formapago(request):
             #return HttpResponseRedirect(url)
         else:
                 return render(request, 'ventas/verifica.html')
-        
-
-
-
-
-
-        
+               
 @login_required
 def tipodocumento(request):
         if request.method == 'POST':
@@ -204,7 +201,6 @@ def tipodocumento(request):
                                 producto.stock-=detalle['cantidad']
                                 producto.save()
                         
-
 ###################################Como obtener el total de ventas################################################################                        
 
                         ventas=Boleta.objects.all().values('id_venta')
@@ -226,7 +222,6 @@ def guardarfactura(request):
         nueva_factura = Factura(id_venta=Venta.objects.latest('id'), id_cliente=(request.POST['textinput']) )
         nueva_factura.save()
 
-
 class VentaList(ListView):
 
     model = DetalleVenta
@@ -238,7 +233,7 @@ class VentaList(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(VentaList, self).get_context_data(**kwargs)
-        context['suma'] = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta')*F('cantidad')))['total']
+        context['suma'] = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta_unitario')*F('cantidad')))['total']
         print(context)
         return context
 
@@ -290,8 +285,6 @@ def verifica(request):
                 else:
                         return HttpResponseRedirect('registrocliente')
                 
-#https://es.stackoverflow.com/questions/95569/recuperar-objectos-de-un-modelo-en-django
-
 @login_required
 def registracliente(request):
         form = RegCliente(request.POST or None)
@@ -400,7 +393,6 @@ def estadisticas(request):
             
         return render(request,'ventas/estadisticas.html',{'totalventas': totalventas ,'ven2': ven2,'utilidad': utilidad , nombre:'nombre'})
 
-
 @login_required
 def vista_boleta(request):
     boletas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','boleta__id_venta','forma_pago','total')
@@ -430,7 +422,7 @@ def detalle_boleta(request, id):
     #print(boleta)
     venta2 = Venta.objects.filter(id__in=boleta.values('id_venta_id'))
     #print(venta2)
-    detalle=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total','detalleventa__precio_venta').annotate(suto=F('detalleventa__cantidad')*F('detalleventa__precio_venta')).filter(boleta__id=id)
+    detalle=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total','detalleventa__precio_venta_unitario').annotate(suto=F('detalleventa__cantidad')*F('detalleventa__precio_venta_unitario')).filter(boleta__id=id)
     #detalle=(Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto_id')).values('id','nombre','detalleventa__cantidad','detalleventa__precio_venta')).filter(detalleventa__id_venta__in=venta2.values('id'))
     #detalle = DetalleVenta.objects.filter(id_venta__in=venta2.values('id'))
     #a=Venta.objects.filter(id__in=Boleta.objects.values('id_venta')).values('boleta__id','id','detalleventa__id_detalleventa','detalleventa__cantidad','producto__nombre','producto__id','total').filter(boleta__id=1)
@@ -499,10 +491,6 @@ def abrircaja(request):
                 except:
                         return render(request, 'ventas/nocaja.html')
 
-
-        
-
-
 @login_required
 def cerrarcaja(request):
         if request.method == 'POST':
@@ -539,8 +527,20 @@ def cerrarcaja(request):
 
 @login_required
 def cierracaja(request):
-    return render(request, 'ventas/cerrarcaja.html')
+        
+        usuario=get_user(request)
+        fecha = datetime.now()
+        caja = request.META.get('REMOTE_ADDR')
 
+        context = {
+                        
+                'usuario': usuario,
+                'fecha': fecha,
+                'caja': caja
+                }
+
+
+        return render(request, 'ventas/cerrarcaja.html',context)
 
 @login_required
 def arqueo(request):
@@ -591,7 +591,6 @@ def arqueo(request):
             mesj = "Caja no cerrada el dia de hoy"
             return render(request, 'ventas/cerrarcaja.html', {'mesj': mesj})
                 
-
 @login_required
 def test(request):
     return render(request, "abastecimiento/compras.html")

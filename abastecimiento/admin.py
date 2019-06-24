@@ -45,8 +45,6 @@ class AdminDetalleCompra(admin.ModelAdmin):
         model = DetalleCompra
 
 
-
-
 admin.site.register(Proveedor, AdminProveedor)
 admin.site.register(Producto, AdminProducto)
 admin.site.register(Compra, AdminCompra)

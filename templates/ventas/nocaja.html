@@ -22,20 +22,45 @@
             </div>
             <div class="col-md-4">
                     <div class="alert alert-warning text-center" role="alert">
-                            {{mesj}}
+                            {{msj}}
                     </div>
-                <div class="row">    
+                <div class="row">
+                        <div class="col-md-2 text text-center offset-1">
+                        Nombre:
+                        </div>
+
+                        <div class="col-md-8">
+                            {{usuario}}
+                        </div>
+
+                        <div class="col-md-2 text text-center offset-1">
+                        Caja:
+                        </div>
+
+                        <div class="col-md-8">
+                            {{caja}}
+                        </div>
+
+                        <div class="col-md-2 text text-center offset-1">
+                        Fecha:
+                        </div>
+
+                        <div class="col-md-8">
+                            {{fecha}}
+                        </div>
+
                         <div class="col-md-8 offset-1">
+                                
                                 <form class="form-row align-items-center" action="/ventas/abrircaja/" method='POST'>
                                     {% csrf_token %}
                                     <input type="text" class="form-control" id="monto" name="monto" placeholder="Monto inicial">
-                    </div>
+                        </div>
                         <div class="col-md-2">       
                             <button type="submit" class="btn btn-primary align-self-end">Enviar</button>
                         </div>
-                    </form>
+                                </form>
                     
-                </div>
+                        </div>
             </div>
             <div class="col-md-4">
             </div>
