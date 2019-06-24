@@ -26,9 +26,9 @@
                     </div>
                 <div class="row">    
                         <div class="col-md-8 offset-1">
-                                <form class="form-row align-items-center" action="abrircaja" method="POST">
+                                <form class="form-row align-items-center" action="abrircaja" method="POST" >
                                     {% csrf_token %}
-                                    <input type="text" class="form-control" id="monto" name="monto" placeholder="Monto inicial">
+                                    <input type="number" class="form-control" id="monto" name="monto" placeholder="Monto inicial" required>
                     </div>
                         <div class="col-md-2">       
                             <button type="submit" class="btn btn-primary align-self-end">Enviar</button>

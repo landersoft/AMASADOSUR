@@ -563,12 +563,20 @@ def arqueo(request):
             print(hora)
             hora_apertura = caja.hora_a.time()
             hora_cierre = caja.hora_c.time()
-            total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Tarjeta').aggregate(totality=Sum('total'))
-            total_efectivo = total_efectivo
-            total_tarjeta = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True,forma_pago='Efectivo').aggregate(totality=Sum('total'))
+            total_efectivo2=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'), fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True, forma_pago = 'Tarjeta').aggregate(totality=Sum('total'))
+            #total_efectivo = Venta.objects.filter(fecha__range=(caja.hora_a,caja.hora_c)).exclude(total__isnull=True, forma_pago = 'Tarjeta').aggregate(totality=Sum('total'))
+
+            total_tarjeta = Venta.objects.filter(id__in=Boleta.objects.values('id_venta'), fecha__range=(caja.hora_a,caja.hora_c),forma_pago='Tarjeta').exclude(total__isnull=True).aggregate(totality2=Sum('total'))
+            if total_tarjeta['totality2'] is None:
+                total_tarjeta['totality2']=0
+
             monto_inicial = caja.monto_inicial
             monto_final = caja.monto_final
             caja_modulo = caja.caja_modulo
+            total = total_efectivo2['totality']+total_tarjeta['totality2']+monto_inicial
+            cant_ve = Venta.objects.filter(id__in=Boleta.objects.values('id_venta'), fecha__range=(caja.hora_a, caja.hora_c), forma_pago='Efectivo').exclude(total__isnull=True).count()
+            cant_vt = Venta.objects.filter(id__in=Boleta.objects.values('id_venta'), fecha__range=(caja.hora_a, caja.hora_c), forma_pago='Tarjeta').exclude(total__isnull=True).count()
+
             print(caja_modulo)
 
             caja_dict = {
@@ -578,12 +586,15 @@ def arqueo(request):
                 'hora': hora,
                 'hora_apertura': hora_apertura,
                 'hora_cierre': hora_cierre,
-                'total_efectivo': total_efectivo,
+                'total_efectivo2': total_efectivo2,
                 'total_tarjeta': total_tarjeta,
                 #totality=Sum('total'))
                 'monto_inicial': monto_inicial,
                 'monto_final': monto_final,
                 'caja_modulo': caja_modulo,
+                'total':total,
+                'cant_ve':cant_ve,
+                'cant_vt': cant_vt,
             }
 
             return render(request, 'ventas/arqueo.html', caja_dict)
@@ -594,3 +605,22 @@ def arqueo(request):
 @login_required
 def test(request):
     return render(request, "abastecimiento/compras.html")
+
+@login_required
+def vista_boleta_vivo(request):
+
+    apertura = Caja.objects.latest('id').hora_a
+    print(apertura)
+    try:
+        cierre = Caja.objects.latest('id').hora_c
+        if cierre==None:
+            cierre=datetime.now()
+    except Caja.DoesNotExist:
+        cierre = None
+        cierre=datetime.now()
+
+    print(cierre)
+
+    boletas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'), fecha__range=(apertura, cierre)).values('boleta__id','boleta__id_venta','forma_pago','total')
+    boletas=boletas.order_by('boleta')
+    return render(request,'ventas/vista_boleta.html',{'boletas': boletas})

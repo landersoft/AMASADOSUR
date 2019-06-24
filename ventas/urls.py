@@ -11,7 +11,7 @@ urlpatterns = [
     path(r'nueva/add', views.detalleadd, name='add'),
     path(r'nueva/menu2/', views.menu2, name='menu2'),    
     path(r'abrircaja/', views.abrircaja, name='abrircaja'),
-    path(r'nueva/lista/', views.VentaList.as_view()),
+    path(r'nueva/lista/', views.VentaList.as_view(), name='ventalist'),
     path(r'nueva/lista/pagar', views.pagar, name='pagar'),
     path(r'nueva/lista/formapago', views.formapago, name='formapago'),
     path(r'nueva/lista/documento', views.tipodocumento, name='tipodocumento'),
@@ -23,6 +23,7 @@ urlpatterns = [
 
     path(r'estadisticas/', views.estadisticas, name='estadisticas'),
     path(r'reporte/boletas/', views.vista_boleta, name='vista_boleta'),
+    path(r'reporte/boletas/cierre', views.vista_boleta_vivo, name='vista_boleta_vivo'),
     path(r'reporte/facturas/', views.vista_factura, name='vista_factura'),
     path(r'reporte/boletas/detalle/<int:id>', views.detalle_boleta, name='detalle_boleta'),
     path(r'reporte/facturas/detalle/<int:id>', views.detalle_factura, name='detalle_factura'),

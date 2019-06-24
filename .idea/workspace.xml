@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ce95fe4a-ded9-4cd1-8803-b5f7d5f6d910" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/templates/ventas/abrircaja.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ventas/abrircaja.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ventas/arqueo.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ventas/arqueo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ventas/nocaja.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ventas/nocaja.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ventas/venta.error.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ventas/venta.error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ventas/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ventas/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ventas/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ventas/views.py" afterDir="false" />
+    </list>
+    <ignored path=".idea/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ventas/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1855">
+              <caret line="83" column="40" lean-forward="true" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#57#0" expanded="true" />
+                <element signature="e#732#774#0" />
+                <element signature="e#917#2133#0" />
+                <element signature="e#2178#2409#0" />
+                <element signature="e#4654#6539#0" />
+                <element signature="e#6608#8920#0" />
+                <element signature="e#9103#9270#0" />
+                <element signature="e#9891#10050#0" />
+                <element signature="e#10099#12193#0" />
+                <element signature="e#12265#14270#0" />
+                <element signature="e#14327#17373#0" />
+                <element signature="e#17422#17667#0" />
+                <element signature="e#17717#17974#0" />
+                <element signature="e#18029#18970#0" />
+                <element signature="e#19025#20361#0" />
+                <element signature="e#20407#20669#0" />
+                <element signature="e#20715#20757#0" />
+                <element signature="e#20807#23389#0" />
+                <element signature="e#25292#27642#0" />
+                <element signature="e#27371#27424#0" />
+                <element signature="e#27479#27966#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ventas/cerrarcaja.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-612" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ventas/exito.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-end-line="38" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ventas/arqueo.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="65" column="64" lean-forward="true" selection-start-line="65" selection-start-column="64" selection-end-line="65" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="36" column="40" lean-forward="true" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="66" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ventas/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>producto no</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/templates/ventas/abrircaja.html" />
+        <option value="$PROJECT_DIR$/templates/ventas/nocaja.html" />
+        <option value="$PROJECT_DIR$/ventas/views.py" />
+        <option value="$PROJECT_DIR$/ventas/urls.py" />
+        <option value="$PROJECT_DIR$/templates/ventas/venta.error.html" />
+        <option value="$PROJECT_DIR$/templates/ventas/arqueo.html" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/AMASADOSUR.iml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="549" />
+    <option name="y" value="-13" />
+    <option name="width" value="1300" />
+    <option name="height" value="688" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="AMASADOSUR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AMASADOSUR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AMASADOSUR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AMASADOSUR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="ventas" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AMASADOSUR" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AMASADOSUR" type="462c0819:PsiDirectoryNode" />
+              <item name="ventas" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="AMASADOSUR" type="Python.DjangoServer" factoryName="Django server">
+      <module name="AMASADOSUR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ce95fe4a-ded9-4cd1-8803-b5f7d5f6d910" name="Default Changelist" comment="" />
+      <created>1561341727292</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1561341727292</updated>
+      <workItem from="1561341731303" duration="7597000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="7597000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1296" height="696" extended-state="6" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" weight="0.3285968" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" sideWeight="0.49919093" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Event Log" sideWeight="0.5008091" side_tool="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="R Packages" />
+      <window_info anchor="right" id="SciView" />
+      <window_info anchor="right" id="R Graphics" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/AMASADOSUR/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-163" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/detalle_boleta.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1071" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ventas/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357">
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/cierre.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/venta.error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/abrircaja.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-24">
+          <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/nocaja.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="55" column="55" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="36" column="40" lean-forward="true" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/arqueo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="65" column="64" lean-forward="true" selection-start-line="65" selection-start-column="64" selection-end-line="65" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/exito.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-end-line="38" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ventas/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ventas/cerrarcaja.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-612" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ventas/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1855">
+          <caret line="83" column="40" lean-forward="true" selection-start-line="83" selection-start-column="40" selection-end-line="83" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+            <element signature="e#732#774#0" />
+            <element signature="e#917#2133#0" />
+            <element signature="e#2178#2409#0" />
+            <element signature="e#4654#6539#0" />
+            <element signature="e#6608#8920#0" />
+            <element signature="e#9103#9270#0" />
+            <element signature="e#9891#10050#0" />
+            <element signature="e#10099#12193#0" />
+            <element signature="e#12265#14270#0" />
+            <element signature="e#14327#17373#0" />
+            <element signature="e#17422#17667#0" />
+            <element signature="e#17717#17974#0" />
+            <element signature="e#18029#18970#0" />
+            <element signature="e#19025#20361#0" />
+            <element signature="e#20407#20669#0" />
+            <element signature="e#20715#20757#0" />
+            <element signature="e#20807#23389#0" />
+            <element signature="e#25292#27642#0" />
+            <element signature="e#27371#27424#0" />
+            <element signature="e#27479#27966#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

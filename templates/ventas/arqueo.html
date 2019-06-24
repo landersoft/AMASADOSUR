@@ -51,8 +51,8 @@
 
                                     <div class="col-md-6 text-center">
                                         {{ monto_inicial }}<p></p>
-                                        {{ total_efectivo.totality }}<p></p>
-                                        {{ total_tarjeta.totality }}<p></p>
+                                        {{ total_efectivo2.totality }}<p></p>
+                                        {{ total_tarjeta.totality2 }}<p></p>
                                         {{ total }}
                                     </div>
 
@@ -61,7 +61,7 @@
                             </div>
                             <div class="card">
                             <div class="card-header text text-center">
-                                <strong>Ventas</strong>
+                                <strong><a href="{% url 'ventas:vista_boleta_vivo' %}">Ventas</a></strong>
                             </div>
                                     <div class="card card-body">
                                         <div class="row">
@@ -71,8 +71,8 @@
 
                                             </div>
                                             <div class="col-md-6 text-left">
-                                                {{ cantidad_efectivo }}
-                                                {{ cantidad_tarjeta }}
+                                                {{ cant_ve }}<p></p>
+                                                {{ cant_vt }}
                                             </div>
                                         </div>
 

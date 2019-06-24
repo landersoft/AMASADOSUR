@@ -1,38 +1,35 @@
 {% extends "base.html"%}
-
+{% load static %}
 {% block content %}
 
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-2">
-
         </div>
+
+
 		<div class="col-md-8">
-		<div class="alert alert-danger text-center" role="alert">
+            <div class="estilo">
+            &nbsp
+        </div>
+        <div class="estilo">
+            &nbsp
+        </div>
+		    <div class="alert alert-danger text-center" role="alert">
   					{{msj}}
-					</div>
-			<div class="row">
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-6">
-                    <div id="espacio">&nbsp</div>
-                    <div id="espacio">&nbsp</div>
-					
-							
-                            <form class="form-row align-items-center " action="/ventas/nueva/add" method="POST">{% csrf_token %}
-                                <label class="sr-only" for="textinput" autofocus>Codigo</label>
-                                <input id="textinput" name="textinput" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required="">
 
+                <script type="text/javascript">
+                function Redirect()
+                    {
 
-				</div>
-				<div class="col-md-4">
-                    <div id="espacio">&nbsp</div>
-                    <div id="espacio">&nbsp</div>
-                    <button type="submit" class="btn btn-primary mb-1 ">Aceptar</button>
-                    </form>
-				</div>
-			</div>
-		</div>
+                window.location.href = "{% url 'ventas:ventalist' %}";
+
+                    }
+                setTimeout('Redirect()', 1000);
+                </script>
+
+            </div>
+        </div>
 		<div class="col-md-2">
 		</div>
 	</div>
