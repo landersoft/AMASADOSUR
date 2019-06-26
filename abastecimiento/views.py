@@ -34,3 +34,7 @@ class ListadoCompras(ListView):
     template_name = 'abastecimiento/compras.html'
     context_object_name = 'compras'
 
+
+@login_required
+def test(request):
+    return render(request, "abastecimiento/compra.html")

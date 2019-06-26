@@ -1,0 +1,145 @@
+{% extends "base.html"%}
+{% block estilo %}{% endblock %}
+
+{% load staticfiles %}
+
+{% block tittle %}Compra{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+    <form action="/" method="POST">
+        {% csrf_token %}
+
+        &nbsp;
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-3">
+            <div class="container">
+
+                    <div class="form-row">
+                        <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="rut" name="rut" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Verifica</button>
+                        </div>
+                        <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                        </div>
+                         <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="direccion" name="direccion">
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="container">
+                <div class="form-row">
+                    <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
+                    <div class="col-md-7">
+                        <input type="email" class="form-control form-control-sm" id="email" name="email">
+                    </div>
+                    <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control form-control-sm" id="telefono" name="telefono">
+                    </div>
+                    <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
+                    <div class="col-md-7">
+                        <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
+                    </div>
+                 <!--   <div class="col-md-10 offset-md-7">
+                       <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                 --->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+		</div>
+    </div>
+
+        <div class="row">
+            <div class="col-md-1">
+		    </div>
+		    <div class="col-md-3">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-3">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-1">
+
+		</div>
+		<div class="col-md-3 ">
+		</div>
+		<div class="col-md-3 border border-0">
+
+            <form class="form-row align-items-center text text-center text-black-50" action="/ventas/nueva/add" method="POST">
+                {% csrf_token %}
+                Codigo
+                <input id="textinput" name="textinput" type="number" placeholder="Ingrese Codigo" class="form-control input-lg"
+                       required="" autofocus >
+		</div>
+
+        <div class="col-md-1 text-black-50">
+                Cantidad
+                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
+		</div>
+
+        <div class="col-md-1 text-black-50">
+                Precio Unit
+                <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
+		</div>
+		<div class="col-md-1 text-light ">
+            aceptar
+                <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
+
+		</div>
+            </form>
+		<div class="col-md-3 text text-center text-black-50 h-auto">
+            <div class="text text-light">Total</div>
+            <h2><strong>Total:</strong> {{suma}}</h2>
+
+
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </form>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
