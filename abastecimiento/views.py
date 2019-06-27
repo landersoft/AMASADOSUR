@@ -26,6 +26,8 @@ class ProductoList(ListView):
 
 class CrearCompra(CreateView):
     pass
+
+
     
 
 
@@ -36,5 +38,24 @@ class ListadoCompras(ListView):
 
 
 @login_required
-def test(request):
+def compra(request):
     return render(request, "abastecimiento/compra.html")
+
+
+def nueva_compra(request):
+    if request.method=="POST":
+        rut_proveedor = request.POST('rut')
+        try:
+            proveedor = Proveedor.objects.get(rut=rut_proveedor)
+
+            context={
+                proveedor : 'proveedor'
+            }
+            return render(request, 'ventas/info.html', context)
+        except Proveedor.DoesNotExist:
+            proveedor=None
+            mesj = "Proveedor NO existe \n Redirigiendo"
+            context={
+                'mesj': mesj
+            }
+            return render(request,'ventas/info.html',context)

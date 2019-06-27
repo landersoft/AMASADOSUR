@@ -489,15 +489,28 @@ def abrircaja(request):
                                 mesj="Caja cerrada por hoy"
                                 return render(request,'ventas/info.html',{'mesj': mesj})
                 except:
-                        return render(request, 'ventas/nocaja.html')
+                    usuario = get_user(request)
+                    fecha = datetime.now()
+                    caja = request.META.get('REMOTE_ADDR')
+                    mesj = "Ingrese monto inicial"
+                    context = {
+
+                        'usuario': usuario,
+                        'fecha': fecha,
+                        'caja': caja,
+                        'mesj': mesj,
+                    }
+                    return render(request, 'ventas/nocaja.html',context)
 
 @login_required
 def cerrarcaja(request):
         if request.method == 'POST':
+
             usuario = get_user(request)
             print(usuario)
             try:
                 caja = Caja.objects.get(usuario=usuario, estado="abierta")
+
                 print(caja.id)
                 caja.hora_c = datetime.now()
                 caja.estado = "cerrado"
@@ -510,6 +523,12 @@ def cerrarcaja(request):
                 print(total)
                 #print("este es el totality: " + caja2['totality'])
                 caja.monto_final = total['totality']
+                if not caja.monto_final:
+                    url = reverse('ventas:ventalist')
+                    print(url)
+                    return HttpResponseRedirect(url)
+
+
                 caja.save()
                 # return render(request, 'ventas/arqueo.html')
                 url = reverse('ventas:arqueo')
@@ -517,11 +536,16 @@ def cerrarcaja(request):
                 return HttpResponseRedirect(url)
             except Caja.DoesNotExist:
                     caja = None
+                    usuario = get_user(request)
+                    fecha = datetime.now()
+                    caja = request.META.get('REMOTE_ADDR')
                     mesj = "Usuario no presenta cajas abiertas"
                     context = {
-                        'mesj': mesj
+                        'mesj' : mesj,
+                        'usuario': usuario,
+                        'fecha': fecha,
+                        'caja': caja,
                     }
-
 
                     return render(request, 'ventas/nocaja.html', context)
 

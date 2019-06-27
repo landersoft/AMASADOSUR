@@ -16,6 +16,7 @@ class Proveedor(models.Model):
 
 
 class Producto(models.Model):
+    codigo_barras = models.IntegerField()
     nombre = models.CharField(max_length=10, blank=False, null=False)
     descripcion = models.CharField(max_length=30, blank=False, null=False)
     precio_venta_unitario = models.IntegerField(default=0)
@@ -29,11 +30,11 @@ class Producto(models.Model):
 
 
 class Compra(models.Model):
-    documento = models.CharField(max_length=20, blank=False, null=False)
-    fecha = models.DateField(auto_now=True)
+    documento = models.CharField(max_length=20, blank=True, null=True)
+    fecha = models.DateField()
     proveedor = models.ForeignKey(
         'Proveedor', related_name='proveedores', on_delete=models.PROTECT)
-    total = models.IntegerField()
+    total = models.IntegerField(blank=True,null=True)
     producto = models.ManyToManyField('Producto', through='DetalleCompra')
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,blank=True, null=True)
 
