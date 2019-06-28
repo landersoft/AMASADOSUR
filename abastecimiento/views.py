@@ -49,11 +49,13 @@ def nueva_compra(request):
         print(rut_proveedor)
         try:
             proveedor = Proveedor.objects.get(rut=rut_proveedor)
-
+            print(proveedor.nombre)
+            
             context={
-                'proveedor': proveedor
+                'nombre': proveedor.nombre,
+                'rut': proveedor.rut 
             }
-            return render(request, 'ventas/info.html', context)
+            return render(request, 'abastecimiento/compra.html', context)
         except Proveedor.DoesNotExist:
             proveedor=None
             mesj = "Proveedor NO existe \n Redirigiendo"

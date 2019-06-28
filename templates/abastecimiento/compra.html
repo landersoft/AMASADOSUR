@@ -12,47 +12,85 @@
 		<div class="col-md-4">
 		</div>
 		<div class="col-md-4">
-            <form action="abastecimiento/compra/nueva" method="POST">
+            <form action="http://127.0.0.1:8000/abastecimiento/compra/nueva" method="POST">
                 {% csrf_token %}
+                {% if rut %}
                     <div class="form-row">
 
-
-                        <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control form-control-sm" id="rut" name="rut" required>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Verifica</button>
-                        </div>
-
-                        <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
-                        </div>
-                         <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control form-control-sm" id="direccion" name="direccion">
-                        </div>
+                        
+                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" required placeholder={{rut}} readonly>
+                            </div>                        
+                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" required>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">Verifica</button>
+                            </div>                         
+                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{nombre}} readonly>
+                            </div>                        
+                            <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" placeholder={{direccion}} readonly >
+                            </div>
+                            <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
+                            <div class="col-md-7">
+                                <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder={{email}} readonly>
+                            </div>
+                            <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
+                            <div class="col-md-7">
+                                <input type="number" class="form-control form-control-sm" id="telefono" name="telefono" placeholder={{telefono}} readonly>
+                            </div>
+                            <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
+                                <div class="col-md-7">
+                            <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
+                    
                     </div>
+
+                {% else %}
+
+                    <div class="form-row">
+                        
+                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" required >
+                            </div>                        
+                                                     
+                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" required>
+                            </div>                        
+                            <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="direccion" name="direccion">
+                            </div>
+                            <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
+                            <div class="col-md-7">
+                                <input type="email" class="form-control form-control-sm" id="email" name="email">
+                            </div>
+                            <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
+                            <div class="col-md-7">
+                                <input type="number" class="form-control form-control-sm" id="telefono" name="telefono">
+                            </div>
+                            <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
+                                <div class="col-md-7">
+                            <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
+                    
+                    </div>
+            {% endif %}
+
 
 
             <div class="form-row">
-                    <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
-                    <div class="col-md-7">
-                        <input type="email" class="form-control form-control-sm" id="email" name="email">
-                    </div>
-                    <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
-                    <div class="col-md-7">
-                        <input type="number" class="form-control form-control-sm" id="telefono" name="telefono">
-                    </div>
-                    <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
-                    <div class="col-md-7">
-                        <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
-                    </div>
-                 <!--   <div class="col-md-10 offset-md-7">
+                    
+                   <div class="col-md-10 offset-md-7">
                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                 --->
+                 
             </div>
 
 		</div>
