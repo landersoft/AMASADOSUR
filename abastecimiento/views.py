@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView
+from django.forms import modelformset_factory
 from django.urls import reverse_lazy
 
-from .models import Producto,Proveedor,Compra
+from .models import Producto,Proveedor,Compra,DetalleCompra
 from django.forms import formsets, formset_factory
 from django.contrib.auth.decorators import login_required
 
@@ -44,12 +45,13 @@ def compra(request):
 
 def nueva_compra(request):
     if request.method=="POST":
-        rut_proveedor = request.POST('rut')
+        rut_proveedor = request.POST['rut']
+        print(rut_proveedor)
         try:
             proveedor = Proveedor.objects.get(rut=rut_proveedor)
 
             context={
-                proveedor : 'proveedor'
+                'proveedor': proveedor
             }
             return render(request, 'ventas/info.html', context)
         except Proveedor.DoesNotExist:
@@ -59,3 +61,5 @@ def nueva_compra(request):
                 'mesj': mesj
             }
             return render(request,'ventas/info.html',context)
+
+
