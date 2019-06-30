@@ -1,104 +1,306 @@
 {% extends "base.html"%}
+
 {% block estilo %}{% endblock %}
 
 {% load staticfiles %}
 
 {% block tittle %}Compra{% endblock %}
-
 {% block content %}
+    <div class="container-fluid">
 
-<div class="container-fluid">
+
+
+        &nbsp;
+
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-2">
 		</div>
-		<div class="col-md-4">
-            <form action="http://127.0.0.1:8000/abastecimiento/compra/nueva" method="POST">
-                {% csrf_token %}
-                {% if rut %}
+
+        {% if rut and fecha is None %}
+
+		        <div class="col-md-4">
+
+            <div class="container">
+                    <form action="{% url 'abastecimiento:nueva' %}" method="post">{% csrf_token %}
                     <div class="form-row">
 
-                        
-                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" required placeholder={{rut}} readonly>
-                            </div>                        
-                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" required>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary">Verifica</button>
-                            </div>                         
-                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{nombre}} readonly>
-                            </div>                        
-                            <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="direccion" name="direccion" placeholder={{direccion}} readonly >
-                            </div>
-                            <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
-                            <div class="col-md-7">
-                                <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder={{email}} readonly>
-                            </div>
-                            <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
-                            <div class="col-md-7">
-                                <input type="number" class="form-control form-control-sm" id="telefono" name="telefono" placeholder={{telefono}} readonly>
-                            </div>
-                            <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
-                                <div class="col-md-7">
-                            <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
-                    
+                        <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="rut" name="rut" placeholder="{{ rut }}" value="{{ rut }}" readonly>
+                        </div>
+
+                        <label for="nombre" class="col-md-3 col-form-label-sm">Nombre Provee.</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{ nombre }} readonly>
+                        </div>
+
+                        <label for="usuario" class="col-md-3 col-form-label-sm ">Usuario</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
+                        </div>
                     </div>
 
-                {% else %}
-
-                    <div class="form-row">
-                        
-                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" required >
-                            </div>                        
-                                                     
-                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre</label>                        
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" required>
-                            </div>                        
-                            <label for="direccion" class="col-md-3 col-form-label-sm">Direccion</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="direccion" name="direccion">
-                            </div>
-                            <label for="email" class="col-md-3 col-form-label-sm">E-mail</label>
-                            <div class="col-md-7">
-                                <input type="email" class="form-control form-control-sm" id="email" name="email">
-                            </div>
-                            <label for="telefono" class="col-md-3 col-form-label-sm">Telefono</label>
-                            <div class="col-md-7">
-                                <input type="number" class="form-control form-control-sm" id="telefono" name="telefono">
-                            </div>
-                            <label for="fecha" class="col-md-3 col-form-label-sm">Fecha</label>
-                                <div class="col-md-7">
-                            <input type="date" class="form-control form-control-sm" id="fecha" name="fecha">
-                    
-                    </div>
-            {% endif %}
-
-
-
-            <div class="form-row">
-                    
-                   <div class="col-md-10 offset-md-7">
-                       <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                 
             </div>
 
+        </div>
+                <div class="col-md-4">
+            <div class="container">
+                <div class="form-row">
+                    <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control form-control-sm" id="dcto" name="dcto" required>
+                    </div>
+
+                    <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
+                    <div class="col-md-7">
+                        <input type="date" class="form-control form-control-sm" id="fecha" name="fecha" required>
+                    </div>
+                    <div class="col offset-md-8">
+                            <button type="submit" class="btn btn-primary">Registra Compra</button>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+                </form>
+
+
+
+        {% elif rut and fecha %}
+
+                <div class="col-md-4">
+                    <div class="container">
+
+                        <div class="form-row">
+
+                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" placeholder="{{ rut }}" readonly>
+                            </div>
+
+
+                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre Provee.</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{ nombre }} readonly>
+                            </div>
+
+                            <label for="usuario" class="col-md-3 col-form-label-sm ">Usuario</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="container">
+                        <div class="form-row">
+                            <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control-sm" id="dcto" placeholder="{{ dcto }}"  name="dcto"  readonly>
+                            </div>
+
+                            <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control form-control-sm" id="fecha" placeholder="{{ fecha }}" name="fecha"  readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
+<div class="container-fluid">
+&nbsp
+	<div class="form-row">
+		<div class="col-md-1">
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-2 text text-left text-black">
+            Código
+            <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required="" autofocus >
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
 		</div>
 	</div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="col-md-1 ">
+		</div>
+		<div class="col-md-3 border border-0">
+
+            <form class="form-row align-items-center text text-center text-black-50" action=action="{% url 'abastecimiento:agrega_detalle' %}" method="post">{% csrf_token %}
+                {% csrf_token %}
+                Codigo
+                <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg"
+                       required="" autofocus >
+                <input type="hidden" id="id" name="id" value="{{ id }}">
+        </div>
+
+        <div class="col-md-1 text-black-50">
+                Cantidad
+                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
+		</div>
+
+        <div class="col-md-1 text-black-50">
+                Precio Unit
+                <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
+		</div>
+		<div class="col-md-1 text-light ">
+            aceptar
+                <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
+
+		</div>
+            </form>
+		<div class="col-md-3 text text-center text-black-50 h-auto">
+            <div class="text text-light">Total</div>
+            <h2><strong>Total:</strong> {{suma}}</h2>
+
+
+		</div>
+		<div class="col-md-1">
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {% else %}
+            <div class="col-md-4">
+            <div class="container">
+                    <form action="{% url 'abastecimiento:verifica' %}" method="POST">{% csrf_token %}
+                    <div class="form-row">
+                        <label for="rut" class="col-md-3 col-form-label-sm text-right">Rut</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="rut" name="rut" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-sm">Verifica</button>
+                        </div>
+                        <label for="nombre" class="col-md-3 col-form-label-sm text-right">Nombre</label>
+                        <div class="col-7">
+                            <input type="text" class="form-control form-control-sm" id="nombre" name="nombre">
+                        </div>
+
+                    </div>
+                    </form>
+
+            </div>
+        </div>
+            <div class="col-md-4">
+            <div class="container">
+                <div class="form-row">
+                    <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
+                    <div class="col-md-7">
+                        <input type="date" class="form-control form-control-sm" id="fecha" name="fecha" placeholder="" readonly>
+                    </div>
+                    <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control form-control-sm" id="dcto" name="dcto" readonly>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        <div class="col-md-2">
+		</div>
 
 
 

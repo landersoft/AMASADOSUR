@@ -1,0 +1,54 @@
+{% block detalle %}
+        <div class="row">
+            <div class="col-md-1">
+		    </div>
+		    <div class="col-md-3">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-3">
+		    </div>
+		    <div class="col-md-1">
+		    </div>
+		    <div class="col-md-1">
+
+		</div>
+		<div class="col-md-3 ">
+		</div>
+		<div class="col-md-3 border border-0">
+
+            <form class="form-row align-items-center text text-center text-black-50" action="/ventas/nueva/add" method="POST">
+                {% csrf_token %}
+                Codigo
+                <input id="textinput" name="textinput" type="number" placeholder="Ingrese Codigo" class="form-control input-lg"
+                       required="" autofocus >
+		</div>
+
+        <div class="col-md-1 text-black-50">
+                Cantidad
+                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
+		</div>
+
+        <div class="col-md-1 text-black-50">
+                Precio Unit
+                <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
+		</div>
+		<div class="col-md-1 text-light ">
+            aceptar
+                <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
+
+		</div>
+            </form>
+		<div class="col-md-3 text text-center text-black-50 h-auto">
+            <div class="text text-light">Total</div>
+            <h2><strong>Total:</strong> {{suma}}</h2>
+
+
+		</div>
+		<div class="col-md-1">
+		</div>
+	</div>
+
+{% endblock %}
