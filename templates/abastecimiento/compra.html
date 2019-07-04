@@ -8,20 +8,17 @@
 {% block content %}
     <div class="container-fluid">
 
-
-
-        &nbsp;
-
+        &nbsp
 	<div class="row">
 		<div class="col-md-2">
-		</div>
+        </div>
+
 
         {% if rut and fecha is None %}
 
-		        <div class="col-md-4">
-
-            <div class="container">
-                    <form action="{% url 'abastecimiento:nueva' %}" method="post">{% csrf_token %}
+            <div class="col-md-4">
+            <form action="{% url 'abastecimiento:nueva' %}" method="post">{% csrf_token %}
+                <div class="container">
                     <div class="form-row">
 
                         <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
@@ -39,223 +36,118 @@
                             <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
                         </div>
                     </div>
-
-            </div>
-
-        </div>
-                <div class="col-md-4">
-            <div class="container">
-                <div class="form-row">
-                    <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control form-control-sm" id="dcto" name="dcto" required>
-                    </div>
-
-                    <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
-                    <div class="col-md-7">
-                        <input type="date" class="form-control form-control-sm" id="fecha" name="fecha" required>
-                    </div>
-                    <div class="col offset-md-8">
-                            <button type="submit" class="btn btn-primary">Registra Compra</button>
-                    </div>
-
-
                 </div>
 
             </div>
+            <div class="col-md-4">
 
-        </div>
-                </form>
+                <div class="container">
+                    <div class="form-row">
+                        <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="dcto" name="dcto" required>
+                        </div>
+
+                        <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
+                        <div class="col-md-7">
+                            <input type="date" class="form-control form-control-sm" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="col offset-md-8">
+                                <button type="submit" class="btn btn-primary">Registra Compra</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </form>
+            </div>
+
 
 
 
         {% elif rut and fecha %}
+            <div class="col-md-4">
+                <form class="text-black-50" action="{% url 'abastecimiento:agrega_detalle' %}" method="post">{% csrf_token %}
+                            <input type="hidden" name="id_compra" value="{{ id }}" readonly>
+                            <div class="container">
+                                <div class="form-row">
 
-                <div class="col-md-4">
-                    <div class="container">
+                                    <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
+                                    <div class="col-7">
+                                        <input type="text" class="form-control form-control-sm" id="rut" name="rut" placeholder="{{ rut }}" readonly>
+                                    </div>
 
-                        <div class="form-row">
 
-                            <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="rut" name="rut" placeholder="{{ rut }}" readonly>
+                                    <label for="nombre" class="col-md-3 col-form-label-sm">Nombre Provee.</label>
+                                    <div class="col-7">
+                                        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{ nombre }} readonly>
+                                    </div>
+
+                                    <label for="usuario" class="col-md-3 col-form-label-sm ">Usuario</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
+                                    </div>
+
+                                </div>
                             </div>
 
 
-                            <label for="nombre" class="col-md-3 col-form-label-sm">Nombre Provee.</label>
-                            <div class="col-7">
-                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{ nombre }} readonly>
-                            </div>
+            </div>
 
-                            <label for="usuario" class="col-md-3 col-form-label-sm ">Usuario</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
+            <div class="col-md-4">
+                <div class="container">
+                            <div class="form-row">
+                                <label for="dcto" class="col-md-3 col-form-label-sm ">Dcto.Compra</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control form-control-sm" id="dcto" placeholder="{{ dcto }}"  name="dcto"  readonly>
+                                </div>
+
+                                <label for="fecha" class="col-md-3 col-form-label-sm ">Fecha</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control form-control-sm" id="fecha" placeholder="{{ fecha }}" name="fecha"  readonly>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="container">
-                        <div class="form-row">
-                            <label for="dcto" class="col-md-5 col-form-label-sm text-right">Dcto.Compra</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm" id="dcto" placeholder="{{ dcto }}"  name="dcto"  readonly>
-                            </div>
-
-                            <label for="fecha" class="col-md-5 col-form-label-sm text-right">Fecha</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control form-control-sm" id="fecha" placeholder="{{ fecha }}" name="fecha"  readonly>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                </div>
             </div>
 
 
-
-<div class="container-fluid">
-&nbsp
-	<div class="form-row">
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-2 text text-left text-black">
-            Código
-            <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required="" autofocus >
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-1">
-		</div>
-	</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div class="col-md-1 ">
-		</div>
-		<div class="col-md-3 border border-0">
-
-            <form class="form-row align-items-center text text-center text-black-50" action=action="{% url 'abastecimiento:agrega_detalle' %}" method="post">{% csrf_token %}
-                {% csrf_token %}
-                Codigo
-                <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg"
-                       required="" autofocus >
-                <input type="hidden" id="id" name="id" value="{{ id }}">
-        </div>
-
-        <div class="col-md-1 text-black-50">
-                Cantidad
-                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
-		</div>
-
-        <div class="col-md-1 text-black-50">
-                Precio Unit
-                <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
-		</div>
-		<div class="col-md-1 text-light ">
-            aceptar
-                <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
-
-		</div>
-            </form>
-		<div class="col-md-3 text text-center text-black-50 h-auto">
-            <div class="text text-light">Total</div>
-            <h2><strong>Total:</strong> {{suma}}</h2>
-
-
-		</div>
-		<div class="col-md-1">
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <div class="container-fluid">
+                    &nbsp
+                        <div class="form-row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-2 text text-left text-black">
+                                Código
+                                <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required="" autofocus >
+                            </div>
+                            <div class="col-md-1">
+                                Cantidad
+                                <input id="cantidad" name="cantidad" value="1" type="number" placeholder="1" class="form-control input-lg" autofocus >
+                            </div>
+                            <div class="col-md-1">
+                                Precio Unit
+                                    <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
+                            </div>
+                            <div class="col-md-1">
+                                Lote
+                                    <input id="lote" name="lote" value="" type="text" class="form-control input-lg" autofocus >
+                            </div>
+                            <div class="col-md-2">
+                                F.Vencimiento
+                                    <input id="fecha_vencimiento" name="fecha_vencimiento" value="" type="date" class="form-control input-lg" autofocus >
+                            </div>
+                            <div class="col-md-1 text-light">
+                                aceptar
+                                    <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
+                            </div>
+                            <div class="col-md-3 text text-black-50 h-auto">
+                                <div class="text text-light">Total</div>
+                                <h2><strong>Total:</strong> {{suma}}</h2>
+                            </div>
+                            <div class="col-md-1">
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -295,7 +187,7 @@
 
                 </div>
             </div>
-        </div>
+
         {% endif %}
 
 
@@ -303,6 +195,9 @@
 		</div>
 
 
+    </div>
+    </div>
+    </div>
 
 
 {% endblock %}

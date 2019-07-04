@@ -46,8 +46,10 @@ def compra(request):
 def nueva(request):
     if request.method=="POST":
         documento=request.POST.get('dcto')
+        proveedor = Proveedor.objects.get(rut=request.POST.get('rut'))
+
         try:
-            Compra.objects.get(documento=documento)
+            Compra.objects.get(documento=documento,proveedor=proveedor)
             mesj="Documento ya ingresado"
             return render(request,'ventas/info.html',{'mesj': mesj})
         except Compra.DoesNotExist:
@@ -72,18 +74,15 @@ def nueva(request):
         return render(request,'abastecimiento/compra.html',context)
 
 def agrega_detalle(request):
-    pass
-    #if request.method==POST:
-    #    id_compra = request.POST.get('id')
-    #    id_producto = Producto.objects.get(codigo_barras=request.POST.get('codigo')).id
-    #    lote = request.POST.get('lote')
-    #    nuevo_detalle = DetalleCompra()
-
-    #    lote = models.CharField(max_length=30, blank=True, null=True)
-    #    fecha_vencimiento = models.DateField()
-    #    cantidad = models.IntegerField()
-    #    precio_compra_unitario = models.IntegerField()
-
+    if request.method=='POST':
+        id_compra = request.POST.get('id')
+        id_producto = Producto.objects.get(codigo_barras=request.POST.get('codigo')).id
+        lote = request.POST.get('lote')
+        fecha_vencimiento = request.POST.get('fecha_vencimiento')
+        cantidad = request.POST.get('cantidad')
+        precio_compra_unitario = request.POST.GET('precio')
+        nuevo_detalle = DetalleCompra(id_compra=id_compra, id_producto=id_producto, lote=lote, fecha_vencimiento=fecha_vencimiento, cantidad=cantidad, precio_compra_unitario=precio_compra_unitario )
+        nuevo_detalle.save()
 
 
 def verifica(request):
