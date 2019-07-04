@@ -142,12 +142,42 @@
                             </div>
                             <div class="col-md-3 text text-black-50 h-auto">
                                 <div class="text text-light">Total</div>
-                                <h2><strong>Total:</strong> {{suma}}</h2>
+                                {% if suma %}
+                                    <h2><strong>Total:</strong>{{suma}}</h2>
+                                {% else %}
+                                    <h2><strong>Total:</strong> 0</h2>
+                                {% endif %}
+
                             </div>
                             <div class="col-md-1">
                             </div>
                         </div>
                     </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+            &nbsp
+                <table class="table text text-center">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Lote</th>
+                      <th scope="col">Fecha Vencimiento</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio Unitario</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
 
 
 
