@@ -75,14 +75,44 @@ def nueva(request):
 
 def agrega_detalle(request):
     if request.method=='POST':
-        id_compra = request.POST.get('id')
-        id_producto = Producto.objects.get(codigo_barras=request.POST.get('codigo')).id
+        id_compra = request.POST.get('id_compra')
+        codigo_barras=request.POST.get('codigo')
+        id_producto = Producto.objects.get(codigo_barras=codigo_barras).id
+        print(id_producto)
         lote = request.POST.get('lote')
         fecha_vencimiento = request.POST.get('fecha_vencimiento')
         cantidad = request.POST.get('cantidad')
-        precio_compra_unitario = request.POST.GET('precio')
-        nuevo_detalle = DetalleCompra(id_compra=id_compra, id_producto=id_producto, lote=lote, fecha_vencimiento=fecha_vencimiento, cantidad=cantidad, precio_compra_unitario=precio_compra_unitario )
+        precio_compra_unitario = request.POST.get('precio')
+        
+
+        nuevo_detalle = DetalleCompra(id_compra,id_producto,lote,fecha_vencimiento,cantidad,precio_compra_unitario)
+        print(nuevo_detalle.id_compra)
+        print(nuevo_detalle.id_producto)
+        print(nuevo_detalle.lote)
         nuevo_detalle.save()
+
+        detalles = DetalleCompra.objects.filter(id_compra=id_compra)
+        compra = Compra.objects.get(id=id_compra)
+
+        documento = request.POST.get('dcto')
+        proveedor = Proveedor.objects.get(rut=request.POST.get('rut'))
+        fecha=request.POST.get('fecha')
+        print(fecha)
+        usuario=request.user
+
+
+
+        context={
+                'detalles': detalles,
+                'fecha': fecha,
+                'dcto': documento,
+                'rut': proveedor.rut,
+                'nombre': proveedor.nombre,
+                'id': id_compra,
+                'usuario': usuario,
+            }
+
+        return render(request, 'abastecimiento/compra.hmtl', context)
 
 
 def verifica(request):

@@ -17,6 +17,7 @@
         {% if rut and fecha is None %}
 
             <div class="col-md-4">
+            <h3>rut y fecha none</h3>
             <form action="{% url 'abastecimiento:nueva' %}" method="post">{% csrf_token %}
                 <div class="container">
                     <div class="form-row">
@@ -66,26 +67,28 @@
 
 
         {% elif rut and fecha %}
+        
             <div class="col-md-4">
+            <h3>rut y fecha</h3>
                 <form class="text-black-50" action="{% url 'abastecimiento:agrega_detalle' %}" method="post">{% csrf_token %}
-                            <input type="hidden" name="id_compra" value="{{ id }}" readonly>
+                        <input type="hidden" name="id_compra" value="{{ id }}" readonly>
                             <div class="container">
                                 <div class="form-row">
 
                                     <label for="rut" class="col-md-3 col-form-label-sm align-content-end">Rut Proveedor</label>
                                     <div class="col-7">
-                                        <input type="text" class="form-control form-control-sm" id="rut" name="rut" placeholder="{{ rut }}" readonly>
+                                        <input type="text" class="form-control form-control-sm" id="rut" name="rut" value = {{ rut }} placeholder="{{ rut }}" readonly>
                                     </div>
 
 
                                     <label for="nombre" class="col-md-3 col-form-label-sm">Nombre Provee.</label>
                                     <div class="col-7">
-                                        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" placeholder={{ nombre }} readonly>
+                                        <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" value = {{ nombre }} placeholder={{ nombre }} readonly>
                                     </div>
 
                                     <label for="usuario" class="col-md-3 col-form-label-sm ">Usuario</label>
                                     <div class="col-md-7">
-                                        <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" placeholder={{ usuario }} readonly>
+                                        <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" value = {{ usuario }} placeholder={{ usuario }} readonly>
                                     </div>
 
                                 </div>
@@ -99,15 +102,15 @@
                             <div class="form-row">
                                 <label for="dcto" class="col-md-3 col-form-label-sm ">Dcto.Compra</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control form-control-sm" id="dcto" placeholder="{{ dcto }}"  name="dcto"  readonly>
+                                    <input type="text" class="form-control form-control-sm" id="dcto" placeholder="{{ dcto }}" value= {{ dcto}} name="dcto"  readonly>
                                 </div>
 
                                 <label for="fecha" class="col-md-3 col-form-label-sm ">Fecha</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control form-control-sm" id="fecha" placeholder="{{ fecha }}" name="fecha"  readonly>
+                                    <input type="text" class="form-control form-control-sm" id="fecha" placeholder="{{ fecha }}" value = {{ fecha }} name="fecha"  readonly>
                                 </div>
                             </div>
-                        </div>
+                </div>
             </div>
 
 
@@ -168,20 +171,26 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
+                    {% for detalle in detalles %}
+                        <tr>
+                            <th scope="row">{{detalle.id}}</th>
+                            <td>{{detalle.producto}}</td>
+                            <td>{{detalle.lote}}</td>
+                            <td>{{detalle.fecha_vencimiento}}</td>
+                            <td>{{detalle.cantidad}}</td>
+                            <td>{{detalle.precio_unitario}}</td>
+                        </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
             </div>
+            </form>
             <div class="col-md-1"></div>
 
 
 
         {% else %}
+        si no 
             <div class="col-md-4">
             <div class="container">
                     <form action="{% url 'abastecimiento:verifica' %}" method="POST">{% csrf_token %}
