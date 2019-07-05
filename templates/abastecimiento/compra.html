@@ -174,11 +174,11 @@
                     {% for detalle in detalles %}
                         <tr>
                             <th scope="row">{{detalle.id}}</th>
-                            <td>{{detalle.producto}}</td>
+                            <td>{{detalle.id_producto}}</td>
                             <td>{{detalle.lote}}</td>
                             <td>{{detalle.fecha_vencimiento}}</td>
                             <td>{{detalle.cantidad}}</td>
-                            <td>{{detalle.precio_unitario}}</td>
+                            <td>{{detalle.precio_compra_unitario}}</td>
                         </tr>
                     {% endfor %}
                   </tbody>
