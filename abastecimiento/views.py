@@ -44,7 +44,7 @@ def compra(request):
     return render(request, "abastecimiento/compra.html")
 
 def nueva(request):
-    if request.method=="POST":
+    if request.method == "POST":
         documento=request.POST.get('dcto')
         proveedor = Proveedor.objects.get(rut=request.POST.get('rut'))
 
@@ -74,7 +74,7 @@ def nueva(request):
         return render(request,'abastecimiento/compra.html',context)
 
 def agrega_detalle(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         
         id_compra2 = request.POST.get('id_compra')
         id_2 = Compra.objects.get(id=id_compra2)
@@ -86,10 +86,8 @@ def agrega_detalle(request):
         cantidad = request.POST.get('cantidad')
         precio_compra_unitario = request.POST.get('precio')
         nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
-        print(nuevo_detalle.id_compra)
-        print(nuevo_detalle.id_producto)
-        print(nuevo_detalle.lote)
-        #nuevo_detalle.save()
+
+        suma = DetalleCompra.objects.filter(id_compra=id_2.id).annotate('')
 
         detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
         #compra = Compra.objects.get(id=id_compra)
@@ -99,7 +97,6 @@ def agrega_detalle(request):
         fecha=request.POST.get('fecha')
         print(fecha)
         usuario=request.user
-
 
 
         context={

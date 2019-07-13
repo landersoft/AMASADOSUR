@@ -17,7 +17,7 @@
         {% if rut and fecha is None %}
 
             <div class="col-md-4">
-            <h3>rut y fecha none</h3>
+            
             <form action="{% url 'abastecimiento:nueva' %}" method="post">{% csrf_token %}
                 <div class="container">
                     <div class="form-row">
@@ -69,7 +69,7 @@
         {% elif rut and fecha %}
         
             <div class="col-md-4">
-            <h3>rut y fecha</h3>
+            
                 <form class="text-black-50" action="{% url 'abastecimiento:agrega_detalle' %}" method="post">{% csrf_token %}
                         <input type="hidden" name="id_compra" value="{{ id }}" readonly>
                             <div class="container">
@@ -190,7 +190,7 @@
 
 
         {% else %}
-        si no 
+         
             <div class="col-md-4">
             <div class="container">
                     <form action="{% url 'abastecimiento:verifica' %}" method="POST">{% csrf_token %}
@@ -240,3 +240,5 @@
 
 
 {% endblock %}
+
+{% block footer %}{% endblock %}
