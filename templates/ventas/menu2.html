@@ -18,7 +18,7 @@
         <div class="content" style="background-color: #00CEC0">
 
             <img src="{% static 'img/venta.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Ventas</h3>
-          <p>This one has a bit longer content</p>
+          <p>Software POS</p>
         </div>
           </div>
       </div>
@@ -26,14 +26,16 @@
           <div onclick="javascript:window.location.href='{% url 'admin:abastecimiento_producto_changelist' %}' ">
             <div class="content" style="background-color:#F77D51">
                 <img src="{% static 'img/producto.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Productos</h3>
-                <p>Normal content.</p>
+                <p>Lista de Productos</p>
             </div>
           </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="content colour-3">
+        <div onclick="javascript:window.location.href='{% url 'ventas:estadisticas' %}' ">
+          <div class="content colour-3">
             <img src="{% static 'img/reporte.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="" /><h3>Reportes</h3>
-          <p>Normal content.</p>
+          <p>Estadisticas y KPI de ventas</p>
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-12">

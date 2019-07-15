@@ -1,12 +1,8 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView
-from django.forms import modelformset_factory
-from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
-
-from .models import Producto,Proveedor,Compra,DetalleCompra
-from django.forms import formsets, formset_factory
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.views.generic import ListView, CreateView
+
+from .models import Producto, Proveedor, Compra, DetalleCompra
 
 
 @login_required
@@ -16,7 +12,7 @@ def index(request):
 
 
 
-
+@login_required
 class ProductoList(ListView):
     model = Producto
     paginate_by = 20
@@ -32,7 +28,7 @@ class CrearCompra(CreateView):
 
     
 
-
+@login_required
 class ListadoCompras(ListView):
     model = Compra
     template_name = 'abastecimiento/compras.html'
@@ -43,6 +39,7 @@ class ListadoCompras(ListView):
 def compra(request):
     return render(request, "abastecimiento/compra.html")
 
+@login_required
 def nueva(request):
     if request.method == "POST":
         documento=request.POST.get('dcto')
@@ -73,6 +70,7 @@ def nueva(request):
             }
         return render(request,'abastecimiento/compra.html',context)
 
+@login_required
 def agrega_detalle(request):
     if request.method == 'POST':
         
@@ -87,7 +85,7 @@ def agrega_detalle(request):
         precio_compra_unitario = request.POST.get('precio')
         nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
 
-        suma = DetalleCompra.objects.filter(id_compra=id_2.id).annotate('')
+        #suma = DetalleCompra.objects.filter(id_compra=id_2.id).annotate('')
 
         detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
         #compra = Compra.objects.get(id=id_compra)
@@ -111,7 +109,7 @@ def agrega_detalle(request):
 
         return render(request, 'abastecimiento/compra.html', context)
 
-
+@login_required
 def verifica(request):
     if request.method=="POST":
         rut_proveedor = request.POST['rut']
@@ -128,12 +126,12 @@ def verifica(request):
             return render(request, 'abastecimiento/compra.html', context)
         except Proveedor.DoesNotExist:
             proveedor=None
-            mesj = "Proveedor NO existe \n Redirigiendo"
+            mesj = "Proveedor no existe,redirigiendo"
             context={
-                'mesj': mesj
+                'mesj2': mesj
             }
             return render(request,'ventas/info.html',context)
 
-
+@login_required
 def test(request):
     return render(request, 'abastecimiento/test.html')

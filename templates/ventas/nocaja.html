@@ -21,46 +21,58 @@
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
+            {% if mesj %}
                     <div class="alert alert-warning text-center" role="alert">
                             {{mesj}}
                     </div>
-                <div class="row">
-                        <div class="col-md-2 text text-center offset-1">
-                        Nombre:
+            {% else %}
+            &nbsp
+            {% endif %}
+
+            <div class="card">
+				<h5 class="card-header">
+					Abrir Caja
+				</h5>
+				<div class="card-body">
+					<div class="row">
+                        <div class="col-md-3 text text-right offset-1">
+                        Usuario:
                         </div>
 
-                        <div class="col-md-8">
-                            {{usuario}}
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" value = {{ usuario }} placeholder="{{ usuario }}" readonly>
                         </div>
 
-                        <div class="col-md-2 text text-center offset-1">
+                        <div class="col-md-3 text text-right offset-1">
                         Caja:
                         </div>
 
-                        <div class="col-md-8">
-                            {{caja}}
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="caja" name="caja" value = {{ caja }} placeholder="{{ caja }}" readonly>
                         </div>
 
-                        <div class="col-md-2 text text-center offset-1">
+                        <div class="col-md-3 text text-right offset-1">
                         Fecha:
                         </div>
 
-                        <div class="col-md-8">
-                            {{fecha}}
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="fecha" name="fecha" value = {{ fecha }} placeholder="{{ fecha }}" readonly>
                         </div>
 
-                        <div class="col-md-8 offset-1">
+                        <div class="col-md-7 offset-1">
                                 
                                 <form class="form-row align-items-center" action="/ventas/abrircaja/" method='POST'>
                                     {% csrf_token %}
                                     <input type="number" class="form-control" id="monto" name="monto" placeholder="Monto inicial" required>
                         </div>
-                        <div class="col-md-2">       
+                        <div class="col-md-3">       
                             <button type="submit" class="btn btn-primary align-self-end">Enviar</button>
                         </div>
                                 </form>
                     
                         </div>
+				</div>
+                
             </div>
             <div class="col-md-4">
             </div>

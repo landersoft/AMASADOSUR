@@ -1,0 +1,25 @@
+{% extends "base.html"%}
+
+{% block estilo %}{% endblock %}
+
+{% load staticfiles %}
+
+{% block tittle %}Compra{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6 text-center">
+
+            <img src="{% static 'img/404.png' %}" width="200" height="200" class="d-inline-block align-top" alt="">
+            <h1>404</h1>
+            <h3>Lo siento, no encuentro la pagína solicitada</h3>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

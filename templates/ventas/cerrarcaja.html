@@ -7,58 +7,63 @@
 
 
 
-<!-- <script type="text/javascript">   
-    function Redirect() 
-    {  
-        window.location="/ventas/abrircaja"; 
-    } 
-    
-    setTimeout('Redirect()', 2000);   
-</script> -->
-
 <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                    
-                <div class="row">
-                        <div class="col-md-2 text text-center offset-1">
-                        Nombre:
+            {% if mesj %}
+                    <div class="alert alert-warning text-center" role="alert">
+                            {{mesj}}
+                    </div>
+            {% else %}
+            &nbsp
+            {% endif %}
+
+            <div class="card">
+				<h5 class="card-header">
+					Cerrar Caja
+				</h5>
+				<div class="card-body">
+					<div class="row">
+                        <div class="col-md-3 text text-right offset-1">
+                        Usuario:
                         </div>
 
-                        <div class="col-md-8">
-                            {{usuario}}
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="usuario" name="usuario" value = {{ usuario }} placeholder="{{ usuario }}" readonly>
                         </div>
 
-                        <div class="col-md-2 text text-center offset-1">
-                        Fecha:
-                        </div>
-
-                        <div class="col-md-8">
-                            {{fecha}}
-                        </div>
-
-                        <div class="col-md-2 text text-center offset-1">
+                        <div class="col-md-3 text text-right offset-1">
                         Caja:
                         </div>
 
-                        <div class="col-md-8">
-                            {{caja}}
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="caja" name="caja" value = {{ caja }} placeholder="{{ caja }}" readonly>
                         </div>
 
-                        <div class="col-md-8 offset-1">
+                        <div class="col-md-3 text text-right offset-1">
+                        Fecha:
+                        </div>
+
+                        <div class="col-md-7">
+                            <input type="text" class="form-control form-control-sm" id="fecha" name="fecha" value = {{ fecha }} placeholder="{{ fecha }}" readonly>
+                        </div>
+
+                        <div class="col-md-7 offset-1">
                                 
                                 <form class="form-row align-items-center" action="/ventas/cerrarcaja/" method='POST'>
                                     {% csrf_token %}
                                     
                         </div>
-                        <div class="col-md-2">       
+                        <div class="col-md-3">       
                             <button type="submit" class="btn btn-primary align-self-end">Enviar</button>
                         </div>
                                 </form>
                     
                         </div>
+				</div>
+                
             </div>
             <div class="col-md-4">
             </div>
@@ -66,3 +71,6 @@
     </div>
 
 {% endblock %}
+
+<form class="form-row align-items-center" action="/ventas//" method='POST'>
+                                    {% csrf_token %}

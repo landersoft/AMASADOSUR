@@ -121,7 +121,7 @@
                             </div>
                             <div class="col-md-2 text text-left text-black">
                                 Código
-                                <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required="" autofocus >
+                                <input id="codigo" name="codigo" type="number" placeholder="Ingrese Codigo" class="form-control input-lg" required autofocus >
                             </div>
                             <div class="col-md-1">
                                 Cantidad
@@ -129,19 +129,19 @@
                             </div>
                             <div class="col-md-1">
                                 Precio Unit
-                                    <input id="precio" name="precio" value="" type="number" class="form-control input-lg" autofocus >
+                                    <input id="precio" name="precio" value="" type="number" class="form-control input-lg" required autofocus >
                             </div>
                             <div class="col-md-1">
                                 Lote
-                                    <input id="lote" name="lote" value="" type="text" class="form-control input-lg" autofocus >
+                                    <input id="lote" name="lote" value="" type="text" class="form-control input-lg" required autofocus >
                             </div>
                             <div class="col-md-2">
                                 F.Vencimiento
-                                    <input id="fecha_vencimiento" name="fecha_vencimiento" value="" type="date" class="form-control input-lg" autofocus >
+                                    <input id="fecha_vencimiento" name="fecha_vencimiento" value="" type="date" class="form-control input-lg" required autofocus >
                             </div>
                             <div class="col-md-1 text-light">
                                 aceptar
-                                    <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Aceptar</button>
+                                    <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-barcode"></span> Agregar</button>
                             </div>
                             <div class="col-md-3 text text-black-50 h-auto">
                                 <div class="text text-light">Total</div>
@@ -185,7 +185,13 @@
                 </table>
             </div>
             </form>
-            <div class="col-md-1"></div>
+            <div class="col-md-12 offset-10">
+            <div onclick="javascript:window.location.href='{% url 'abastecimiento:compra' %}' ">
+            <button type="submit" class="btn btn-primary align-bottom"><span class="fa fa-save"></span> Guardar</button> 
+            </div>
+            <div class="col-md-1">
+               
+            </div>
 
 
 

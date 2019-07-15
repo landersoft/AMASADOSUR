@@ -31,13 +31,20 @@ def index(request):
 @login_required
 def nueva(request):
         try:
-                usuario=get_user(request)
+                usuario = get_user(request)
                 caja = Caja.objects.get(usuario=usuario,estado="abierta")
                 print(caja)
                 hoy=datetime
+                print(caja.hora_a)
                 if caja.hora_a.date()<datetime.now().date():
-                    mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
-                    return render(request,'ventas/cerrarcaja.html', {'mesj': mesj})
+                        mesj="Caja no cerrada la ultima jornada. Por favor cerrar"
+                        context={
+                                'usuario': usuario,
+                                'fecha': str(datetime.now()),
+                                'caja': caja.caja_modulo,
+                                'mesj': mesj,
+                        } 
+                        return render(request,'ventas/cerrarcaja.html', context)
 
                 nueva_venta = Venta(usuario=request.user)
                 nueva_venta.save()
@@ -56,7 +63,7 @@ def nueva(request):
                 context = {
                         'msj': mesj,
                         'usuario': usuario,
-                        'fecha': fecha,
+                        'fecha': fecha.strftime('%Y-%m-%d %H:%M'),
                         'caja': caja
                 }
                 
@@ -335,7 +342,7 @@ def estadisticas(request):
         ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
         #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
-        totalventas = ven.aggregate(totalventas=Sum(F('precio_venta')*F('cantidad')))['totalventas']
+        totalventas = ven.aggregate(totalventas=Sum(F('precio_venta_unitario')*F('cantidad')))['totalventas']
         print(totalventas)
 
             ############################Cantidad de productos vendidos x id############################
@@ -353,7 +360,7 @@ def estadisticas(request):
         #ventas = Boleta.objects.all()
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         cantidades = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
-        precio=DetalleCompra.objects.filter(id_producto_id__in=ven2.values('id_producto_id')).values('id_producto_id','precio_unitario_compra')
+        precio=DetalleCompra.objects.filter(id_producto_id__in=ven2.values('id_producto_id')).values('id_producto_id','precio_compra_unitario')
 
         pre=list(precio)
         can=list(cantidades)
@@ -368,7 +375,7 @@ def estadisticas(request):
 
         for i in range(len(can)):
             if can[i]['id_producto_id']==pre[i]['id_producto_id']:
-                suma=suma+(can[i]['total']*pre[i]['precio_unitario_compra'])
+                suma=suma+(can[i]['total']*pre[i]['precio_compra_unitario'])
 
         print(suma)
         print('este es el costo')

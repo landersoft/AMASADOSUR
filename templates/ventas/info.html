@@ -5,5 +5,34 @@
 
 <h1>{{mesj}}</h1>
     <h1>{{proveedor.rut}}</h1>
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-5 text-center">
+{% if mesj2 %}
+<h1>{{mesj2}}</h1>
+</div>
 
+<div class="col-md-3"></div>
+</div>
+
+<input type="hidden" id="Url" data-url="{% url 'admin:abastecimiento_proveedor_add' %}" >
+
+
+<script type="text/javascript">
+    function Redirect()
+    {
+        var url = $("#Url").attr("data-url");
+
+
+        window.location.href = url;
+
+    }
+    setTimeout('Redirect()', 2000);
+</script>
+
+
+
+
+
+{% endif %}
 {% endblock %}
