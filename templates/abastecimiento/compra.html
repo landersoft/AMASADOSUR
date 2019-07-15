@@ -158,6 +158,11 @@
                     </div>
             <div class="col-md-1"></div>
             <div class="col-md-10">
+            {% if mesj %}
+                <div class="alert alert-warning" role="alert">
+                    {{mesj}}
+                </div>
+            {% endif %}
             &nbsp
                 <table class="table text text-center">
                   <thead>

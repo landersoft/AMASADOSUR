@@ -77,37 +77,49 @@ def agrega_detalle(request):
         id_compra2 = request.POST.get('id_compra')
         id_2 = Compra.objects.get(id=id_compra2)
         codigo=request.POST.get('codigo')
-        producto = Producto.objects.get(codigo_barras=codigo)
-        print(producto.id)
-        lote = request.POST.get('lote')
-        fecha_vencimiento = request.POST.get('fecha_vencimiento')
-        cantidad = request.POST.get('cantidad')
-        precio_compra_unitario = request.POST.get('precio')
-        nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
-
-        #suma = DetalleCompra.objects.filter(id_compra=id_2.id).annotate('')
-
-        detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
-        #compra = Compra.objects.get(id=id_compra)
-
-        documento = request.POST.get('dcto')
-        proveedor = Proveedor.objects.get(rut=request.POST.get('rut'))
-        fecha=request.POST.get('fecha')
-        print(fecha)
-        usuario=request.user
-
-
-        context={
-                'detalles': detalles,
-                'fecha': fecha,
-                'dcto': documento,
-                'rut': proveedor.rut,
-                'nombre': proveedor.nombre,
-                'id': id_2.id,
-                'usuario': usuario,
+        try:
+            producto = Producto.objects.get(codigo_barras=codigo)
+        except Producto.DoesNotExist:
+            msj2="Producto No existe"
+            return render(request,'ventas/venta.error.html', {'msj2': msj2})
+            
+        #consulta si ya se ingresó el producto
+        try:
+            consulta = DetalleCompra.objects.get(id_producto=producto,id_compra=id_2)
+            mesj2 = "Producto ya ingresado"
+            context ={
+                'mesj2': mesj2,
             }
+            return render(request, 'abastecimiento/venta.error.html', context)
+        
+        except DetalleCompra.DoesNotExist:
+            print(producto.id)
+            lote = request.POST.get('lote')
+            fecha_vencimiento = request.POST.get('fecha_vencimiento')
+            cantidad = request.POST.get('cantidad')
+            precio_compra_unitario = request.POST.get('precio')
+            nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
 
-        return render(request, 'abastecimiento/compra.html', context)
+            detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
+            documento = request.POST.get('dcto')
+            proveedor = Proveedor.objects.get(rut=request.POST.get('rut'))
+            fecha=request.POST.get('fecha')
+            print(fecha)
+            usuario=request.user
+
+            
+
+            context={
+                    
+                    'detalles': detalles,
+                    'fecha': fecha,
+                    'dcto': documento,
+                    'rut': proveedor.rut,
+                    'nombre': proveedor.nombre,
+                    'id': id_2.id,
+                    'usuario': usuario,
+                }
+            return render(request, 'abastecimiento/compra.html', context)
 
 @login_required
 def verifica(request):

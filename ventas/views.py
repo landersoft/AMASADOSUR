@@ -530,12 +530,12 @@ def cerrarcaja(request):
                 print(total)
                 #print("este es el totality: " + caja2['totality'])
                 caja.monto_final = total['totality']
-                if not caja.monto_final:
-                    url = reverse('ventas:ventalist')
-                    print(url)
-                    return HttpResponseRedirect(url)
+                # if not caja.monto_final:
+                #     url = reverse('ventas:ventalist')
+                #     print(url)
+                #     return HttpResponseRedirect(url)
 
-
+        
                 caja.save()
                 # return render(request, 'ventas/arqueo.html')
                 url = reverse('ventas:arqueo')

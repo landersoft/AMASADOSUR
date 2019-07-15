@@ -15,19 +15,32 @@
         <div class="estilo">
             &nbsp
         </div>
-		    <div class="alert alert-danger text-center" role="alert">
-  					{{msj}}
+		    
+  					
+            {% if msj2 %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{msj2}}
+                </div>
 
                 <script type="text/javascript">
-                function Redirect()
-                    {
-
-                window.location.href = "{% url 'ventas:ventalist' %}";
-
-                    }
-                setTimeout('Redirect()', 1000);
+                    function Redirect2()
+                        {
+                            window.history.back();
+                        }
+                    setTimeout('Redirect2()', 1000);
                 </script>
 
+            {% else %} 
+                <div class="alert alert-danger text-center" role="alert">
+                    {{msj}}
+                <script type="text/javascript">
+                    function Redirect()
+                        {
+                            window.location.href = "{% url 'ventas:ventalist' %}";
+                        }
+                    setTimeout('Redirect()', 1000);
+                </script>
+            {% endif %}
             </div>
         </div>
 		<div class="col-md-2">

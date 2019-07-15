@@ -20,7 +20,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=10, blank=False, null=False)
     descripcion = models.CharField(max_length=30, blank=False, null=False)
     precio_venta_unitario = models.IntegerField(default=0)
-    pmp = models.IntegerField(editable=False, default=0)
+    ppp = models.IntegerField(editable=False, default=0)
     stock = models.IntegerField(default=0, editable=False)
     margen = models.IntegerField(default=20)
 
