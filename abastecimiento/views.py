@@ -1,6 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+
 
 from .models import Producto, Proveedor, Compra, DetalleCompra
 
@@ -12,11 +16,12 @@ def index(request):
 
 
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class ProductoList(ListView):
     model = Producto
     paginate_by = 20
     template_name = 'abastecimiento/productos.html'
+    context_object_name = 'productos'
 
 
 
