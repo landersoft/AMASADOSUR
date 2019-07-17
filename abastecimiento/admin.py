@@ -13,7 +13,7 @@ class AdminProveedor(admin.ModelAdmin):
         
 #############################################################################
 class AdminProducto(admin.ModelAdmin):
-    list_display = ["id", "nombre", "descripcion", "precio_venta_unitario"]
+    list_display = ["id", "nombre", "descripcion", "precio_venta_unitario","stock"]
     list_filter = ["id","nombre"]
     search_fields = ["id", "nombre"]
 

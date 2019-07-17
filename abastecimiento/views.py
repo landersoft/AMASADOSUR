@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.db.models import Sum
+from django.db.models import Q,F
+from django.db.models import IntegerField
 
 
 
@@ -20,6 +23,7 @@ def index(request):
 class ProductoList(ListView):
     model = Producto
     paginate_by = 20
+    order_by = 'nombre'
     template_name = 'abastecimiento/productos.html'
     context_object_name = 'productos'
 
@@ -90,12 +94,12 @@ def agrega_detalle(request):
             
         #consulta si ya se ingresó el producto
         try:
-            consulta = DetalleCompra.objects.get(id_producto=producto,id_compra=id_2)
-            mesj2 = "Producto ya ingresado"
+            consulta = DetalleCompra.objects.get(id_producto=producto.id,id_compra=id_compra2)
+            msj2 = "Producto ya ingresado"
             context ={
                 'msj2': msj2,
             }
-            return render(request, 'abastecimiento/venta.error.html', context)
+            return render(request, 'ventas/venta.error.html', context)
         
         except DetalleCompra.DoesNotExist:
             print(producto.id)
@@ -103,8 +107,30 @@ def agrega_detalle(request):
             fecha_vencimiento = request.POST.get('fecha_vencimiento')
             cantidad = request.POST.get('cantidad')
             precio_compra_unitario = request.POST.get('precio')
-            nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
-            productos = DetalleCompra.object.filter()
+            nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad = cantidad,precio_compra_unitario = precio_compra_unitario)
+            compras_productos = DetalleCompra.objects.filter(id_producto=producto)
+            q = 0
+            p = 0
+            ppp = 0
+            for compra_producto in compras_productos:
+                p += compra_producto.precio_compra_unitario * compra_producto.cantidad
+                q += compra_producto.cantidad
+                ppp = p/q
+            
+            actualiza_producto = Producto.objects.get(id=producto.id)
+            actualiza_producto.ppp=ppp
+            print(actualiza_producto.stock)
+            cant = actualiza_producto.stock
+            #cant = Producto.objects.get(id=producto.id)['stock']
+            print("cant :")
+            print(cant)
+            print(actualiza_producto.stock)
+            print(cantidad)
+            cant = cant + int(cantidad)
+            actualiza_producto.stock = cant
+            actualiza_producto.precio_venta_unitario= (actualiza_producto.ppp + (actualiza_producto.ppp*0.19) + (actualiza_producto.ppp*(actualiza_producto.margen/100)))
+            actualiza_producto.precio_venta_unitario += actualiza_producto.precio_venta_unitario*0.19
+            actualiza_producto.save()
 
             detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
             documento = request.POST.get('dcto')
@@ -113,10 +139,14 @@ def agrega_detalle(request):
             print(fecha)
             usuario=request.user
 
+            total = DetalleCompra.objects.filter(id_compra=id_2.id).aggregate(suma=Sum(F('cantidad')*F('precio_compra_unitario')))
+            compra = Compra.objects.get(id=id_2.id)
+            compra.total = total['suma']
+            compra.save()
             
 
             context={
-                    
+                    'suma': total['suma']+(total['suma']*0.19),
                     'detalles': detalles,
                     'fecha': fecha,
                     'dcto': documento,
