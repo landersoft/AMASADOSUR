@@ -88,7 +88,7 @@ def agrega_detalle(request):
             consulta = DetalleCompra.objects.get(id_producto=producto,id_compra=id_2)
             mesj2 = "Producto ya ingresado"
             context ={
-                'mesj2': mesj2,
+                'msj2': msj2,
             }
             return render(request, 'abastecimiento/venta.error.html', context)
         
@@ -99,6 +99,7 @@ def agrega_detalle(request):
             cantidad = request.POST.get('cantidad')
             precio_compra_unitario = request.POST.get('precio')
             nuevo_detalle = DetalleCompra.objects.create(id_compra=id_2, id_producto=producto, lote=lote,fecha_vencimiento = fecha_vencimiento, cantidad= cantidad,precio_compra_unitario = precio_compra_unitario)
+            productos = DetalleCompra.object.filter()
 
             detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
             documento = request.POST.get('dcto')
