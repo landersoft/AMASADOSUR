@@ -550,7 +550,7 @@ def cerrarcaja(request):
                     context = {
                         'mesj' : mesj,
                         'usuario': usuario,
-                        'fecha': fecha,
+                        'fecha': str(fecha),
                         'caja': caja,
                     }
 
@@ -566,7 +566,7 @@ def cierracaja(request):
         context = {
                         
                 'usuario': usuario,
-                'fecha': fecha,
+                'fecha': str(fecha),
                 'caja': caja
                 }
 
