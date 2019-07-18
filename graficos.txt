@@ -1,0 +1,1 @@
+https://www.fusioncharts.com/dev/getting-started/django/your-first-chart-using-django
