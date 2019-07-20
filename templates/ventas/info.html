@@ -3,13 +3,25 @@
 
 {% block content %}
 
-<h1>{{mesj}}</h1>
+
     <h1>{{proveedor.rut}}</h1>
 <div class="row">
 <div class="col-md-3"></div>
-<div class="col-md-5 text-center">
-{% if mesj2 %}
-<h1>{{mesj2}}</h1>
+
+<div class="col-md-6 text-center">
+    {% if mesj2 %}
+    {{mesj2}}
+    {% elif mesj %}
+    {{ mesj}}
+        <script type="text/javascript">
+                    function Redirect2()
+                        {
+                            window.history.back();
+                        }
+                    setTimeout('Redirect2()', 2000);
+                </script>
+
+    {{elif}}
 </div>
 
 <div class="col-md-3"></div>

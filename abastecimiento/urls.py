@@ -12,6 +12,8 @@ urlpatterns = [
     path(r'compra/nueva/nueva', views.nueva, name='nueva'),
     path(r'compra/nueva/nueva/add', views.agrega_detalle, name='agrega_detalle'),
     path(r'compra/nueva', views.verifica, name='verifica'),
+    path(r'producto/menu_buscar', views.menu_buscar, name='menu_buscar'),
+    path(r'producto/buscar', views.buscar, name='buscar'),
 
     path(r'test/', views.test, name='test'),
 

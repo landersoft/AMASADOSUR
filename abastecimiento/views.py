@@ -183,3 +183,25 @@ def verifica(request):
 @login_required
 def test(request):
     return render(request, 'abastecimiento/test.html')
+
+
+
+
+def menu_buscar(request):
+    return render (request,'abastecimiento/buscar.html')
+
+def buscar(request):
+
+        ingreso = request.POST.get('producto')
+        print(ingreso)
+        try:
+            producto = Producto.objects.get(id=ingreso)
+
+            return render (request,'abastecimiento/buscar.html',{'producto': producto})
+
+        except Producto.DoesNotExist:
+            msj = "Producto no existe en Base de Datos"
+
+            return render (request,'abastecimiento/buscar.html',{'msj':msj})
+
+

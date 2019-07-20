@@ -1,0 +1,83 @@
+{% extends "base.html"%}
+
+{% block estilo %}{% endblock %}
+
+{% load staticfiles %}
+
+{% block tittle %}Buscar Producto{% endblock %}
+{% block content %}
+
+    <div class = "row">
+    <div class = "col-md-3"></div>
+    <div class = "col-md-6">
+
+        {% if msj %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{msj}}
+                </div>
+
+                <script type="text/javascript">
+                    function Redirect2()
+                        {
+                            window.history.back();
+                        }
+                    setTimeout('Redirect2()', 1000);
+                </script>
+
+
+
+        {% elif producto %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                  </tr>
+                </thead>
+            <tbody>
+
+                  <tr>
+                    <td>{{ producto.id}}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio_venta_unitario }}</td>
+                  </tr>
+
+            </tbody>
+            </table>
+
+            <script type="text/javascript">
+                    function Redirect2()
+                        {
+                            window.history.back();
+                        }
+                    setTimeout('Redirect2()', 2000);
+                </script>
+
+        {% else %}
+
+
+
+
+
+
+        <form action = "buscar" method ="POST">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <label for="producto">Codigo Barras</label>
+                <input type="text" class="form-control" id="producto" aria-describedby="ingrese codigo de barras" placeholder="Ingrese código" name="producto">
+                <small id="producto" class="form-text text-muted">Ingrese el codigo de barrassss</small>
+             </div>
+
+            <button type="submit" class="btn btn-primary">Aceptar</button>
+        </form>
+        {% endif %}
+    </div>
+
+
+    <div class = "col-md-3"></div>
+    </div>
+    
+
+{% endblock %}
