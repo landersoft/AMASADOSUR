@@ -188,7 +188,7 @@ def test(request):
 
 
 def menu_buscar(request):
-    return render (request,'abastecimiento/buscar.html')
+    return render(request,'abastecimiento/buscar.html')
 
 def buscar(request):
 
@@ -202,6 +202,6 @@ def buscar(request):
         except Producto.DoesNotExist:
             msj = "Producto no existe en Base de Datos"
 
-            return render (request,'abastecimiento/buscar.html',{'msj':msj})
+            return render(request,'abastecimiento/buscar.html',{'msj':msj})
 
 
