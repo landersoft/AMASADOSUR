@@ -371,7 +371,7 @@ def estadisticas(request):
 
         
         
-        print(temp)
+        
         print("cantidades")
         print(cantidades)
         print("precio")
