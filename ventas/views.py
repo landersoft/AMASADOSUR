@@ -127,7 +127,7 @@ def detalleadd(request):
         # print((det_venta.cantidad * det_venta.precio_venta))
         total2 = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(suma=Sum(F('precio_venta_unitario')*F('cantidad')))
         print("total consulta")
-        de_venta.total = total2["suma"]
+        de_venta.total = total2["suma"]+(total2["suma"]*0.19)
         print(total2["suma"])
         contador = len(total2)
         de_venta.save()
@@ -240,7 +240,7 @@ class VentaList(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(VentaList, self).get_context_data(**kwargs)
-        context['suma'] = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta_unitario')*F('cantidad')))['total']
+        context['suma'] = DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta_unitario')*F('cantidad')))['total']+((DetalleVenta.objects.filter(id_venta=Venta.objects.latest('id')).aggregate(total=Sum(F('precio_venta_unitario')*F('cantidad')))['total'])*0.19)
         print(context)
         return context
 
@@ -339,14 +339,14 @@ def registracliente(request):
 @login_required
 def estadisticas(request):
             ############################TOTAL VENTAS OK#########################################
-        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))|Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
+        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))
         #ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id_venta_id')))
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         totalventas = ven.aggregate(totalventas=Sum(F('precio_venta_unitario')*F('cantidad')))['totalventas']
         print(totalventas)
 
             ############################Cantidad de productos vendidos x id############################
-        ventas= Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))| Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
+        ventas= Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         #ven2 = Producto.objects.filter(id__in=DetalleVenta.objects.values('id_producto')).values('nombre','detalleventa__cantidad')
         ven2 = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
@@ -356,11 +356,29 @@ def estadisticas(request):
         nombre = Producto.objects.filter(id__in=ven2.values('id_producto_id'))
             ###########################Utilidad Neta###############################################
         
-        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))| Venta.objects.filter(id__in=Factura.objects.values('id_venta'))
+        ventas=Venta.objects.filter(id__in=Boleta.objects.values('id_venta'))
         #ventas = Boleta.objects.all()
+        
+        #deteo = DetalleVenta.objects.filter(id_venta__in=(Venta.objects.filter(id__in=Boleta.objects.values('id_venta')))
+
+        #print(deteo)
+
+
+
         ven = DetalleVenta.objects.filter(id_venta__in=(ventas.values('id')))
         cantidades = ven.values('id_producto_id').order_by('id_producto_id').annotate(total=Sum('cantidad'))
         precio=DetalleCompra.objects.filter(id_producto_id__in=ven2.values('id_producto_id')).values('id_producto_id','precio_compra_unitario')
+
+        
+        
+        print(temp)
+        print("cantidades")
+        print(cantidades)
+        print("precio")
+        print(precio)
+
+        #producto = Producto.objects.filter(id__in=cantidades.values('id_producto_id').values("nombre")
+        #print(producto)
 
         pre=list(precio)
         can=list(cantidades)
@@ -371,12 +389,12 @@ def estadisticas(request):
 
         indice=0
         suma=0
-        print (str(len(cantidades)))
+        #    print (str(len(cantidades)))
 
-        for i in range(len(can)):
-            if can[i]['id_producto_id']==pre[i]['id_producto_id']:
-                suma=suma+(can[i]['total']*pre[i]['precio_compra_unitario'])
-
+        """         for i in range(len(can)):
+                        if can[i]['id_producto_id']==pre[i]['id_producto_id']:
+                        suma=suma+(can[i]['total']*pre[i]['precio_compra_unitario'])
+        """
         print(suma)
         print('este es el costo')
 
@@ -385,7 +403,7 @@ def estadisticas(request):
 
 
         #utilidad=tv[indice]['totalventas']-suma
-        print(utilidad)
+        #print(utilidad)
         #for indice in cantidades.__len__():
         #    indice+=indice
         #    if cantidades.values('id_producto_id')[indice]==pre[indice]['id_producto_id']:

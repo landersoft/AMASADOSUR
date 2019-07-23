@@ -114,22 +114,33 @@ def agrega_detalle(request):
             ppp = 0
             for compra_producto in compras_productos:
                 p += compra_producto.precio_compra_unitario * compra_producto.cantidad
+                print("p")
+                print(p)
                 q += compra_producto.cantidad
+                print("q")
+                print(q)
+                
                 ppp = p/q
+                print("ppp")
+                print(ppp)
             
             actualiza_producto = Producto.objects.get(id=producto.id)
             actualiza_producto.ppp=ppp
             print(actualiza_producto.stock)
             cant = actualiza_producto.stock
+            precio = ppp+(ppp*0.19)
+            precio = precio + (precio*(actualiza_producto.margen/100))
+            #precio = precio+(precio*0.19)
+            print("precio" )
+            print(precio)
             #cant = Producto.objects.get(id=producto.id)['stock']
-            print("cant :")
-            print(cant)
-            print(actualiza_producto.stock)
-            print(cantidad)
+            
             cant = cant + int(cantidad)
             actualiza_producto.stock = cant
-            actualiza_producto.precio_venta_unitario= (actualiza_producto.ppp + (actualiza_producto.ppp*0.19) + (actualiza_producto.ppp*(actualiza_producto.margen/100)))
-            actualiza_producto.precio_venta_unitario += actualiza_producto.precio_venta_unitario*0.19
+            actualiza_producto.precio_venta_unitario = precio
+            """ actualiza_producto.precio_venta_unitario = ((actualiza_producto.ppp + (actualiza_producto.ppp*0.19))
+            actualiza_producto.precio_venta_unitario +=(actualiza_producto.ppp *(actualiza_producto.margen/100)) 
+            actualiza_producto.precio_venta_unitario += actualiza_producto.precio_venta_unitario*0.19 """
             actualiza_producto.save()
 
             detalles = DetalleCompra.objects.filter(id_compra=id_2.id)
