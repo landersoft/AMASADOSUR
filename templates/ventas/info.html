@@ -10,7 +10,23 @@
 
 <div class="col-md-6 text-center">
     {% if mesj2 %}
-    {{mesj2}}
+    <div class="alert alert-danger text-center" role="alert">
+        {{mesj2}}
+    <input type="hidden" id="Url" data-url="{% url 'admin:abastecimiento_proveedor_add' %}" >
+
+
+<script type="text/javascript">
+    function Redirect()
+    {
+        var url = $("#Url").attr("data-url");
+
+
+        window.location.href = url;
+
+    }
+    setTimeout('Redirect()', 2000);
+</script>
+    </div>
     {% elif mesj %}
     {{ mesj}}
         <script type="text/javascript">

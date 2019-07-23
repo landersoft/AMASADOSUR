@@ -85,7 +85,7 @@ def detalleadd(request):
     if request.method == 'POST':  
         
         try:
-                de_producto = Producto.objects.get(pk=request.POST.get('textinput'))
+                de_producto = Producto.objects.get(codigo_barras=request.POST.get('textinput'))
         except Producto.DoesNotExist:
                 de_producto = None
                 msj="Producto No existe"
@@ -99,7 +99,7 @@ def detalleadd(request):
         obj = DetalleVenta.objects.filter(id_producto=de_producto.id, id_venta=de_venta.id).first()
         
         # query = DetalleVenta.objects.filter(id_producto = flotante, id_venta = de_venta).count()
-        precio = Producto.objects.get(id=flotante).precio_venta_unitario
+        precio = Producto.objects.get(codigo_barras=flotante).precio_venta_unitario
         
         if obj is None:
             det_venta = DetalleVenta()

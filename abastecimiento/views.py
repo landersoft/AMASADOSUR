@@ -195,7 +195,7 @@ def buscar(request):
         ingreso = request.POST.get('producto')
         print(ingreso)
         try:
-            producto = Producto.objects.get(id=ingreso)
+            producto = Producto.objects.get(codigo_barras=ingreso)
 
             return render (request,'abastecimiento/buscar.html',{'producto': producto})
 
